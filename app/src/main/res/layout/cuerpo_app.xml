@@ -6,11 +6,10 @@
     android:layout_height="match_parent">
 
 
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="90dp"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
@@ -29,10 +28,82 @@
         android:textColorLink="#F6F5F1"
         android:textSize="36dp"
         android:textStyle="bold"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.635"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:rotation="90"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/intento_hexagono_funcional3_foreground" />
+
+    <Button
+        android:id="@+id/b_misJuegos_cuerpo"
+        android:layout_width="330dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="141dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="179dp"
+        android:text="Mis juegos"
+        android:textSize="50dp"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar"
+        app:layout_constraintHorizontal_bias="0.451"
+        app:layout_constraintStart_toStartOf="@+id/toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <Button
+        android:id="@+id/b_amistades_cuerpo"
+        android:layout_width="330dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="141dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="179dp"
+        android:text="Amistades"
+        android:textSize="50dp"
+        app:layout_constraintEnd_toEndOf="@+id/b_misJuegos_cuerpo"
+        app:layout_constraintHorizontal_bias="0.44"
+        app:layout_constraintStart_toStartOf="@+id/b_misJuegos_cuerpo"
+        app:layout_constraintTop_toBottomOf="@+id/b_misJuegos_cuerpo" />
+
+    <Button
+        android:id="@+id/b_historial_cuerpo"
+        android:layout_width="330dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="141dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="179dp"
+        android:text="Historial"
+        android:textSize="50dp"
+        app:layout_constraintEnd_toEndOf="@+id/b_amistades_cuerpo"
+        app:layout_constraintHorizontal_bias="0.44"
+        app:layout_constraintStart_toStartOf="@+id/b_amistades_cuerpo"
+        app:layout_constraintTop_toBottomOf="@+id/b_amistades_cuerpo" />
+
+    <Button
+        android:id="@+id/b_convocar_cuerpo"
+        android:layout_width="330dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="141dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="1dp"
+        android:text="Convocar"
+        android:textSize="50dp"
+        app:layout_constraintEnd_toEndOf="@+id/b_historial_cuerpo"
+        app:layout_constraintHorizontal_bias="0.997"
+        app:layout_constraintStart_toEndOf="@+id/b_historial_cuerpo"
+        app:layout_constraintStart_toStartOf="@+id/b_misJuegos_cuerpo"
+        app:layout_constraintTop_toBottomOf="@+id/b_historial_cuerpo" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

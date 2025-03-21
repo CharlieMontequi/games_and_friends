@@ -13,7 +13,7 @@
         android:theme="@style/Theme.GamesFriends"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +21,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.Amistades"/>
+        <activity android:name=".view.Cuerpo_app"/>
+        <activity android:name=".view.detalle.Detalle_amigo"/>
+        <activity android:name=".view.Mis_juegos"/>
+        <activity android:name=".view.detalle.Detalle_juego"/>
+        <activity android:name=".view.Historial"/>
+        <activity android:name=".view.detalle.Detalle_historial"/>
+        <activity android:name=".view.detalle.Detalle_convocar"/>
+        <activity android:name=".view.Regristro"/>
+        <activity android:name=".view.detalle.Detalle_perfil"/>
+
     </application>
 
 </manifest>

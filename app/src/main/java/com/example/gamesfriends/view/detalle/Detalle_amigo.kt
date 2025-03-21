@@ -1,13 +1,13 @@
-package com.example.gamesfriends
+package com.example.gamesfriends.view.detalle
 
 import android.os.Bundle
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.example.gamesfriends.R
 
-class MainActivity : AppCompatActivity() {
+class Detalle_amigo : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.detalle_amigo)
 
     }
 }
