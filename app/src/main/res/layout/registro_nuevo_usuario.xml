@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F8F7F3">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_registro"
@@ -22,7 +23,7 @@
         android:id="@+id/textView2"
         android:layout_width="205dp"
         android:layout_height="85dp"
-        android:text="Games &amp; Friends"
+        android:text="Games\n&amp; Friends"
         android:textColor="#F6F5F1"
         android:textColorLink="#F6F5F1"
         android:textSize="36dp"
