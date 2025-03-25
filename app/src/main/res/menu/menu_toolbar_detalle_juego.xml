@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/item_juegol_addJuego_coleccion"
+        android:title="Añadir juego a la colección" />
+    <item
+        android:id="@+id/item_juego_eliminarJuego_coleccion"
+        android:title="Eliminar juego de la colección" />
+    <item
+        android:id="@+id/item_juego_perfil"
+        android:title="Perfil" />
+    <item
+        android:id="@+id/item_perfil_notificaciones"
+        android:title="Notificaciones" />
+    <item
+        android:id="@+id/item_perfil_acercaDe"
+        android:title="Acerca de..." />
+    <item
+        android:id="@+id/item_perfil_salir_desconectar"
+        android:title="Salir/Log out" />
+</menu>

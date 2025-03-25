@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item_perfil_perfilEditar"
+        android:title="Editar perfil" />
+    <item
+        android:id="@+id/item_perfil_addJuego_bbd"
+        android:title="Añadir juego a la BBDD" />
+    <item
+        android:id="@+id/item_perfil_notificaciones"
+        android:title="Notificaciones" />
+    <item
+        android:id="@+id/item_perfil_acercaDe"
+        android:title="Acerca de..." />
+    <item
+        android:id="@+id/item_perfil_salir_desconectar"
+        android:title="Salir/Log out" />
+</menu>
