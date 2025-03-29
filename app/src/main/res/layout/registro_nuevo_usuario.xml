@@ -122,8 +122,9 @@
         android:background="@drawable/edit_text_azul"
         android:ems="10"
         android:gravity="center"
-        android:hint="Correo"
+        android:hint="Contraseña"
         android:inputType="textPassword"
+        android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="@+id/textView6"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textView6"
@@ -137,6 +138,7 @@
         android:layout_marginTop="35dp"
         android:layout_marginEnd="109dp"
         android:text="REGISTRARSE"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="@+id/etxt_contrasenia_registro"
         app:layout_constraintStart_toStartOf="@+id/etxt_contrasenia_registro"
         app:layout_constraintTop_toBottomOf="@+id/etxt_contrasenia_registro" />
