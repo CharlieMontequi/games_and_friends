@@ -1,12 +1,12 @@
 package com.example.gamesfriends.model.datos
 
-import java.sql.Date
+import java.time.LocalDate
+import java.util.Date
 
 data class Historial(
     val id_historial: Int?,
     val nombre_historial: String,
-    val fecha_historial: Date,
+    val fecha_historial: LocalDate?,
     val numeroPersonas_historial: Int,
-    val usuario_historial: Int,
-    val juegosUsados_historial: Array<Int>
+    val usuario_historial: Int
 )
