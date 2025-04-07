@@ -10,7 +10,7 @@
         android:id="@+id/view5"
         android:layout_width="390dp"
         android:layout_height="3dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="64dp"
         android:background="@color/balcoBeige"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.476"
@@ -24,13 +24,14 @@
         android:gravity="center"
         android:text="Verano Azul"
         android:textColor="#F6F5F1"
-        android:textSize="36dp"
+        android:textSize="30dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.042" />
+        app:layout_constraintVertical_bias="0.023" />
 
     <ImageView
         android:id="@+id/imageView9"
@@ -53,7 +54,7 @@
         android:layout_marginEnd="202dp"
         android:text="14-9-2001"
         android:textColor="@color/balcoBeige"
-        android:textSize="28dp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/view5"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/imageView9"
@@ -61,8 +62,8 @@
 
     <ImageView
         android:id="@+id/imageView12"
-        android:layout_width="50sp"
-        android:layout_height="50sp"
+        android:layout_width="40sp"
+        android:layout_height="40sp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="7dp"
 
@@ -77,13 +78,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="60dp"
         android:text="8 juegos "
         android:textColor="@color/balcoBeige"
-        android:textSize="28dp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.035"
         app:layout_constraintStart_toStartOf="@+id/txt_fecha_item_listado_partida"
         app:layout_constraintTop_toBottomOf="@+id/txt_fecha_item_listado_partida" />
 
@@ -92,12 +93,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="51dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="67dp"
         android:layout_marginEnd="12dp"
         android:text="4 personas"
         android:textColor="@color/balcoBeige"
-        android:textSize="28dp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/view5"
+        app:layout_constraintHorizontal_bias="0.312"
         app:layout_constraintStart_toEndOf="@+id/txt_numero_juegos_item_listaHistorial"
         app:layout_constraintTop_toBottomOf="@+id/view5" />
 
@@ -110,7 +112,7 @@
         android:textColor="@color/balcoBeige"
         android:textSize="34sp"
         app:layout_constraintEnd_toStartOf="@+id/txt_numero_personas_itemListadoHistorial"
-        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toEndOf="@+id/txt_numero_juegos_item_listaHistorial"
         app:layout_constraintTop_toBottomOf="@+id/txt_fecha_item_listado_partida" />
 </androidx.constraintlayout.widget.ConstraintLayout>

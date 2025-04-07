@@ -27,8 +27,9 @@
         android:layout_marginEnd="16dp"
         android:text="Juego de mesa "
         android:textColor="#F6F5F1"
-        android:textSize="36dp"
+        android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imV_foto_juego_item_listado_juegos"
         app:layout_constraintTop_toTopOf="parent" />
 

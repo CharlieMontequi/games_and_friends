@@ -14,22 +14,21 @@ import com.example.gamesfriends.model.datos.Mecanica
 import com.example.gamesfriends.model.datos.MecanicaEnJuego
 import com.example.gamesfriends.model.datos.Usuario
 import java.text.SimpleDateFormat
+import java.time.Duration
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.util.Date
 
 data class DataBaseHelper(var contexto: Context) :
     SQLiteOpenHelper(contexto, DATABASE, null, DATABASE_VERSION) {
 
     companion object {
-        private const val DATABASE = "Juegos De Mesa"
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE = "Juegos_De_Mesa"
+        private const val DATABASE_VERSION = 4
 
         // TABLA USUARIOS
         private const val TABLE_USUARIOS = "Usuarios"
         private const val KEY_ID_USUARIO = "UsuarioID"
-        private const val KEY_NOMBRE_USUARIO =
-            "Nombre Usuario"// el nombre sea el que fuere mas el id
+        private const val KEY_NOMBRE_USUARIO = "Nombre_Usuario"
         private const val KEY_CORREO = "Correo"
         private const val KEY_CONTRASENIA = "Contraseña"
 
@@ -44,15 +43,14 @@ data class DataBaseHelper(var contexto: Context) :
         /*
         faltaria determinar como van a ser los apuntes personales de los juegos
          */
-        private const val TABLE_COLECCION = "Juegos En Propiedad"
+        private const val TABLE_COLECCION = "Juegos_En_Propiedad"
         private const val KEY_ID_COLECCION = "JuedoPropiedadID"
-        private const val KEY_FK_USUARIO_TIENE_JUEGO =
-            "FK Propietario_ID"// id del juegador que lo tiene
-        private const val KEY_FK_JUEGO_TIENE = "FK JuegoTieneID"// id del juego que tiene
-        private const val KEY_FECHA_ULTIMA_VEZ_JUEGADO = "Fecha Ultima Vez Jugado"
-        private const val KEY_PRECIO_COMPRA = "Precio compra"
-        private const val KEY_VECES_JUGADO = "Veces jugeado"
-        private const val KEY_ANOTACION_PERSONAL = "Anotación personal"
+        private const val KEY_FK_USUARIO_TIENE_JUEGO = "FK_Propietario_ID"
+        private const val KEY_FK_JUEGO_TIENE = "FK_JuegoTieneID"
+        private const val KEY_FECHA_ULTIMA_VEZ_JUEGADO = "Fecha_Ultima_Vez_Jugado"
+        private const val KEY_PRECIO_COMPRA = "Precio_compra"
+        private const val KEY_VECES_JUGADO = "Veces_jugado"
+        private const val KEY_ANOTACION_PERSONAL = "Anotación_personal"
 
         // TABLA TODOS LOS JUEGOS
         /*
@@ -61,10 +59,10 @@ data class DataBaseHelper(var contexto: Context) :
          */
         private const val TABLE_JUEGOS = "Juegos"
         private const val KEY_ID_JUEGO = "JuegoID"
-        private const val KEY_NOMBRE_JUEGO = "Nombre Juego"
+        private const val KEY_NOMBRE_JUEGO = "Nombre_Juego"
         private const val KEY_DESCIPRCION_JUEGO = "Descripción"
-        private const val KEY_NUMERO_JUGADORES_MINIMO = "Número Jugadores Mínimo"
-        private const val KEY_NUMERO_JUGADORES_MAXIMO = "Número Jugadores MINIMO"
+        private const val KEY_NUMERO_JUGADORES_MINIMO = "Mínimo"
+        private const val KEY_NUMERO_JUGADORES_MAXIMO = "Máximo"
         private const val KEY_DURACION = "Duración"
 
 
@@ -73,15 +71,15 @@ data class DataBaseHelper(var contexto: Context) :
         la tabla de tipos se va a encargar solo de recoger los tipos de juegos
         se ha añadido como tabla para que se filtre por id y sacarlos con una consulta
          */
-        private const val TABLE_MECANICAS = "Mecánicas De Juegos"
+        private const val TABLE_MECANICAS = "Mecánicas_De_Juegos"
         private const val KEY_ID_MECANICA = "MecánicasID"
-        private const val KEY_NOMBRE_MECANICA = "Nombre Mecánicas"
+        private const val KEY_NOMBRE_MECANICA = "Nombre_Mecánicas"
 
         // TABLA JUEGOS CON CATEGORIAS
-        private const val TABLE_MECANICAS_EN_JUEGO = "Mecánicas en juego"
+        private const val TABLE_MECANICAS_EN_JUEGO = "Mecánicas_en_juego"
         private const val KEY_ID_MECANICASENJUEGO = "Mecánicas_juegoID"
-        private const val KEY_FK_JUEGO_MECANICASENJUEGO = "FK Juego ID"
-        private const val KEY_FK_MECANICAS_MECANICASENJUEGO = "FK Mecánica ID"
+        private const val KEY_FK_JUEGO_MECANICASENJUEGO = "FK_Juego_ID"
+        private const val KEY_FK_MECANICAS_MECANICASENJUEGO = "FK_Mecánica_ID"
 
         // TABLA HISTORIAL DE PARTIDAS- independiente
         /*
@@ -94,20 +92,19 @@ data class DataBaseHelper(var contexto: Context) :
          */
         private const val TABLE_HISTORIAL = "Historial"
         private const val KEY_ID_HISTORIAL = "HistorialID"
-        private const val KEY_NOMBRE_PARTIDA = "Nombre Partida"
-        private const val KEY_FECHA_PARTIDA = "Fecha Partida"
-        private const val KEY_NUMERO_PERSONAS =
-            "Número Jugadores"// cuando exista el online esto sera una fk
-        private const val KEY_FK_USUARIO_MONTA_PARTIDA = "FK Usuario Organizador"
+        private const val KEY_NOMBRE_PARTIDA = "Nombre_Partida"
+        private const val KEY_FECHA_PARTIDA = "Fecha_Partida"
+        private const val KEY_NUMERO_PERSONAS = "Número_Jugadores"
+        private const val KEY_FK_USUARIO_MONTA_PARTIDA = "FK_Usuario_Organizador"
 
         //TABLA DE JUEGOS LLEVADOS A LA PARTIDA
         /*
         Al ser los juegos usando un array de los mismos se define en otra tabla
          */
-        val TABLE_JUEGOS_USADOS = "Tabla juegos llevados a la partida"
-        val KEY_ID_JUEGO_USADO = "id juegos llevados"
-        val KEY_FK_JUEGO_JUEGOUSADO = "id del juego llevado"
-        val KEY_FK_HISTORIAL = " id del historial"
+        val TABLE_JUEGOS_USADOS = "Tabla_Juegos_Usadps"
+        val KEY_ID_JUEGO_USADO = "id_JuegoUsado"
+        val KEY_FK_JUEGO_JUEGOUSADO = "id_juego_juegoUsado"
+        val KEY_FK_HISTORIAL = " id_historial"
 
     }
 
@@ -115,15 +112,15 @@ data class DataBaseHelper(var contexto: Context) :
         val crearTablaUsuarios =
             ("CREATE TABLE IF NOT EXISTS $TABLE_USUARIOS (" +
                     "$KEY_ID_USUARIO INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "$KEY_NOMBRE_USUARIO TEXT NOT NULL, " +
-                    "$KEY_CORREO TEXT NOT NULL, " +
-                    "$KEY_CONTRASENIA TEXT NOT NULL)")
+                    "$KEY_NOMBRE_USUARIO TEXT, " +
+                    "$KEY_CORREO TEXT, " +
+                    "$KEY_CONTRASENIA TEXT)")
 
         val crearTablaJuegos = ("CREATE TABLE IF NOT EXISTS $TABLE_JUEGOS(" +
-                "$KEY_ID_JUEGO INTEGENER PRIMARY KEY AUTOINCREMENT, " +
-                "$KEY_NOMBRE_JUEGO TEXT NOT NULL, " +
-                "$KEY_NUMERO_JUGADORES_MINIMO INTEGER, " +
-                "$KEY_DESCIPRCION_JUEGO TEXT NOT NULL," +
+                "$KEY_ID_JUEGO INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "$KEY_NOMBRE_JUEGO TEXT, " +
+                "$KEY_DESCIPRCION_JUEGO TEXT," +
+                "$KEY_NUMERO_JUGADORES_MINIMO INTEGER DEFAULT 1, " +
                 "$KEY_NUMERO_JUGADORES_MAXIMO INTEGER, " +
                 "$KEY_DURACION INTEGER)")
 
@@ -132,36 +129,37 @@ data class DataBaseHelper(var contexto: Context) :
                 "$KEY_NOMBRE_MECANICA TEXT NOT NULL)")
 
         val crearTablaJuegosPropiedad = ("CREATE TABLE IF NOT EXISTS $TABLE_COLECCION(" +
-                "$KEY_ID_COLECCION INTEGER PRIMARY KEY, " +
-                "$KEY_FK_USUARIO_TIENE_JUEGO INTEGER," +
-                "$KEY_FK_JUEGO_TIENE INTEGER, " +
+                "$KEY_ID_COLECCION INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "$KEY_FECHA_ULTIMA_VEZ_JUEGADO TEXT," +
                 "$KEY_VECES_JUGADO INTEGER," +
                 "$KEY_ANOTACION_PERSONAL TEXT," +
                 "$KEY_PRECIO_COMPRA REAL NOT NULL," +
-                "FOREIGN KEY($KEY_FK_USUARIO_TIENE_JUEGO) REFERENCES $TABLE_USUARIOS($KEY_ID_USUARIO))," +
+                "$KEY_FK_USUARIO_TIENE_JUEGO INTEGER," +
+                "$KEY_FK_JUEGO_TIENE INTEGER, " +
+                "FOREIGN KEY($KEY_FK_USUARIO_TIENE_JUEGO) REFERENCES $TABLE_USUARIOS($KEY_ID_USUARIO)," +
                 "FOREIGN KEY ($KEY_FK_JUEGO_TIENE) REFERENCES $TABLE_JUEGOS($KEY_ID_JUEGO))")
 
         val crearTablaMecanicasEnJuego = ("CREATE TABLE IF NOT EXISTS $TABLE_MECANICAS_EN_JUEGO(" +
                 "$KEY_ID_MECANICASENJUEGO INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "$KEY_FK_JUEGO_MECANICASENJUEGO INTEGER," +
                 "$KEY_FK_MECANICAS_MECANICASENJUEGO INTEGER," +
-                "FOREING KEY ($KEY_FK_JUEGO_MECANICASENJUEGO) REFERENCES $TABLE_JUEGOS($KEY_ID_JUEGO))," +
-                "FOREING KEY ($KEY_FK_MECANICAS_MECANICASENJUEGO) REFERENCES $TABLE_MECANICAS($KEY_ID_MECANICA))")
+                "FOREIGN KEY ($KEY_FK_JUEGO_MECANICASENJUEGO) REFERENCES $TABLE_JUEGOS($KEY_ID_JUEGO), " +
+                "FOREIGN KEY ($KEY_FK_MECANICAS_MECANICASENJUEGO) REFERENCES $TABLE_MECANICAS($KEY_ID_MECANICA))")
 
         val crearTablaHistorial = ("CREATE TABLE IF NOT EXISTS $TABLE_HISTORIAL(" +
                 "$KEY_ID_HISTORIAL INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "$KEY_NOMBRE_PARTIDA TEXT NOT NULL," +
-                "$KEY_FECHA_PARTIDA TEXT NOT NULL," +
-                "$KEY_NUMERO_PERSONAS INTEGER +" +
+                "$KEY_NOMBRE_PARTIDA TEXT," +
+                "$KEY_FECHA_PARTIDA TEXT," +
+                "$KEY_NUMERO_PERSONAS INTEGER, " +
                 "$KEY_FK_USUARIO_MONTA_PARTIDA INTEGER," +
                 "FOREIGN KEY ($KEY_FK_USUARIO_MONTA_PARTIDA) REFERENCES $TABLE_USUARIOS($KEY_ID_USUARIO))")
 
         val crearTablaJuegosUsados = ("CREATE TABLE IF NOT EXISTS $TABLE_JUEGOS_USADOS (" +
                 "$KEY_ID_JUEGO_USADO INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "$KEY_FK_HISTORIAL INTEGER NOT NULL, " +
-                "$KEY_FK_JUEGO_JUEGOUSADO INTEGER NOT NULL, " +
-                "FOREIGN KEY ($KEY_ID_HISTORIAL) REFERENCES $TABLE_HISTORIAL($KEY_ID_HISTORIAL))")
+                "$KEY_FK_HISTORIAL INTEGER, " +
+                "$KEY_FK_JUEGO_JUEGOUSADO INTEGER, " +
+                "FOREIGN KEY ($KEY_FK_HISTORIAL) REFERENCES $TABLE_HISTORIAL($KEY_ID_HISTORIAL), " +
+                "FOREIGN KEY ($KEY_FK_JUEGO_JUEGOUSADO) REFERENCES $TABLE_JUEGOS($KEY_ID_JUEGO))")
 
         // val creaTablaAmistades=""
 
@@ -175,14 +173,13 @@ data class DataBaseHelper(var contexto: Context) :
             db.execSQL(crearTablaMecanicas)
             Log.d("TABLAS", "tabla mecanicas creada con exito")
 
+            db.execSQL(crearTablaHistorial)
+            Log.d("TABLAS", "tabla historial creada con exito")
             db.execSQL(crearTablaJuegosPropiedad)
             Log.d("TABLAS", "tabla juegos en propiedad creada con exito")
 
             db.execSQL(crearTablaMecanicasEnJuego)
             Log.d("TABLAS", "tabla mecanicas en juego creada con exito")
-
-            db.execSQL(crearTablaHistorial)
-            Log.d("TABLAS", "tabla historial creada con exito")
 
             db.execSQL(crearTablaJuegosUsados)
             //  db.execSQL(creaTablaAmistades)
@@ -202,21 +199,38 @@ data class DataBaseHelper(var contexto: Context) :
             db.execSQL("DROP TABLE IF EXISTS $TABLE_JUEGOS_USADOS")
             //db.execSQL("DROP TABLE IF EXISTS $TABLE_AMIGOS")
 
-            onCreate(db)
+
         }
     }
-    ///////////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////BORRAR BBDD/////////////////////////////////////////////
+    fun deleteBBDD() {
+        val db = this.writableDatabase
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_USUARIOS")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_JUEGOS")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_MECANICAS")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_COLECCION")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_MECANICAS_EN_JUEGO")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_HISTORIAL")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_JUEGOS_USADOS")
+        onCreate(db)
+    }
     //////////////////////////CREAR NUEVOS ELEMENTOS///////////////////////////////////
 
-    fun crearUsuario(usuario: Usuario) {
+    fun crearUsuario(usuario: Usuario): Int {
 
         val db = this.writableDatabase
         val datos = ContentValues()
         datos.put(KEY_NOMBRE_USUARIO, usuario.nombre_usuario)
         datos.put(KEY_CORREO, usuario.correo_usuario)
         datos.put(KEY_CONTRASENIA, usuario.contrasenia_usuario)
-        db.insert(TABLE_USUARIOS, null, datos)
+        val id = db.insert(TABLE_USUARIOS, null, datos)
 
+        return if (id != 1L) {
+            id.toInt()
+        } else {
+            -1
+        }
     }
 
     fun crearJuego(juego: Juego) {
@@ -237,7 +251,7 @@ data class DataBaseHelper(var contexto: Context) :
         db.insert(TABLE_JUEGOS, null, datos)
     }
 
-    fun crecarMecancia(mecanica: Mecanica) {
+    fun crearMecancia(mecanica: Mecanica) {
         val db = this.writableDatabase
         val datos = ContentValues()
         datos.put(
@@ -301,6 +315,7 @@ data class DataBaseHelper(var contexto: Context) :
         db.delete(TABLE_USUARIOS, "$KEY_ID_USUARIO =?", arrayOf(idUsuario.toString()))
     }
 
+    // ESTA COMO EL ORTO DE MAL ESTA CONSULTA
     fun borrarJuegoDeJuegosTiene(idJuegoTiene: Int) {
         val db = this.writableDatabase
         db.delete(
@@ -442,6 +457,40 @@ data class DataBaseHelper(var contexto: Context) :
                     fk_usuario_tiene_coleccion = fkIdusuario
                 )
                 todosJuegosTiene.add(juegoEnPropiedad)
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        db.close()
+        return todosJuegosTiene
+    }
+
+    fun listaJuegosPropiedadSiendoJuegosLoObtenido(fkIdusuario: Int): MutableList<Juego> {
+        val todosJuegosTiene = mutableListOf<Juego>()
+        val db = this.writableDatabase
+        val sentencia =
+            "SELECT * FROM $TABLE_JUEGOS WHERE $KEY_ID_JUEGO IN (SELECT $KEY_FK_JUEGO_TIENE FROM $TABLE_COLECCION WHERE $KEY_FK_USUARIO_TIENE_JUEGO=?)"
+        var cursor: Cursor?
+        cursor = db.rawQuery(sentencia, arrayOf(fkIdusuario.toString()))
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                val cursorIdJuego = cursor.getColumnIndex(KEY_ID_JUEGO)
+                val curNombre = cursor.getColumnIndex(KEY_NOMBRE_JUEGO)
+                val curDescripcion = cursor.getColumnIndex(KEY_DESCIPRCION_JUEGO)
+                val curJugMinimo = cursor.getColumnIndex(KEY_NUMERO_JUGADORES_MINIMO)
+                val curJugMaximo = cursor.getColumnIndex(KEY_NUMERO_JUGADORES_MAXIMO)
+                val curDuracion = cursor.getColumnIndex(KEY_DURACION)
+
+
+                val juego = Juego(
+                    idJuego = cursor.getInt(cursorIdJuego),
+                    nombreJuego = cursor.getString(curNombre),
+                    descipcionJuegp = cursor.getString(curDescripcion),
+                    minimoJugadoresJuego = cursor.getInt(curJugMinimo),
+                    maximoJugadoresJuego = cursor.getInt(curJugMaximo),
+                    duracionJuego = cursor.getInt(curDuracion)
+                )
+                todosJuegosTiene.add(juego)
             } while (cursor.moveToNext())
         }
         cursor.close()
@@ -610,6 +659,21 @@ data class DataBaseHelper(var contexto: Context) :
         return historial
     }
 
+    ///////////////////////////AGRUPACIONES NUMERICAS///////////////////////////////////
+    fun agrupacionJuegosEnUso(fkIdHistorial:Int): Int?{
+        var cantidad: Int?=null
+        val db = this.readableDatabase
+        val sentencia = "SELECT COUNT($KEY_ID_JUEGO_USADO) FROM $TABLE_JUEGOS_USADOS WHERE $KEY_FK_HISTORIAL =?"
+        var cursor:Cursor?
+        cursor= db.rawQuery(sentencia, arrayOf(fkIdHistorial.toString()))
+        if (cursor.moveToFirst()){
+            cantidad = cursor.getInt(0)
+        }
+
+
+        return cantidad
+    }
+
     ///////////////////////////BUSCAR POR NOMBRE///////////////////////////////////////
     fun buscarJuegoNombre(nombreBusqueda: String): Juego? {
         var juego: Juego? = null
@@ -642,7 +706,7 @@ data class DataBaseHelper(var contexto: Context) :
         return juego
     }
 
-    ///////////////////////////BUSCAR POR NOMBRE- obteniendo un listado///////////////////////////////////////
+    ///////////////////////////BUSCAR POR NOMBRE- obteniendo un listado////////////////
     fun buscarJuegoNombreListado(nombreBusqueda: String): List<Juego> {
         val listaJuegos = mutableListOf<Juego>()
         val db = this.readableDatabase
@@ -683,17 +747,194 @@ data class DataBaseHelper(var contexto: Context) :
     ///////////////////////////FECHAS GESTOR///////////////////////////////////////////
     // conversor de fechas
     fun deFechaATexto(fecha: LocalDate?): String {
-        val formatoFecha = SimpleDateFormat("dd-MM-yyyy")
-        return formatoFecha.format(fecha)
+        var cuando = "NUNCA"
+        if (fecha != null) {
+            val formatoFecha = SimpleDateFormat("dd-MM-yyyy")
+            return formatoFecha.format(fecha)
+        } else {
+            return cuando
+        }
+
     }
 
     fun deTextoAFecha(textoFechado: String): LocalDate? {
         return try {
-            val formatoFecha = DateTimeFormatter.ofPattern("dd-MM-yyyy")
-            LocalDate.parse(textoFechado, formatoFecha) // para sacar la fecha sin la hora
+            if (textoFechado != "NUNCA") {
+                val formatoFecha = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+                LocalDate.parse(textoFechado, formatoFecha)
+            } else {
+                LocalDate.of(0, 1, 1) // Representación de 00-00-0000
+            }
         } catch (e: Exception) {
             e.printStackTrace()
-            null
+            LocalDate.of(0, 1, 1) // También devolvemos "00-00-0000" si hay error al parsear
         }
     }
+
+    ///////////////////////////DATOS MINIMOS///////////////////////////////////////////
+    fun datosMninimos() {
+        val todasMecanicas =
+            listOf(
+                Mecanica(null, "Azar"),
+                Mecanica(null, "Bazas"),
+                Mecanica(null, "Colocación de losetas"),
+                Mecanica(null, "Colocación de trabajadores"),
+                Mecanica(null, "Construcción de mazo"),
+                Mecanica(null, "Cooperativo"),
+                Mecanica(null, "Destreza"),
+                Mecanica(null, "Deducción/escape"),
+                Mecanica(null, "Estrategia"),
+                Mecanica(null, "Exploración/aventuera"),
+                Mecanica(null, "Gestión de acciones"),
+                Mecanica(null, "Gestión de recursos"),
+                Mecanica(null, "Lanzamiento de datos"),
+                Mecanica(null, "Memoria"),
+                Mecanica(null, "Narrativo/imaginativo"),
+                Mecanica(null, "Puzle"),
+                Mecanica(null, "Roles"),
+                Mecanica(null, "Roles ocultos"),
+                Mecanica(null, "Roll & write")
+            )
+
+        // crear las mecanicas
+        todasMecanicas.forEach { mecanica: Mecanica -> crearMecancia(mecanica) }
+
+        val algunosJuegos = listOf(
+            Juego(
+                null,
+                "Flamecraft",
+                "Flamecraft es un juego de tablero en el que asumiréis el papel de Guardallamas, encargados de conseguir que los Dragones Artesanos lancen sus llamas especializadas para crear cosas maravillosas. Estos dragones son muy deseados por los comerciantes, ya que les permitirán aumentar las ventas entre sus clientes. El jugador que haya conseguido mayor reputación como Guardallamas será el vencedor de la partida.",
+                1,
+                5,
+                60
+            ),
+            Juego(
+                null,
+                "Arborea",
+                "Arbórea es un juego de tablero donde serás un espíritu que guía a los aldeanos para sanar y que el paisaje crezca. Para ello, les enviarás a peregrinaciones y construirás tu ecosistema personal. Durante el juego, los jugadores colocarán trabajadores en vías de acción, luego las vías avanzarán y los jugadores se moverán con ellas. Cuanto más se muevan las vías, mejores serán las recompensas que pueden ayudar a los jugadores. Estas recompensas ayudan a contribuir a la ruta de recursos compartidos, hacer ofrendas a los Sabios para invertir en regalos o atraer animales a la tierra de Arbórea. ",
+                1,
+                5,
+                120
+            ),
+            Juego(
+                null,
+                "Rebel Princess",
+                "Rebel Princess es un juego de cartas que se desarrolla a lo largo de cinco rondas, representando los cinco días de una fiesta. Se sigue la mecánica general de los juegos de gbazas, pero en cada ronda se introduce una regla especial que hace que cada partida sea totalmente diferente. Cuidado con los príncipes azules y con las ranas encantadas, porque traerán proposiciones matrimoniales que no te gustarán. El participante con menos proposiciones matrimoniales al finalizar la partida será el vencedor.",
+                3,
+                6,
+                40
+            ),
+            Juego(
+                null,
+                "Jungle Speed",
+                "En Jungle Speed tienes que quedarte sin cartas.\n" +
+                        "\n" +
+                        "No hay tiempo para pensar. Enseña tu carta y no des oportunidad a los demás. ¿Ya hay otra figura tribal idéntica en la mesa? Vuela a coger el Tótem. Si escuchas una carcajada, tu impaciencia te ha jugado una mala pasada, has perdido y otra vez a empezar: te llevas todas las cartas descubiertas por el resto de las manos durante la partida. Y no te enfades, el buen ambiente es esencial. Si no puedes evitar picarte, reta a las manos otra vez. Cuanto más corta sea la partida, más disfrutarás.",
+                3,
+                8,
+                15
+            ),
+            Juego(
+                null,
+                "Duel Books",
+                "En Duel Books te enfrentaras contra tus amigos con un libro. En este emocionamente juego de datos y capítulos cada jugador lanzará un dado para escoger el capítulo con el que jugar y ¡empezará el duelo! Empezando por el protagonista y se iran resolviendo las páginas hasta que solo quede un vencedor. Preparate para descrubir un juego como nunca habías visto.",
+                2,
+                6,
+                20
+            )
+        )
+        algunosJuegos.forEach { juego: Juego -> crearJuego(juego) }
+
+        val mecanicasEnJuegos = listOf(
+            // Flamecraft - idJuego = 1
+            MecanicaEnJuego(
+                null,
+                fk_mecanica_mecanicaJuego = 13,
+                fk_juego_mecanicaJuego = 1
+            ), // Gestión de recursos
+            MecanicaEnJuego(
+                null,
+                fk_mecanica_mecanicaJuego = 4,
+                fk_juego_mecanicaJuego = 1
+            ),  // Colocación de trabajadores
+
+            // Arborea - idJuego = 2
+            MecanicaEnJuego(
+                null,
+                fk_mecanica_mecanicaJuego = 4,
+                fk_juego_mecanicaJuego = 2
+            ),  // Colocación de trabajadores
+            MecanicaEnJuego(
+                null,
+                fk_mecanica_mecanicaJuego = 11,
+                fk_juego_mecanicaJuego = 2
+            ), // Gestión de acciones
+
+            // Rebel Princess - idJuego = 3
+            MecanicaEnJuego(
+                null,
+                fk_mecanica_mecanicaJuego = 2,
+                fk_juego_mecanicaJuego = 3
+            ),  // Bazas
+
+            // Jungle Speed - idJuego = 4
+            MecanicaEnJuego(
+                null,
+                fk_mecanica_mecanicaJuego = 7,
+                fk_juego_mecanicaJuego = 4
+            )   // Destreza
+        )
+        mecanicasEnJuegos.forEach { mecanicaEnJuego: MecanicaEnJuego ->
+            crearMecanciaEnJuego(
+                mecanicaEnJuego
+            )
+        }
+
+        val usuarios = listOf(
+            Usuario(null, "a", "a", "a"),
+            Usuario(null, "b", "b", "b"),
+            Usuario(null, "admin", "admin", "admin")
+        )
+        usuarios.forEach { usuarios: Usuario -> crearUsuario(usuarios) }
+
+        val usuarioConJuegos = listOf(
+            Coleccion(null, 1.0, 0, null, "intimisimi", 1, 1),
+            Coleccion(null, 30.0, 12, null, "ajshdfa", 1, 2),
+            Coleccion(null, 90.0, 2398764, null, "", 1, 4),
+            Coleccion(null, 12.0, 2, null, "", 2, 4),
+            Coleccion(null, 90.0, 2, null, "", 2, 2),
+            Coleccion(null, 70.0, 4, null, "", 3, 5),
+            Coleccion(null, 90.0, 6, null, "", 3, 4),
+            Coleccion(null, 60.0, 2, null, "", 3, 3)
+        )
+        usuarioConJuegos.forEach { usuarioConJuegos: Coleccion ->
+            crearJuegoEnPropiedad(
+                usuarioConJuegos
+            )
+        }
+
+        val historialPartidas = listOf(
+            Historial(null, "Veneno pa tu pieeeeel", null, 2, 2),
+            Historial(null, "ahora vas y lo juegas", null, 5, 2),
+            Historial(null, "los cojones", null, 3, 2),
+            Historial(null, "polis bien", null, 15, 3),
+            Historial(null, "poliplatos de placertea", null, 3, 3),
+            Historial(null, "tu y quien mas?", null, 5, 1),
+            Historial(null, "aaaaaah... NO!", null, 4, 3)
+        )
+        historialPartidas.forEach { historial: Historial -> crearHistorial(historial) }
+
+        val juegosUsados = listOf(
+            JuegoUsado(null, 1, 1),
+            JuegoUsado(null, 2, 2),
+            JuegoUsado(null, 3, 3),
+            JuegoUsado(null, 4, 4),
+            JuegoUsado(null, 5, 5),
+            JuegoUsado(null, 2,6),
+            JuegoUsado(null, 1, 7)
+        )
+        juegosUsados.forEach { juegoUsado: JuegoUsado ->  crearJuegoEnUso(juegoUsado) }
+    }
+
+
 }

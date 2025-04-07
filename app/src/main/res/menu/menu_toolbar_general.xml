@@ -6,15 +6,15 @@
         android:id="@+id/item_juego_perfil"
         android:title="Perfil" />
     <item
-        android:id="@+id/item_perfil_addJuego_bbd"
+        android:id="@+id/item_addJuego_bbd_general"
         android:title="Añadir juego a la BBDD" />
     <item
-        android:id="@+id/item_perfil_notificaciones"
+        android:id="@+id/item_notificaciones_general"
         android:title="Notificaciones" />
     <item
-        android:id="@+id/item_perfil_acercaDe"
+        android:id="@+id/item_acercaDe_general"
         android:title="Acerca de..." />
     <item
-        android:id="@+id/item_perfil_salir_desconectar"
+        android:id="@+id/item_salir_desconectar_general"
         android:title="Salir/Log out" />
 </menu>

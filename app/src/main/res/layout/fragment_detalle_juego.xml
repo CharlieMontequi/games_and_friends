@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/edit_text_azul"
-    android:backgroundTint="@color/azulito">
+    android:backgroundTint="@color/balcoBeige">
 
     <TextView
         android:id="@+id/textView3"
