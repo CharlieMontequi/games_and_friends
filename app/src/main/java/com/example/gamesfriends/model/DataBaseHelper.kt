@@ -6,6 +6,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
+import com.example.gamesfriends.model.datos.Amigo
 import com.example.gamesfriends.model.datos.Historial
 import com.example.gamesfriends.model.datos.Juego
 import com.example.gamesfriends.model.datos.Coleccion
@@ -38,6 +39,9 @@ data class DataBaseHelper(var contexto: Context) :
         eso solo funcionara en modo online ya que en local no habra sincronizacion
          */
         private const val TABLE_AMIGOS = "Amigos"
+        private const val KEY_ID_AMIGOS = "ID_amigos"
+        private const val KEY_FK_AMIGO1 = "FK_amigo1"
+        private const val KEY_FK_AMIGO2 = "FK_amigo2"
 
         // TABLA JUEGOS EN PROPIEDEAS/COLECCION
         /*
@@ -161,6 +165,13 @@ data class DataBaseHelper(var contexto: Context) :
                 "FOREIGN KEY ($KEY_FK_HISTORIAL) REFERENCES $TABLE_HISTORIAL($KEY_ID_HISTORIAL), " +
                 "FOREIGN KEY ($KEY_FK_JUEGO_JUEGOUSADO) REFERENCES $TABLE_JUEGOS($KEY_ID_JUEGO))")
 
+        val crearTablaAmigos = ("CREATE TABLE IF NOT EXISTS $TABLE_AMIGOS (" +
+                "$KEY_ID_AMIGOS INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "$KEY_FK_AMIGO1 INTEGER," +
+                "$KEY_FK_AMIGO2 INTEGER," +
+                "FOREIGN KEY($KEY_FK_AMIGO1) REFERENCES $TABLE_USUARIOS($KEY_ID_USUARIO)," +
+                "FOREIGN KEY($KEY_FK_AMIGO2) REFERENCES $TABLE_USUARIOS($KEY_ID_USUARIO))")
+
         // val creaTablaAmistades=""
 
         if (db != null) {
@@ -175,6 +186,7 @@ data class DataBaseHelper(var contexto: Context) :
 
             db.execSQL(crearTablaHistorial)
             Log.d("TABLAS", "tabla historial creada con exito")
+
             db.execSQL(crearTablaJuegosPropiedad)
             Log.d("TABLAS", "tabla juegos en propiedad creada con exito")
 
@@ -182,8 +194,9 @@ data class DataBaseHelper(var contexto: Context) :
             Log.d("TABLAS", "tabla mecanicas en juego creada con exito")
 
             db.execSQL(crearTablaJuegosUsados)
-            //  db.execSQL(creaTablaAmistades)
-            //  Log.d("TABLAS","tabla amigos creada con exito")
+
+            db.execSQL(crearTablaAmigos)
+            Log.d("TABLAS", "tabla amigos creada con exito")
 
         }
     }
@@ -213,6 +226,7 @@ data class DataBaseHelper(var contexto: Context) :
         db.execSQL("DROP TABLE IF EXISTS $TABLE_MECANICAS_EN_JUEGO")
         db.execSQL("DROP TABLE IF EXISTS $TABLE_HISTORIAL")
         db.execSQL("DROP TABLE IF EXISTS $TABLE_JUEGOS_USADOS")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_AMIGOS")
         onCreate(db)
     }
     //////////////////////////CREAR NUEVOS ELEMENTOS///////////////////////////////////
@@ -308,6 +322,15 @@ data class DataBaseHelper(var contexto: Context) :
         db.insert(TABLE_JUEGOS_USADOS, null, datos)
     }
 
+    fun crearAmigos(amigo: Amigo) {
+        val db = this.writableDatabase
+        val datos = ContentValues()
+        datos.put(KEY_FK_AMIGO1, amigo.fk_amigo1)
+        datos.put(KEY_FK_AMIGO2, amigo.fk_amigo2)
+
+        db.insert(TABLE_AMIGOS, null, datos)
+    }
+
     //////////////////////////BORRAR ELEMENTOS/////////////////////////////////////////
 
     fun borrarUsuario(idUsuario: Int) {
@@ -338,6 +361,21 @@ data class DataBaseHelper(var contexto: Context) :
     fun borrarJuegoUsado(fkHistorial: Int) {
         val db = this.writableDatabase
         db.delete(TABLE_JUEGOS_USADOS, "$KEY_FK_HISTORIAL =?", arrayOf(fkHistorial.toString()))
+    }
+
+    fun borrarAmigo(fkAmigo1: Int, fkAmigo2: Int) {
+        val db = this.writableDatabase
+        db.delete(
+            "amigos",
+            "(($KEY_FK_AMIGO1 = ? AND $KEY_FK_AMIGO2 = ?) OR ($KEY_FK_AMIGO1 = ? AND $KEY_FK_AMIGO2 = ?))",
+            arrayOf(
+                fkAmigo1.toString(),
+                fkAmigo2.toString(),
+                fkAmigo2.toString(),
+                fkAmigo1.toString()
+            )
+        )
+
     }
 
     //////////////////////////ACTUALIZAR ELEMENTOS//////////////////////////////////////
@@ -551,8 +589,49 @@ data class DataBaseHelper(var contexto: Context) :
         return todosJuegosUsados
     }
 
-    ///////////////////////////DETALLES CONCRETOS/////////////////////////////////////////
+    fun listadoTodosAmigos(fkAmigo1: Int): MutableList<Amigo> {
+        val todosAmigos = mutableListOf<Amigo>()
+        val db = this.readableDatabase
+        val sentencia = "SELECT * FROM $TABLE_AMIGOS WHERE $KEY_FK_AMIGO1 =? OR $KEY_FK_AMIGO2 = ?"
+        var cursor: Cursor?
+        cursor = db.rawQuery(sentencia, arrayOf(fkAmigo1.toString(), fkAmigo1.toString()))
+        if (cursor.moveToFirst()) {
+            do {
+                val curIDAmigo = cursor.getColumnIndex(KEY_ID_AMIGOS)
+                val curFKamigo2 = cursor.getColumnIndex(KEY_FK_AMIGO2)
+                val amigo = Amigo(
+                    id_amigos = cursor.getInt(curIDAmigo),
+                    fk_amigo1 = fkAmigo1,
+                    fk_amigo2 = cursor.getInt(curFKamigo2)
+                )
+                todosAmigos.add(amigo)
 
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        db.close()
+        return todosAmigos
+    }
+
+    fun listaMecanicasEnJuegoDadoJuego(fk_idjuego: Int): MutableList<String> {
+        val mecanciasEnjuego = mutableListOf<String>()
+        val db = this.readableDatabase
+        val sentencia =
+            "SELECT $KEY_NOMBRE_MECANICA FROM $TABLE_MECANICAS WHERE $KEY_ID_MECANICA IN(SELECT $KEY_FK_MECANICAS_MECANICASENJUEGO FROM $TABLE_MECANICAS_EN_JUEGO WHERE $KEY_FK_JUEGO_MECANICASENJUEGO =?)"
+        var cursor: Cursor?
+        cursor = db.rawQuery(sentencia, arrayOf(fk_idjuego.toString()))
+        if (cursor.moveToFirst()) {
+            do {
+                val nombreMecCur = cursor.getString(0)
+                mecanciasEnjuego.add(nombreMecCur)
+            } while (cursor.moveToNext())
+        }
+
+        return mecanciasEnjuego
+    }
+
+    ///////////////////////////DETALLES CONCRETOS/////////////////////////////////////////
+    // matid tonto- detalle amigo da una usuario asi que es detalle usuario
     fun detalleUsuario(idUsuario: Int): Usuario? {
         var usuario: Usuario? = null
         val db = this.readableDatabase
@@ -660,17 +739,29 @@ data class DataBaseHelper(var contexto: Context) :
     }
 
     ///////////////////////////AGRUPACIONES NUMERICAS///////////////////////////////////
-    fun agrupacionJuegosEnUso(fkIdHistorial:Int): Int?{
-        var cantidad: Int?=null
+    fun agrupacionJuegosEnUso(fkIdHistorial: Int): Int? {
+        var cantidad: Int? = null
         val db = this.readableDatabase
-        val sentencia = "SELECT COUNT($KEY_ID_JUEGO_USADO) FROM $TABLE_JUEGOS_USADOS WHERE $KEY_FK_HISTORIAL =?"
-        var cursor:Cursor?
-        cursor= db.rawQuery(sentencia, arrayOf(fkIdHistorial.toString()))
-        if (cursor.moveToFirst()){
+        val sentencia =
+            "SELECT COUNT($KEY_ID_JUEGO_USADO) FROM $TABLE_JUEGOS_USADOS WHERE $KEY_FK_HISTORIAL =?"
+        var cursor: Cursor?
+        cursor = db.rawQuery(sentencia, arrayOf(fkIdHistorial.toString()))
+        if (cursor.moveToFirst()) {
             cantidad = cursor.getInt(0)
         }
+        return cantidad
+    }
 
-
+    fun totalJuegosEnColeccion(fkPropietario: Int): Int? {
+        var cantidad: Int? = null
+        val db = this.readableDatabase
+        val setencia =
+            "SELECT COUNT($KEY_FK_USUARIO_TIENE_JUEGO) FROM $TABLE_COLECCION WHERE $KEY_FK_USUARIO_TIENE_JUEGO =?"
+        var cursor: Cursor?
+        cursor = db.rawQuery(setencia, arrayOf(fkPropietario.toString()))
+        if (cursor.moveToFirst()) {
+            cantidad = cursor.getInt(0)
+        }
         return cantidad
     }
 
@@ -930,11 +1021,14 @@ data class DataBaseHelper(var contexto: Context) :
             JuegoUsado(null, 3, 3),
             JuegoUsado(null, 4, 4),
             JuegoUsado(null, 5, 5),
-            JuegoUsado(null, 2,6),
+            JuegoUsado(null, 2, 6),
             JuegoUsado(null, 1, 7)
         )
-        juegosUsados.forEach { juegoUsado: JuegoUsado ->  crearJuegoEnUso(juegoUsado) }
-    }
+        juegosUsados.forEach { juegoUsado: JuegoUsado -> crearJuegoEnUso(juegoUsado) }
 
+        val amigos = listOf(Amigo(null, 1, 2), Amigo(null, 1, 3), Amigo(null, 3, 2))
+        amigos.forEach { amigo: Amigo -> crearAmigos(amigo) }
+
+    }
 
 }

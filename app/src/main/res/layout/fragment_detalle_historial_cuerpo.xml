@@ -37,7 +37,6 @@
         android:text="Playas de mesa"
         android:textColor="@color/verde"
         android:textSize="36dp"
-
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
