@@ -52,7 +52,7 @@ class Historial : AppCompatActivity() {
         listVHistoriales.setOnItemClickListener { _, _, position, _ ->
             val historialSeleccionado = listadoHitorial[position]
             val intent =Intent(this, Detalle_historial::class.java)
-            intent.putExtra("ID_HISTORIAL",historialSeleccionado.id_historial)
+            intent.putExtra("ID_HISTORIAL",listadoHitorial[position].id_historial)
             startActivity(intent)
         }
     }
@@ -84,9 +84,9 @@ class Historial : AppCompatActivity() {
                 listadoHitorial[position].nombre_historial
             rowView.findViewById<TextView>(R.id.txt_numero_juegos_item_listaHistorial).text =
                 listadoHitorial[position].id_historial?.let {
-                    dbHelper.agrupacionJuegosEnUso(it).toString()
+                    dbHelper.agrupacionJuegosEnUso(it).toString() + " juegos"
                 }
-            rowView.findViewById<TextView>(R.id.txt_fecha_item_listado_partida).text=listadoHitorial[position].fecha_historial.toString() + " juegos"
+            rowView.findViewById<TextView>(R.id.txt_fecha_item_listado_partida).text=listadoHitorial[position].fecha_historial.toString()
             rowView.findViewById<TextView>(R.id.txt_numero_personas_itemListadoHistorial).text =
                 listadoHitorial[position].numeroPersonas_historial.toString() + " personas"
             return rowView

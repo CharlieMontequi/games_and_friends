@@ -38,23 +38,24 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="320dp"
-        android:layout_height="182dp"
+        android:layout_width="315dp"
+        android:layout_height="212dp"
         android:layout_marginStart="29dp"
         android:layout_marginTop="92dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="106dp"
-        android:text="Games\n&amp; Friends"
+        android:gravity="center"
+        android:text="Games\n&amp; \nFriends"
         android:textColor="#016C76"
         android:textColorLink="#016C76"
-        android:textSize="75sp"
+        android:textSize="60sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="@+id/imageView2"
-        app:layout_constraintHorizontal_bias="0.13"
+        app:layout_constraintHorizontal_bias="0.107"
         app:layout_constraintStart_toStartOf="@+id/imageView2"
         app:layout_constraintTop_toTopOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.4" />
 
     <EditText
         android:id="@+id/etxt_correo_inicioSesion"

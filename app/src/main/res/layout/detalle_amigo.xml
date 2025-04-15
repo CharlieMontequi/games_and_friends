@@ -78,13 +78,13 @@
         android:text="Último juego jugado:"
         android:textColor="@color/verde"
         android:textSize="28dp"
-        app:layout_constraintEnd_toEndOf="@+id/listView"
+        app:layout_constraintEnd_toEndOf="@+id/listView_juegosAmigoDetalle"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/listView"
-        app:layout_constraintTop_toBottomOf="@+id/listView" />
+        app:layout_constraintStart_toStartOf="@+id/listView_juegosAmigoDetalle"
+        app:layout_constraintTop_toBottomOf="@+id/listView_juegosAmigoDetalle" />
 
     <ListView
-        android:id="@+id/listView"
+        android:id="@+id/listView_juegosAmigoDetalle"
         android:layout_width="367dp"
         android:layout_height="329dp"
         android:layout_marginTop="12dp"
@@ -107,7 +107,7 @@
         app:layout_constraintEnd_toEndOf="@+id/textView9"
         app:layout_constraintHorizontal_bias="0.047"
         app:layout_constraintStart_toStartOf="@+id/textView9"
-        app:layout_constraintTop_toBottomOf="@+id/listView" />
+        app:layout_constraintTop_toBottomOf="@+id/listView_juegosAmigoDetalle" />
 
     <Button
         android:id="@+id/b_add_amigo"

@@ -15,7 +15,7 @@
         app:layout_constraintHorizontal_bias="0.052"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.025"
+        app:layout_constraintVertical_bias="0.032"
         app:srcCompat="@drawable/intento_hexagono_funcional3_foreground" />
 
     <TextView
@@ -23,68 +23,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
-        android:text="Juego de mesa "
+        android:text="juego"
         android:textColor="#F6F5F1"
-        android:textSize="34sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.027"
         app:layout_constraintStart_toEndOf="@+id/imV_foto_juego_item_listado_juegos"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageView10"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="123dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="147dp"
-        app:layout_constraintEnd_toEndOf="@+id/txt_nombreJuego_item_listado_juego"
-        app:layout_constraintHorizontal_bias="0.012"
-        app:layout_constraintStart_toStartOf="@+id/imV_foto_juego_item_listado_juegos"
-        app:layout_constraintTop_toBottomOf="@+id/txt_nombreJuego_item_listado_juego"
-        app:srcCompat="@drawable/personas" />
 
     <TextView
         android:id="@+id/txt_nJugadores_item_listado_juegos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
+        android:layout_marginStart="1dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="162dp"
+        android:layout_marginEnd="12dp"
         android:text="1-5 jgs"
         android:textColor="#F6F5F1"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/txt_nombreJuego_item_listado_juego"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/imageView10"
+        app:layout_constraintStart_toStartOf="@+id/txt_nombreJuego_item_listado_juego"
         app:layout_constraintTop_toBottomOf="@+id/txt_nombreJuego_item_listado_juego" />
-
-    <ImageView
-        android:id="@+id/imageView11"
-        android:layout_width="30sp"
-        android:layout_height="30sp"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="105dp"
-        app:layout_constraintEnd_toEndOf="@+id/txt_nombreJuego_item_listado_juego"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/txt_nJugadores_item_listado_juegos"
-        app:layout_constraintTop_toBottomOf="@+id/txt_nombreJuego_item_listado_juego"
-        app:srcCompat="@android:drawable/presence_away" />
 
     <TextView
         android:id="@+id/txt_tiempo_item_listado_jeugos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="66dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="72dp"
         android:text="120min"
         android:textColor="#F6F5F1"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/txt_nombreJuego_item_listado_juego"
-        app:layout_constraintStart_toEndOf="@+id/imageView11"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txt_nJugadores_item_listado_juegos"
         app:layout_constraintTop_toBottomOf="@+id/txt_nombreJuego_item_listado_juego" />
 </androidx.constraintlayout.widget.ConstraintLayout>

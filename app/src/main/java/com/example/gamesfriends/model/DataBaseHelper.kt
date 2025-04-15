@@ -14,6 +14,7 @@ import com.example.gamesfriends.model.datos.JuegoUsado
 import com.example.gamesfriends.model.datos.Mecanica
 import com.example.gamesfriends.model.datos.MecanicaEnJuego
 import com.example.gamesfriends.model.datos.Usuario
+import kotlinx.coroutines.coroutineScope
 import java.text.SimpleDateFormat
 import java.time.Duration
 import java.time.LocalDate
@@ -565,23 +566,31 @@ data class DataBaseHelper(var contexto: Context) :
         return todasPartidasHistorial
     }
 
-    fun listadoTodosJuegosPartida(fk_idHistorial: Int): MutableList<JuegoUsado> {
-        val todosJuegosUsados = mutableListOf<JuegoUsado>()
+    fun listadoTodosJuegosPartidaMostrandoJuego(fk_idHistorial: Int): MutableList<Juego> {
+        val todosJuegosUsados = mutableListOf<Juego>()
         val db = this.writableDatabase
-        val sentencia = "SELECT * FROM $TABLE_JUEGOS_USADOS WHERE $KEY_FK_HISTORIAL =?"
+        val sentencia =
+            "SELECT * FROM $TABLE_JUEGOS WHERE $KEY_ID_JUEGO IN (SELECT $KEY_FK_JUEGO_JUEGOUSADO FROM $TABLE_JUEGOS_USADOS WHERE $KEY_FK_HISTORIAL =?)"
         var cursor: Cursor?
         cursor = db.rawQuery(sentencia, arrayOf(fk_idHistorial.toString()))
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                val cursorIDJuegoUsado = cursor.getColumnIndex(KEY_ID_JUEGO_USADO)
-                val cursorFKjuego = cursor.getColumnIndex(KEY_FK_JUEGO_JUEGOUSADO)
+                val idCur = cursor.getColumnIndex(KEY_ID_JUEGO)
+                val nombreCur = cursor.getColumnIndex(KEY_NOMBRE_JUEGO)
+                val descripcionCur = cursor.getColumnIndex(KEY_DESCIPRCION_JUEGO)
+                val minJugadorCur = cursor.getColumnIndex(KEY_NUMERO_JUGADORES_MINIMO)
+                val maxJugadorCur = cursor.getColumnIndex(KEY_NUMERO_JUGADORES_MAXIMO)
+                val duracionCur = cursor.getColumnIndex(KEY_DURACION)
 
-                val juegoUsaod = JuegoUsado(
-                    idJuegoUsado = cursor.getInt(cursorIDJuegoUsado),
-                    fkJuegoJuegousado = cursor.getInt(cursorFKjuego),
-                    fkHistorialJuegousado = fk_idHistorial
+                val juego = Juego(
+                    idJuego = cursor.getInt(idCur),
+                    nombreJuego = cursor.getString(nombreCur),
+                    descipcionJuegp = cursor.getString(descripcionCur),
+                    minimoJugadoresJuego = cursor.getInt(minJugadorCur),
+                    maximoJugadoresJuego = cursor.getInt(maxJugadorCur),
+                    duracionJuego = cursor.getInt(duracionCur)
                 )
-                todosJuegosUsados.add((juegoUsaod))
+                todosJuegosUsados.add(juego)
             } while (cursor.moveToNext())
         }
         cursor.close()
@@ -589,25 +598,36 @@ data class DataBaseHelper(var contexto: Context) :
         return todosJuegosUsados
     }
 
-    fun listadoTodosAmigos(fkAmigo1: Int): MutableList<Amigo> {
-        val todosAmigos = mutableListOf<Amigo>()
+    fun listadoTodosAmigosObteniendoElAmigo(fkAmigo1: Int): MutableList<Usuario> {
+        val todosAmigos = mutableListOf<Usuario>()
         val db = this.readableDatabase
-        val sentencia = "SELECT * FROM $TABLE_AMIGOS WHERE $KEY_FK_AMIGO1 =? OR $KEY_FK_AMIGO2 = ?"
-        var cursor: Cursor?
-        cursor = db.rawQuery(sentencia, arrayOf(fkAmigo1.toString(), fkAmigo1.toString()))
+
+        val sentencia = """
+        SELECT u.*
+        FROM $TABLE_USUARIOS u
+        INNER JOIN $TABLE_AMIGOS a 
+        ON (u.$KEY_ID_USUARIO = a.$KEY_FK_AMIGO1 AND a.$KEY_FK_AMIGO2 = ?) 
+        OR (u.$KEY_ID_USUARIO = a.$KEY_FK_AMIGO2 AND a.$KEY_FK_AMIGO1 = ?)
+    """.trimIndent()
+
+        val cursor = db.rawQuery(sentencia, arrayOf(fkAmigo1.toString(), fkAmigo1.toString()))
+
         if (cursor.moveToFirst()) {
             do {
-                val curIDAmigo = cursor.getColumnIndex(KEY_ID_AMIGOS)
-                val curFKamigo2 = cursor.getColumnIndex(KEY_FK_AMIGO2)
-                val amigo = Amigo(
-                    id_amigos = cursor.getInt(curIDAmigo),
-                    fk_amigo1 = fkAmigo1,
-                    fk_amigo2 = cursor.getInt(curFKamigo2)
-                )
-                todosAmigos.add(amigo)
+                val id = cursor.getInt(cursor.getColumnIndexOrThrow(KEY_ID_USUARIO))
+                val nombre = cursor.getString(cursor.getColumnIndexOrThrow(KEY_NOMBRE_USUARIO))
+                // Agrega más campos si tienes más columnas
 
+                val usuario = Usuario(
+                    id_usuario = id,
+                    nombre_usuario = nombre,
+                    correo_usuario = null,
+                    contrasenia_usuario = null
+                )
+                todosAmigos.add(usuario)
             } while (cursor.moveToNext())
         }
+
         cursor.close()
         db.close()
         return todosAmigos
@@ -833,6 +853,17 @@ data class DataBaseHelper(var contexto: Context) :
         cursor.close()
         db.close()
         return listaJuegos
+    }
+
+    ///////////////////////////COMPROBAR SI HAY REGISTROS//////////////////////////////
+    fun tienesAmigos(idUsuario: Int): Boolean {
+        val db = this.readableDatabase
+        val sentencia =
+            "SELECT 1 FROM $TABLE_AMIGOS WHERE $KEY_FK_AMIGO1 = ? OR $KEY_FK_AMIGO2 = ? LIMIT 1"
+        val cursor = db.rawQuery(sentencia, arrayOf(idUsuario.toString(), idUsuario.toString()))
+        val tienes = cursor.moveToFirst()
+        cursor.close()
+        return tienes
     }
 
     ///////////////////////////FECHAS GESTOR///////////////////////////////////////////

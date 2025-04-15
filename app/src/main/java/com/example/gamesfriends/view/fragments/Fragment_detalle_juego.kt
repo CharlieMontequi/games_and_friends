@@ -54,6 +54,7 @@ class Fragment_detalle_juego : Fragment() {
 
         if (juegoEnColeccion != null) {
             txtDescripcion.text = juego!!.descipcionJuegp
+            txtVecesJugado.movementMethod = android.text.method.ScrollingMovementMethod()
             txtVecesJugado.text = juegoEnColeccion!!.vecesJugado_coleccion.toString()
             txtUltimaVez.text = juegoEnColeccion!!.ultimaVezJugado_coleccion.toString()
             txtMecanicas.text = mecanicasEnjuego.joinToString(", ")

@@ -21,7 +21,7 @@
         android:id="@+id/view4"
         android:layout_width="390dp"
         android:layout_height="3dp"
-        android:layout_marginTop="240dp"
+        android:layout_marginTop="172dp"
         android:background="@color/verde"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.476"
@@ -42,28 +42,43 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/txt_fechaHistorial_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="220dp"
+        android:text="29-4-1998"
+        android:textColor="@color/verde"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/view"
+        app:layout_constraintStart_toStartOf="@+id/view"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
+
     <ImageView
         android:id="@+id/imageView7"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="338dp"
+        app:layout_constraintEnd_toEndOf="@+id/view"
         app:layout_constraintStart_toStartOf="@+id/view"
         app:layout_constraintTop_toBottomOf="@+id/view"
         app:srcCompat="@android:drawable/ic_menu_my_calendar" />
 
     <TextView
-        android:id="@+id/txt_fechaHistorial_fragment"
+        android:id="@+id/txt_numeroParticpantes_fragmentDetalleHistorial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="68dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="180dp"
-        android:text="29-4-1998"
+        android:layout_marginStart="252dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="20dp"
+        android:text="5 personas"
         android:textColor="@color/verde"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/view"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/view"
         app:layout_constraintTop_toBottomOf="@+id/view" />
 
@@ -71,35 +86,22 @@
         android:id="@+id/imageView8"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginStart="193dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="157dp"
         android:rotation="90"
-        app:layout_constraintEnd_toEndOf="@+id/imageView7"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/imageView7"
-        app:layout_constraintTop_toBottomOf="@+id/imageView7"
+        app:layout_constraintEnd_toEndOf="@+id/view"
+        app:layout_constraintStart_toStartOf="@+id/view"
+        app:layout_constraintTop_toBottomOf="@+id/view"
         app:srcCompat="@drawable/intento_hexagono_funcional2_foreground" />
-
-    <TextView
-        android:id="@+id/textView16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="10dp"
-        android:text="5 personas"
-        android:textColor="@color/verde"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/txt_fechaHistorial_fragment"
-        app:layout_constraintHorizontal_bias="0.633"
-        app:layout_constraintStart_toStartOf="@+id/txt_fechaHistorial_fragment"
-        app:layout_constraintTop_toBottomOf="@+id/txt_fechaHistorial_fragment" />
 
     <ListView
         android:id="@+id/listView_historial_detalle_fragment"
-        android:layout_width="409dp"
-        android:layout_height="486dp"
-        android:layout_marginTop="1dp"
+        android:layout_width="386dp"
+        android:layout_height="528dp"
+        android:layout_marginTop="80dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view4" />
+        app:layout_constraintTop_toBottomOf="@+id/view" />
 </androidx.constraintlayout.widget.ConstraintLayout>

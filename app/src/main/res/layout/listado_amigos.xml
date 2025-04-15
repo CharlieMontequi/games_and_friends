@@ -47,25 +47,28 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.023" />
 
-    <SearchView
+
+    <ListView
+        android:id="@+id/listView_listadoAmigos_lista_amigos"
+        android:layout_width="361dp"
+        android:layout_height="571dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="188dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/searchV_nombreAmigos_listado_amigos"
+        app:layout_constraintStart_toStartOf="@+id/searchV_nombreAmigos_listado_amigos"
+        app:layout_constraintTop_toBottomOf="@+id/searchV_nombreAmigos_listado_amigos"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.appcompat.widget.SearchView
         android:id="@+id/searchV_nombreAmigos_listado_amigos"
-        android:layout_width="380dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="9dp"
-        android:layout_marginEnd="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="73dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="73dp"
         android:background="@drawable/edit_text_azul"
         app:layout_constraintEnd_toEndOf="@+id/toolbar_listado_amigos"
         app:layout_constraintStart_toStartOf="@+id/toolbar_listado_amigos"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_listado_amigos" />
-
-    <ListView
-        android:id="@+id/listView_listadoAmigos_lista_amigos"
-        android:layout_width="408dp"
-        android:layout_height="576dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/searchV_nombreAmigos_listado_amigos"
-        app:layout_constraintStart_toStartOf="@+id/searchV_nombreAmigos_listado_amigos"
-        app:layout_constraintTop_toBottomOf="@+id/searchV_nombreAmigos_listado_amigos" />
 </androidx.constraintlayout.widget.ConstraintLayout>

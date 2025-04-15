@@ -83,7 +83,7 @@ class Mis_juegos : AppCompatActivity() {
             rowView.findViewById<TextView>(R.id.txt_nombreJuego_item_listado_juego).text =
                 listadoJuegos[position].nombreJuego
             rowView.findViewById<TextView>(R.id.txt_nJugadores_item_listado_juegos).text =
-                "${listadoJuegos[position].minimoJugadoresJuego}-${listadoJuegos[position].maximoJugadoresJuego}"
+                "${listadoJuegos[position].minimoJugadoresJuego}-${listadoJuegos[position].maximoJugadoresJuego} jgs"
             rowView.findViewById<TextView>(R.id.txt_tiempo_item_listado_jeugos).text =
                 listadoJuegos[position].duracionJuego.toString() + "min"
             return rowView

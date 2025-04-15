@@ -10,9 +10,15 @@ class Detalle_historial  : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.detalle_historial)
 
-        val fragmnetTitulo = Fragment_historial_cuerpo()
+        val idHistorial = intent.getIntExtra("ID_HISTORIAL",0)
+
+        val bundleIJuego = Bundle()
+        bundleIJuego.putInt("ID_HISTORIAL_DETALLE", idHistorial!!)
+
+        val fragmnetDetalleHistorial = Fragment_historial_cuerpo()
+        fragmnetDetalleHistorial.arguments=bundleIJuego
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_detalle_historial_cuerpo, fragmnetTitulo)
+            .replace(R.id.fragment_detalle_historial_cuerpo, fragmnetDetalleHistorial)
             .commit()
 
     }

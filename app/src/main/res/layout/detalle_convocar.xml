@@ -50,81 +50,80 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/etxt_nombrePartida"
         android:layout_width="364dp"
         android:layout_height="52dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="31dp"
-        android:ems="10"
-        android:inputType="text"
         android:background="@drawable/edit_text_azul"
-        android:hint="Nombre de la sesión"
+        android:ems="10"
         android:gravity="center"
+        android:hint="Nombre de la sesión"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="@+id/toolbar6"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/toolbar6"
         app:layout_constraintTop_toBottomOf="@+id/toolbar6" />
-
-    <CalendarView
-        android:id="@+id/calendarView"
-        android:layout_width="179dp"
-        android:layout_height="162dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="180dp"
-        app:layout_constraintEnd_toEndOf="@+id/editTextText"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/editTextText"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
 
     <Button
         android:id="@+id/b_proponer_juegos_convocar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="19dp"
+        android:layout_marginTop="10dp"
         android:text="Proponer juegos"
-        app:layout_constraintEnd_toEndOf="@+id/textView17"
-        app:layout_constraintStart_toStartOf="@+id/textView17"
-        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+        app:layout_constraintEnd_toEndOf="@+id/txt_fechaMarcada"
+        app:layout_constraintTop_toBottomOf="@+id/txt_fechaMarcada" />
 
     <Button
         android:id="@+id/b_compartir_invitacion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="148dp"
-        android:layout_marginTop="27dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="148dp"
         android:text="Inivitar"
-        app:layout_constraintEnd_toEndOf="@+id/listView2"
-        app:layout_constraintStart_toStartOf="@+id/listView2"
-        app:layout_constraintTop_toBottomOf="@+id/listView2" />
+        app:layout_constraintEnd_toEndOf="@+id/listV_juegosAlllevar"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/listV_juegosAlllevar"
+        app:layout_constraintTop_toBottomOf="@+id/listV_juegosAlllevar" />
 
     <ListView
-        android:id="@+id/listView2"
-        android:layout_width="387dp"
-        android:layout_height="265dp"
-        android:layout_marginTop="200dp"
+        android:id="@+id/listV_juegosAlllevar"
+        android:layout_width="376dp"
+        android:layout_height="380dp"
+        android:layout_marginTop="124dp"
         android:layout_marginEnd="2dp"
         android:background="@drawable/edit_text_azul"
         app:layout_constraintEnd_toEndOf="@+id/toolbar6"
-        app:layout_constraintHorizontal_bias="0.545"
+        app:layout_constraintHorizontal_bias="0.513"
         app:layout_constraintStart_toStartOf="@+id/toolbar6"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
+        app:layout_constraintTop_toBottomOf="@+id/etxt_nombrePartida" />
 
     <TextView
-        android:id="@+id/textView17"
+        android:id="@+id/txt_fechaMarcada"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="225dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="80dp"
-        android:text="23-7-1001"
+        android:layout_marginStart="184dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="53dp"
+        android:text="Sin determinar"
         android:textColor="@color/verde"
         android:textSize="28dp"
-        app:layout_constraintEnd_toEndOf="@+id/editTextText"
-        app:layout_constraintHorizontal_bias="0.044"
-        app:layout_constraintStart_toStartOf="@+id/editTextText"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
+        app:layout_constraintEnd_toEndOf="@+id/etxt_nombrePartida"
+        app:layout_constraintStart_toStartOf="@+id/etxt_nombrePartida"
+        app:layout_constraintTop_toBottomOf="@+id/etxt_nombrePartida" />
+
+    <ImageButton
+        android:id="@+id/imB_calendario"
+        android:layout_width="115dp"
+        android:layout_height="102dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="237dp"
+        app:layout_constraintEnd_toEndOf="@+id/etxt_nombrePartida"
+        app:layout_constraintStart_toStartOf="@+id/etxt_nombrePartida"
+        app:layout_constraintTop_toBottomOf="@+id/etxt_nombrePartida"
+        app:srcCompat="@android:drawable/ic_menu_my_calendar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
