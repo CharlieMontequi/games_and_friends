@@ -14,11 +14,12 @@ import com.example.gamesfriends.model.datos.JuegoUsado
 import com.example.gamesfriends.model.datos.Mecanica
 import com.example.gamesfriends.model.datos.MecanicaEnJuego
 import com.example.gamesfriends.model.datos.Usuario
-import kotlinx.coroutines.coroutineScope
 import java.text.SimpleDateFormat
-import java.time.Duration
 import java.time.LocalDate
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import java.util.Date
+import java.util.Locale
 
 data class DataBaseHelper(var contexto: Context) :
     SQLiteOpenHelper(contexto, DATABASE, null, DATABASE_VERSION) {
@@ -419,6 +420,18 @@ data class DataBaseHelper(var contexto: Context) :
         )
     }
 
+    fun actualizarObservaciones(fkUsuario: Int, fkJuego: Int, observacioens: String) {
+        val db = this.writableDatabase
+        val datos = ContentValues()
+        datos.put(KEY_ANOTACION_PERSONAL, observacioens)
+        db.update(
+            TABLE_COLECCION,
+            datos,
+            "$KEY_FK_USUARIO_TIENE_JUEGO =? AND $KEY_FK_JUEGO_TIENE=?",
+            arrayOf(fkUsuario.toString(), fkJuego.toString())
+        )
+    }
+
     ///////////////////////////INICAR SESIÓN///////////////////////////////////////////
     fun incioSesion(correo: String, contrasenia: String): Int {
         var idUsuario = -8
@@ -709,12 +722,13 @@ data class DataBaseHelper(var contexto: Context) :
         return usuario
     }
 
-    fun detalleJuegoTiene(idJuegoTiene: Int): Coleccion? {
+    fun detalleJuegoTiene(fkPropietario: Int, fkJuego: Int): Coleccion? {
         var juegoTiene: Coleccion? = null
         val db = this.readableDatabase
-        val sententencia = "SELECT * FROM $TABLE_COLECCION WHERE $KEY_FK_USUARIO_TIENE_JUEGO =?"
+        val sententencia =
+            "SELECT * FROM $TABLE_COLECCION WHERE $KEY_FK_USUARIO_TIENE_JUEGO =? AND $KEY_FK_JUEGO_TIENE=?"
         var cursor: Cursor?
-        cursor = db.rawQuery(sententencia, arrayOf(idJuegoTiene.toString()))
+        cursor = db.rawQuery(sententencia, arrayOf(fkPropietario.toString(), fkJuego.toString()))
         if (cursor.moveToFirst()) {
             val idColeccionCursor = cursor.getColumnIndex(KEY_ID_COLECCION)
             val precioCompraCursor = cursor.getColumnIndex(KEY_PRECIO_COMPRA)
@@ -730,7 +744,7 @@ data class DataBaseHelper(var contexto: Context) :
                 ultimaVezJugado_coleccion = deTextoAFecha(cursor.getString(ultimaVezCursor)),
                 anotacionPersonal_coleccion = cursor.getString(anotacionesCurosr),
                 fk_usuario_tiene_coleccion = cursor.getInt(fkUsiarioCursor),
-                fk_juego_en_coleccion = idJuegoTiene
+                fk_juego_en_coleccion = fkPropietario
             )
         }
         cursor.close()
@@ -898,9 +912,10 @@ data class DataBaseHelper(var contexto: Context) :
         return tienes
     }
 
-    fun comprobarJuegoEnColeccion(fkJuego:Int, fkUsuario:Int):Boolean{
+    fun comprobarJuegoEnColeccion(fkJuego: Int, fkUsuario: Int): Boolean {
         val db = this.readableDatabase
-        val query = "SELECT * FROM $TABLE_COLECCION WHERE $KEY_FK_USUARIO_TIENE_JUEGO = ? AND $KEY_FK_JUEGO_TIENE = ?"
+        val query =
+            "SELECT * FROM $TABLE_COLECCION WHERE $KEY_FK_USUARIO_TIENE_JUEGO = ? AND $KEY_FK_JUEGO_TIENE = ?"
         val cursor = db.rawQuery(query, arrayOf(fkUsuario.toString(), fkJuego.toString()))
         val existe = cursor.moveToFirst()
         cursor.close()
@@ -910,6 +925,7 @@ data class DataBaseHelper(var contexto: Context) :
 
     ///////////////////////////FECHAS GESTOR///////////////////////////////////////////
     // conversor de fechas
+    /*
     fun deFechaATexto(fecha: LocalDate?): String {
         var cuando = "NUNCA"
         if (fecha != null) {
@@ -920,8 +936,7 @@ data class DataBaseHelper(var contexto: Context) :
         }
 
     }
-
-    fun deTextoAFecha(textoFechado: String): LocalDate? {
+     fun deTextoAFecha(textoFechado: String): LocalDate? {
         return try {
             if (textoFechado != "NUNCA") {
                 val formatoFecha = DateTimeFormatter.ofPattern("dd-MM-yyyy")
@@ -934,6 +949,28 @@ data class DataBaseHelper(var contexto: Context) :
             LocalDate.of(0, 1, 1) // También devolvemos "00-00-0000" si hay error al parsear
         }
     }
+    */
+    fun deFechaATexto(localDate: LocalDate?): String {
+        if (localDate == null) return "Nunca"
+        val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant())
+        return formatter.format(date)
+    }
+
+    fun deTextoAFecha(textoFechado: String): LocalDate? {
+        return try {
+            if (textoFechado != "Nunca") {
+                val formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+                LocalDate.parse(textoFechado, formatoFecha)
+            } else {
+                null // Equivalente a no haber jugado nunca, coherente con la otra función
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
 
     ///////////////////////////DATOS MINIMOS///////////////////////////////////////////
     fun datosMninimos() {

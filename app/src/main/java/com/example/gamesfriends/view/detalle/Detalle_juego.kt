@@ -9,13 +9,16 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.ViewModelProvider
 import com.example.gamesfriends.R
 import com.example.gamesfriends.model.DataBaseHelper
 import com.example.gamesfriends.model.datos.Coleccion
-import com.example.gamesfriends.view.Juego_nuevo
 import com.example.gamesfriends.view.MainActivity
 import com.example.gamesfriends.view.fragments.Fragment_detalle_juego
 import com.example.gamesfriends.view.fragments.Fragment_observaciones_personales_juego
+import com.example.gamesfriends.viewModel.DetalleJuegoViewModel
+import com.example.gamesfriends.viewModel.DialogAgregarJuegoVerDos
+import com.example.gamesfriends.viewModel.DialogAgregarJuego
 import com.example.gamesfriends.viewModel.Gestor
 
 class Detalle_juego : AppCompatActivity() {
@@ -24,6 +27,10 @@ class Detalle_juego : AppCompatActivity() {
     private lateinit var gestor: Gestor
     private var idUsuario: Int = 0
     private var idJuego = 0
+
+    //////////////////////////////////////////////////////
+    private lateinit var detalleViewModel: DetalleJuegoViewModel
+//////////////////////////////////////////////////////
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,10 +46,22 @@ class Detalle_juego : AppCompatActivity() {
 
         dbHelper = DataBaseHelper(this)
 
+//////////////////////////////////////////////////////
+        detalleViewModel = ViewModelProvider(this)[DetalleJuegoViewModel::class.java]
+//////////////////////////////////////////////////////
+
         val juego = dbHelper.detalleJuego(idJuego = idJuego)
         val txt_nombreJuegoDetalle = findViewById<TextView>(R.id.txt_nombre_juego_detalle_juego)
         val txt_NJugadores = findViewById<TextView>(R.id.txt_nJugadores_detalle_juego)
         val txt_duracion = findViewById<TextView>(R.id.txt_tiempoJuego_detalle_juego)
+
+        // Consultar si el juego está en la colección//////////////////////////////////////////////////////
+        val estaEnColeccion = dbHelper.comprobarJuegoEnColeccion(idJuego, idUsuario)
+        val datosColeccion =
+            if (estaEnColeccion) dbHelper.detalleJuegoTiene(idUsuario, idJuego) else null
+        detalleViewModel.actualizarEstado(estaEnColeccion, datosColeccion)
+        //////////////////////////////////////////////////////
+
         if (juego != null) {
             txt_nombreJuegoDetalle.text = juego.nombreJuego
             txt_NJugadores.text =
@@ -60,6 +79,7 @@ class Detalle_juego : AppCompatActivity() {
 
 
             val fragmentObservacionesPersonales = Fragment_observaciones_personales_juego()
+            fragmentObservacionesPersonales.arguments = bundleIJuego
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_observaciones_deatlleJuego, fragmentObservacionesPersonales)
                 .commit()
@@ -69,21 +89,17 @@ class Detalle_juego : AppCompatActivity() {
 
     // TOOLBAR
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inlfater: MenuInflater = menuInflater
-        inlfater.inflate(R.menu.menu_toolbar_detalle_juego, menu)
-
-        val tieneJuego = dbHelper.comprobarJuegoEnColeccion(idJuego, idUsuario)
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu_toolbar_detalle_juego, menu)
 
         val itemAddJuego = menu?.findItem(R.id.item_juegol_addJuego_coleccion)
         val itemBorrarJuego = menu?.findItem(R.id.item_juego_eliminarJuego_coleccion)
 
-        if(tieneJuego){
-            itemBorrarJuego?.isVisible= true
-            itemAddJuego?.isVisible=false
-        }else{
-            itemBorrarJuego?.isVisible= false
-            itemAddJuego?.isVisible=true
+        detalleViewModel.estaEnColeccion.value?.let { enColeccion ->
+            itemBorrarJuego?.isVisible = enColeccion
+            itemAddJuego?.isVisible = !enColeccion
         }
+
 
         return true
     }
@@ -91,12 +107,8 @@ class Detalle_juego : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.item_juegol_addJuego_coleccion -> {
-                //falta mostrar el dialog para preciop y veces jugado
-                val veces = 0
-                val fecha = null
-                val precio = 0.0
-                dbHelper.crearJuegoEnPropiedad(
-                    Coleccion(
+                DialogAgregarJuegoVerDos(this) { precio, veces, fecha ->
+                    val nuevoRegistro = Coleccion(
                         id_coleccion = null,
                         fk_usuario_tiene_coleccion = idUsuario,
                         fk_juego_en_coleccion = idJuego,
@@ -105,21 +117,22 @@ class Detalle_juego : AppCompatActivity() {
                         ultimaVezJugado_coleccion = fecha,
                         anotacionPersonal_coleccion = null
                     )
-                )
-                Toast.makeText(
-                    this,
-                    "Juego añadido a la colección",
-                    Toast.LENGTH_LONG
-                ).show()
+
+                    dbHelper.crearJuegoEnPropiedad(nuevoRegistro)
+                    detalleViewModel.actualizarEstado(true, nuevoRegistro)
+
+                    // Mostrar mensaje y actualizar menú dentro del callback
+                    Toast.makeText(this, "Juego añadido a la colección", Toast.LENGTH_LONG).show()
+                    invalidateOptionsMenu()
+                }.mostrar()
                 true
             }
-            R.id.item_juego_eliminarJuego_coleccion->{
+
+            R.id.item_juego_eliminarJuego_coleccion -> {
                 dbHelper.borrarJuegoDeJuegosTiene(idJuego, idUsuario)
-                Toast.makeText(
-                    this,
-                    "Juego borrado de la colección.",
-                    Toast.LENGTH_LONG
-                ).show()
+                detalleViewModel.actualizarEstado(false, null)
+                Toast.makeText(this, "Juego eliminado de la colección", Toast.LENGTH_LONG).show()
+                invalidateOptionsMenu()
                 true
             }
 

@@ -54,7 +54,7 @@
         android:layout_marginStart="121dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="172dp"
-        android:background="@drawable/edit_text_azul"
+        android:background="@drawable/fondo_con_borde_verde"
         app:layout_constraintEnd_toEndOf="@+id/toolbar_listadoJuegos"
         app:layout_constraintHorizontal_bias="0.399"
         app:layout_constraintStart_toStartOf="@+id/toolbar_listadoJuegos"

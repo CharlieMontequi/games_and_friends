@@ -9,8 +9,10 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.gamesfriends.R
 import com.example.gamesfriends.model.DataBaseHelper
+import com.example.gamesfriends.viewModel.DetalleJuegoViewModel
 import com.example.gamesfriends.viewModel.Gestor
 
 class Fragment_observaciones_personales_juego : Fragment() {
@@ -33,33 +35,34 @@ class Fragment_observaciones_personales_juego : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState) // Llamada al método de la superclase.
+        super.onViewCreated(view, savedInstanceState)
 
-        val gestor = Gestor(requireContext())
-        val idUsuario = gestor.obetenerIdRegistro()
+        txtObservacioens = view.findViewById(R.id.etxt_observacionesfragment)
+        imbGuardar = view.findViewById(R.id.imB_guardar)
+        imbEditar = view.findViewById(R.id.imB_editar)
 
-        val dbHelper = DataBaseHelper(requireContext())
-        var juegoEnColeccion = dbHelper.detalleJuegoTiene(idUsuario!!)
+        val detalleViewModel = ViewModelProvider(requireActivity())[DetalleJuegoViewModel::class.java]
 
-        txtObservacioens = view.findViewById<EditText>(R.id.etxt_observacionesfragment)
-        imbGuardar = view.findViewById<ImageButton>(R.id.imB_guardar)
-        imbEditar = view.findViewById<ImageButton>(R.id.imB_editar)
-
-        if (juegoEnColeccion != null) {
-            txtObservacioens.setText(juegoEnColeccion.anotacionPersonal_coleccion)
-
-            imbEditar.setOnClickListener { inicarEdicion() }
-            imbGuardar.setOnClickListener {
-                soloVer()
-                juegoEnColeccion.anotacionPersonal_coleccion = txtObservacioens.text.toString()
+        detalleViewModel.estaEnColeccion.observe(viewLifecycleOwner) { enColeccion ->
+            if (enColeccion) {
+                val datos = detalleViewModel.datosColeccion.value
+                txtObservacioens.setText(datos?.anotacionPersonal_coleccion ?: "")
+                imbEditar.setOnClickListener { inicarEdicion() }
+                imbGuardar.setOnClickListener {
+                    soloVer()
+                    val nuevoTexto = txtObservacioens.text.toString()
+                    // Puedes actualizarlo en BD si quieres aquí
+                    val gestor = Gestor(requireContext())
+                    val idUsuario = gestor.obetenerIdRegistro()
+                    val dbHelper = DataBaseHelper(requireContext())
+                    val idJuego = arguments?.getInt("ID_JUEGO_DETALLE") ?: return@setOnClickListener
+                    dbHelper.actualizarObservaciones(idUsuario, idJuego, nuevoTexto)
+                }
+            } else {
+                txtObservacioens.setText("Este juego no forma parte de tu colección. No puedes añadir observaciones.")
+                juegoSinPropiedad()
             }
-
-        } else {
-            txtObservacioens.setText("Este juego no forma parte de tu colección. No puedes añadir observaciones. \n Añadelo a la colección para poder escribir una observación.")
-            juegoSinPropiedad()
         }
-
-
     }
 
     fun inicarEdicion() {

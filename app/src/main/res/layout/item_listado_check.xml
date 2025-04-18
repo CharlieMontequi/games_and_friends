@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/edit_text_azul">
+    android:background="@drawable/fondo_con_borde_verde">
 
     <CheckBox
         android:id="@+id/checkBox_marcador_listadoitem"

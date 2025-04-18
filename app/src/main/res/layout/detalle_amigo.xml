@@ -92,14 +92,14 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textView8"
         app:layout_constraintTop_toBottomOf="@+id/textView8"
-        android:background="@drawable/edit_text_azul"/>
+        android:background="@drawable/fondo_con_borde_verde"/>
 
     <TextView
         android:id="@+id/txt_ultimoJuegoJugado_amigoDetalle"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginTop="76dp"
-        android:background="@drawable/edit_text_azul"
+        android:background="@drawable/fondo_con_borde_verde"
         android:gravity="center"
         android:scrollbarAlwaysDrawHorizontalTrack="true"
         android:text="el teo, tu te agachas y yo te pego"
