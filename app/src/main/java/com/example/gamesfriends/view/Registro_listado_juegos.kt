@@ -45,6 +45,7 @@ class Registro_listado_juegos : AppCompatActivity() {
         bGuardarRegistrar.setOnClickListener {
             if (usuarioEnRegristro != null) {
                 dbHelper.crearUsuario(usuarioEnRegristro)
+
             }
 
            // dbHelper.crearJuegoEnPropiedad()

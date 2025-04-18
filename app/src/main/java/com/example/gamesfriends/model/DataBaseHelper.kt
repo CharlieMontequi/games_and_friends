@@ -249,22 +249,17 @@ data class DataBaseHelper(var contexto: Context) :
         }
     }
 
-    fun crearJuego(juego: Juego) {
+    fun crearJuego(juego: Juego): Int {
         val db = this.writableDatabase
         val datos = ContentValues()
         datos.put(KEY_NOMBRE_JUEGO, juego.nombreJuego)
         datos.put(KEY_DESCIPRCION_JUEGO, juego.descipcionJuegp)
-        datos.put(
-            KEY_DURACION, juego.duracionJuego
-        )
-        datos.put(
-            KEY_NUMERO_JUGADORES_MINIMO, juego.minimoJugadoresJuego
-        )
-        datos.put(
-            KEY_NUMERO_JUGADORES_MAXIMO, juego.maximoJugadoresJuego
-        )
+        datos.put(KEY_DURACION, juego.duracionJuego)
+        datos.put(KEY_NUMERO_JUGADORES_MINIMO, juego.minimoJugadoresJuego)
+        datos.put(KEY_NUMERO_JUGADORES_MAXIMO, juego.maximoJugadoresJuego)
 
-        db.insert(TABLE_JUEGOS, null, datos)
+        val idJuego = db.insert(TABLE_JUEGOS, null, datos)
+        return idJuego.toInt()
     }
 
     fun crearMecancia(mecanica: Mecanica) {

@@ -1,13 +1,147 @@
 package com.example.gamesfriends.view.detalle
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.transition.Visibility
 import com.example.gamesfriends.R
+import com.example.gamesfriends.model.DataBaseHelper
+import com.example.gamesfriends.model.datos.Coleccion
+import com.example.gamesfriends.model.datos.Usuario
+import com.example.gamesfriends.view.MainActivity
+import com.example.gamesfriends.viewModel.DialogAgregarJuegoVerDos
+import com.example.gamesfriends.viewModel.Gestor
 
-class Detalle_perfil  : AppCompatActivity() {
+class Detalle_perfil : AppCompatActivity() {
+
+    private lateinit var dbHelper: DataBaseHelper
+    private lateinit var gestor: Gestor
+
+    private lateinit var nombre: EditText
+    private lateinit var correo: EditText
+    private lateinit var contrasenia: EditText
+    private lateinit var guardar: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.detalle_perfil)
 
+        dbHelper = DataBaseHelper(this)
+        gestor = Gestor(this)
+
+        val idUsuario = gestor.obetenerIdRegistro()
+
+        val usuarioRegistrado = dbHelper.detalleUsuario(idUsuario)
+
+        nombre = findViewById(R.id.etxt_nombre_detalle_perfil)
+        correo = findViewById(R.id.etxt_correo_perfil_detalle)
+        contrasenia = findViewById(R.id.etxt_contrasenia_perfil_detalle)
+        guardar = findViewById(R.id.b_guardar_perfil_detalle)
+
+
+        val toolbarCuerpo =
+            findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_perfil_detalel)
+        setSupportActionBar(toolbarCuerpo)
+
+        if (usuarioRegistrado != null) {
+            nombre.setText(usuarioRegistrado.nombre_usuario)
+            correo.setText(usuarioRegistrado.correo_usuario)
+            contrasenia.setText(usuarioRegistrado.contrasenia_usuario)
+
+        }
+        soloVer()
+
+        guardar.setOnClickListener {
+            dbHelper.actualizarUsuario(
+                Usuario(
+                    id_usuario = idUsuario,
+                    nombre_usuario = nombre.text.toString(),
+                    correo_usuario = correo.text.toString(),
+                    contrasenia_usuario = contrasenia.text.toString()
+                )
+            )
+            soloVer()
+        }
+    }
+
+    // TOOLBAR
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu_toolbar_perfil_detalle, menu)
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.item_perfil_perfilEditar -> {
+                editarPerfil()
+                true
+            }
+
+            R.id.item_perfil_borrar_perfil -> {
+                true
+            }
+
+            R.id.item_notificaciones_general -> {
+                Toast.makeText(
+                    this,
+                    "En desarrollo helmosho2",
+                    Toast.LENGTH_LONG
+                ).show()
+                true
+            }
+
+            R.id.item_acercaDe_general -> {
+                Toast.makeText(
+                    this,
+                    "Aplicacion de juegos de mesa- dialog en desarrollo",
+                    Toast.LENGTH_LONG
+                ).show()
+                true
+            }
+
+            R.id.item_salir_desconectar_general -> {
+                gestor = Gestor(this)
+                gestor.estaRegristrado(false)
+                Toast.makeText(
+                    this,
+                    "Adiosito",
+                    Toast.LENGTH_LONG
+                ).show()
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+
+    fun editarPerfil() {
+
+        nombre.isEnabled = true
+        correo.isEnabled = true
+        contrasenia.isEnabled = true
+        guardar.isEnabled = true
+        guardar.visibility = View.VISIBLE
+    }
+
+    fun soloVer() {
+
+        nombre.isEnabled = false
+        correo.isEnabled = false
+        contrasenia.isEnabled = false
+        guardar.isEnabled = false
+        guardar.visibility = View.INVISIBLE
     }
 }

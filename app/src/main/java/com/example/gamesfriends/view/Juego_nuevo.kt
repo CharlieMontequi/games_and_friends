@@ -17,8 +17,10 @@ import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.lifecycleScope
 import com.example.gamesfriends.R
 import com.example.gamesfriends.model.DataBaseHelper
+import com.example.gamesfriends.model.datos.Coleccion
 import com.example.gamesfriends.model.datos.Juego
 import com.example.gamesfriends.view.detalle.Detalle_perfil
+import com.example.gamesfriends.viewModel.DialogAgregarJuegoVerDos
 import com.example.gamesfriends.viewModel.Gestor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -34,7 +36,9 @@ class Juego_nuevo : AppCompatActivity() {
 
         val dbHelper = DataBaseHelper(this)
 
-        val toolbarAmigos = findViewById<Toolbar>(R.id.toolbar_detalle_historial)
+        gestor = Gestor(this)
+
+        val toolbarAmigos = findViewById<Toolbar>(R.id.toolbar_juevonuevo)
         setSupportActionBar(toolbarAmigos)
 
         val nombrejuegoNuevo = findViewById<EditText>(R.id.etxt_nombreJuego_nuevo)
@@ -82,9 +86,6 @@ class Juego_nuevo : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                if (switchTambienColeccion.isChecked) {
-                    //mostrar un dialog para indicar precio, veces jugado y fecha
-                }
                 val juegoNuevo = Juego(
                     idJuego = null,
                     nombreJuego = nombrejuegoNuevo.text.toString(),
@@ -93,7 +94,27 @@ class Juego_nuevo : AppCompatActivity() {
                     maximoJugadoresJuego = maxJugadoresNuevo.text.toString().toInt(),
                     duracionJuego = duracionJuego_Nuevo.text.toString().toInt()
                 )
-                dbHelper.crearJuego(juegoNuevo)
+                val idJuegoNuevo = dbHelper.crearJuego(juegoNuevo)
+
+                if (switchTambienColeccion.isChecked) {
+                    //mostrar un dialog para indicar precio, veces jugado y fecha
+                    DialogAgregarJuegoVerDos(this) { precio, veces, fecha ->
+                        val nuevoRegistro = Coleccion(
+                            id_coleccion = null,
+                            fk_usuario_tiene_coleccion = gestor.obetenerIdRegistro(),
+                            fk_juego_en_coleccion = idJuegoNuevo,
+                            precioCompra_coleccion = precio,
+                            vecesJugado_coleccion = veces,
+                            ultimaVezJugado_coleccion = fecha,
+                            anotacionPersonal_coleccion = null
+                        )
+
+                        dbHelper.crearJuegoEnPropiedad(nuevoRegistro)
+                        Toast.makeText(this, "Juego añadido a la colección", Toast.LENGTH_LONG).show()
+
+                    }.mostrar()
+                }
+
             }
         }
 

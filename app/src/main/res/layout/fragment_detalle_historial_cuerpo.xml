@@ -93,7 +93,7 @@
         app:layout_constraintEnd_toEndOf="@+id/view"
         app:layout_constraintStart_toStartOf="@+id/view"
         app:layout_constraintTop_toBottomOf="@+id/view"
-        app:srcCompat="@drawable/intento_hexagono_funcional2_foreground" />
+        app:srcCompat="@drawable/hexagono_verde_foregorund" />
 
     <ListView
         android:id="@+id/listView_historial_detalle_fragment"

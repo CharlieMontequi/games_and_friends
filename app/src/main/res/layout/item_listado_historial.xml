@@ -71,7 +71,7 @@
         app:layout_constraintEnd_toEndOf="@+id/imageView9"
         app:layout_constraintStart_toStartOf="@+id/imageView9"
         app:layout_constraintTop_toBottomOf="@+id/imageView9"
-        app:srcCompat="@drawable/intento_hexagono_funcional3_foreground" />
+        app:srcCompat="@drawable/hexagono_blanco_beige_foreground" />
 
     <TextView
         android:id="@+id/txt_numero_juegos_item_listaHistorial"
