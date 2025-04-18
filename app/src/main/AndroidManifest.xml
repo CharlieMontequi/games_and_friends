@@ -31,6 +31,8 @@
         <activity android:name=".view.detalle.Detalle_convocar"/>
         <activity android:name=".view.Regristro"/>
         <activity android:name=".view.detalle.Detalle_perfil"/>
+        <activity android:name=".view.Registro_listado_juegos"/>
+        <activity android:name=".view.Juego_nuevo"/>
 
     </application>
 

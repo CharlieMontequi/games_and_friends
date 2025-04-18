@@ -8,7 +8,7 @@ data class Coleccion(
     val precioCompra_coleccion: Double,
     var vecesJugado_coleccion: Int,
     var ultimaVezJugado_coleccion: LocalDate?,
-    var anotacionPersonal_coleccion: String,
+    var anotacionPersonal_coleccion: String?,
     val fk_usuario_tiene_coleccion: Int,
     val fk_juego_en_coleccion: Int
 )

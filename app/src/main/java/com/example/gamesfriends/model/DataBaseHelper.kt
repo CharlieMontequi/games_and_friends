@@ -340,12 +340,12 @@ data class DataBaseHelper(var contexto: Context) :
     }
 
     // ESTA COMO EL ORTO DE MAL ESTA CONSULTA
-    fun borrarJuegoDeJuegosTiene(idJuegoTiene: Int) {
+    fun borrarJuegoDeJuegosTiene(idJuegoTiene: Int, idUsuario: Int) {
         val db = this.writableDatabase
         db.delete(
             TABLE_COLECCION,
-            "$KEY_ID_COLECCION =?",
-            arrayOf(idJuegoTiene.toString())
+            "$KEY_FK_JUEGO_TIENE=? AND $KEY_FK_USUARIO_TIENE_JUEGO=?",
+            arrayOf(idJuegoTiene.toString(), idUsuario.toString())
         )
     }
 
@@ -458,7 +458,7 @@ data class DataBaseHelper(var contexto: Context) :
                     id_mecanica = cursor.getInt(cursorIDMecanica),
                     nombreMecanica = cursor.getString(cursorNombreMecanica)
                 )
-                listaTodasMecanicas().add(mecanica)
+                todasMecanicas.add(mecanica)
             } while (cursor.moveToNext())
         }
         cursor.close()
@@ -648,6 +648,38 @@ data class DataBaseHelper(var contexto: Context) :
         }
 
         return mecanciasEnjuego
+    }
+
+    fun listaTodosJuegosBBDD(): MutableList<Juego> {
+        var todosLosJuegos = mutableListOf<Juego>()
+        val db = this.readableDatabase
+        val sentencia = "SELECT * FROM $TABLE_JUEGOS"
+        var cursor: Cursor?
+        cursor = db.rawQuery(sentencia, null)
+
+        if (cursor.moveToFirst()) {
+            do {
+                val idCur = cursor.getColumnIndex(KEY_ID_JUEGO)
+                val nombreCur = cursor.getColumnIndex(KEY_NOMBRE_JUEGO)
+                val descripcionCur = cursor.getColumnIndex(KEY_DESCIPRCION_JUEGO)
+                val minJugCur = cursor.getColumnIndex(KEY_NUMERO_JUGADORES_MINIMO)
+                val maxJugCur = cursor.getColumnIndex(KEY_NUMERO_JUGADORES_MAXIMO)
+                val duracionCur = cursor.getColumnIndex(KEY_DURACION)
+
+                val juego = Juego(
+                    idJuego = cursor.getInt(idCur),
+                    nombreJuego = cursor.getString(nombreCur),
+                    descipcionJuegp = cursor.getString(descripcionCur),
+                    minimoJugadoresJuego = cursor.getInt(minJugCur),
+                    maximoJugadoresJuego = cursor.getInt(maxJugCur),
+                    duracionJuego = cursor.getInt(duracionCur)
+                )
+                todosLosJuegos.add(juego)
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        db.close()
+        return todosLosJuegos
     }
 
     ///////////////////////////DETALLES CONCRETOS/////////////////////////////////////////
@@ -864,6 +896,16 @@ data class DataBaseHelper(var contexto: Context) :
         val tienes = cursor.moveToFirst()
         cursor.close()
         return tienes
+    }
+
+    fun comprobarJuegoEnColeccion(fkJuego:Int, fkUsuario:Int):Boolean{
+        val db = this.readableDatabase
+        val query = "SELECT * FROM $TABLE_COLECCION WHERE $KEY_FK_USUARIO_TIENE_JUEGO = ? AND $KEY_FK_JUEGO_TIENE = ?"
+        val cursor = db.rawQuery(query, arrayOf(fkUsuario.toString(), fkJuego.toString()))
+        val existe = cursor.moveToFirst()
+        cursor.close()
+        db.close()
+        return existe
     }
 
     ///////////////////////////FECHAS GESTOR///////////////////////////////////////////

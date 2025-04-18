@@ -135,7 +135,7 @@
         android:layout_marginStart="101dp"
         android:layout_marginTop="156dp"
         android:layout_marginEnd="109dp"
-        android:text="REGISTRARSE"
+        android:text="Continuar"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="@+id/etxt_contrasenia_registro"
         app:layout_constraintHorizontal_bias="0.425"

@@ -52,10 +52,10 @@
         android:id="@+id/listView_listadoAmigos_lista_amigos"
         android:layout_width="361dp"
         android:layout_height="571dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="188dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/searchV_nombreAmigos_listado_amigos"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="@+id/searchV_nombreAmigos_listado_amigos"
         app:layout_constraintTop_toBottomOf="@+id/searchV_nombreAmigos_listado_amigos"
         app:layout_constraintVertical_bias="0.0" />

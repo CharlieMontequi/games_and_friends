@@ -109,11 +109,8 @@ class Mis_juegos : AppCompatActivity() {
             }
 
             R.id.item_addJuego_bbd_general -> {
-                Toast.makeText(
-                    this,
-                    "En desarrollo helmosho",
-                    Toast.LENGTH_LONG
-                ).show()
+                val intent = Intent(this, Juego_nuevo::class.java)
+                startActivity(intent)
                 true
             }
 

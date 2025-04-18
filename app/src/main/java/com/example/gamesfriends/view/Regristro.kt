@@ -34,34 +34,16 @@ class Regristro : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                val idUsuario = dbHelper.crearUsuario(
-                    Usuario(
-                        null,
-                        nombre_usuario = txtNombre.text.toString(),
-                        correo_usuario = txtCorreo.text.toString(),
-                        contrasenia_usuario = txtContrasenia.text.toString()
-                    )
+                val usurioProcesoRegistro = Usuario(
+                    id_usuario = null,
+                    nombre_usuario = txtNombre.text.toString(),
+                    correo_usuario = txtCorreo.text.toString(),
+                    contrasenia_usuario = txtContrasenia.text.toString()
                 )
-                Toast.makeText(
-                    this,
-                    "Usuario registrado con exito :)" + idUsuario.toString(),
-                    Toast.LENGTH_SHORT
-                ).show()
-                if (idUsuario > 0) {
-                    val intent = Intent(this, Cuerpo_app::class.java)
-                    intent.putExtra("ID_USUARIO", idUsuario)
-                    startActivity(intent)
-                } else {
-                    Toast.makeText(
-                        this,
-                        "INTIMISIMI",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-
-
+                val intent = Intent(this, Registro_listado_juegos::class.java)
+                intent.putExtra("USUARIO", usurioProcesoRegistro)
+                startActivity(intent)
             }
-
         }
 
     }

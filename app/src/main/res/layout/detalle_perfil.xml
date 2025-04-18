@@ -7,7 +7,7 @@
     android:background="#F8F7F3">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbar_perfil_detalel"
         android:layout_width="0dp"
         android:layout_height="90dp"
         android:background="?attr/colorPrimary"
@@ -46,11 +46,11 @@
         android:textColor="#F6F5F1"
         android:textSize="36dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_perfil_detalel"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar_perfil_detalel"
         app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="@+id/toolbar"
-        app:layout_constraintTop_toTopOf="@+id/toolbar"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_perfil_detalel"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_perfil_detalel"
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
@@ -66,10 +66,10 @@
         android:hint="Nombre de Usuario"
         android:inputType="text"
         android:textSize="25dp"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar_perfil_detalel"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/toolbar"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintStart_toStartOf="@+id/toolbar_perfil_detalel"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_perfil_detalel" />
 
     <EditText
         android:id="@+id/etxt_contrasenia_perfil_detalle"
