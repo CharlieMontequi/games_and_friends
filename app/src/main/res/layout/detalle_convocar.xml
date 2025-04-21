@@ -90,7 +90,7 @@
         android:layout_marginStart="148dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="148dp"
-        android:text="Inivitar"
+        android:text="Invitar"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="@+id/listV_juegosAlllevar"
         app:layout_constraintHorizontal_bias="0.493"

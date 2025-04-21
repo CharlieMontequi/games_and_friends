@@ -1,6 +1,7 @@
 package com.example.gamesfriends.view.detalle
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -9,16 +10,12 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.transition.Visibility
 import com.example.gamesfriends.R
 import com.example.gamesfriends.model.DataBaseHelper
-import com.example.gamesfriends.model.datos.Coleccion
 import com.example.gamesfriends.model.datos.Usuario
 import com.example.gamesfriends.view.Juego_nuevo
 import com.example.gamesfriends.view.MainActivity
-import com.example.gamesfriends.viewModel.DialogAgregarJuegoVerDos
 import com.example.gamesfriends.viewModel.Gestor
 
 class Detalle_perfil : AppCompatActivity() {
@@ -34,6 +31,7 @@ class Detalle_perfil : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.detalle_perfil)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         dbHelper = DataBaseHelper(this)
         gestor = Gestor(this)

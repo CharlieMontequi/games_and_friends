@@ -1,4 +1,4 @@
-package com.example.gamesfriends.viewModel
+package com.example.gamesfriends.viewModel.dialogs
 
 import android.app.DatePickerDialog
 import android.app.Dialog

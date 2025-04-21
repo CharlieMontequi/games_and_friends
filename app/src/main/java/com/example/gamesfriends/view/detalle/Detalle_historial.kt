@@ -1,6 +1,7 @@
 package com.example.gamesfriends.view.detalle
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -21,6 +22,7 @@ class Detalle_historial  : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.detalle_historial)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         gestor = Gestor(this)
         val idUsuario = gestor.obetenerIdRegistro()

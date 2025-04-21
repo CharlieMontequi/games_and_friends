@@ -2,10 +2,12 @@ package com.example.gamesfriends.view.detalle
 
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -15,9 +17,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.example.gamesfriends.R
+import com.example.gamesfriends.model.DataBaseHelper
+import com.example.gamesfriends.model.datos.Juego
 import com.example.gamesfriends.view.Juego_nuevo
 import com.example.gamesfriends.view.MainActivity
 import com.example.gamesfriends.viewModel.Gestor
+import com.example.gamesfriends.viewModel.dialogs.DialogConvocarFiltrado
 import java.util.Calendar
 
 class Detalle_convocar  : AppCompatActivity() {
@@ -27,6 +32,10 @@ class Detalle_convocar  : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.detalle_convocar)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
+        val dbHelper = DataBaseHelper(this)
+        var listadoJuego = mutableListOf<Juego>()
 
         gestor = Gestor(this)
         val idUsuario = gestor.obetenerIdRegistro()
@@ -35,7 +44,7 @@ class Detalle_convocar  : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         val txtNombrePartida = findViewById<EditText>(R.id.etxt_nombrePartida)
-        val listaJuegosAllevar = findViewById<ListView>(R.id.listV_juegosAlllevar)
+        val listaViewJuegosAllevar = findViewById<ListView>(R.id.listV_juegosAlllevar)
         val txtFechaRecogida = findViewById<TextView>(R.id.txt_fechaMarcada)
         val imB_calendario = findViewById<ImageButton>(R.id.imB_calendario)
         val bProponer= findViewById<Button>(R.id.b_proponer_juegos_convocar)
@@ -60,8 +69,16 @@ class Detalle_convocar  : AppCompatActivity() {
         }
 
         bProponer.setOnClickListener {
-            Toast.makeText(this, "se abrirar una ventana de filtrado", Toast.LENGTH_LONG).show()
+
+            DialogConvocarFiltrado(this){jugadores, idMecanica, horas->
+                listadoJuego= dbHelper.listadoJuegosFiltrados(idUsuario,jugadores,horas,idMecanica)
+                val nombresJuego = listadoJuego.map{it.nombreJuego}.toTypedArray()
+                val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1,nombresJuego)
+                listaViewJuegosAllevar.adapter= adapter
+            }.mostrar()
+
         }
+
 
         b_invitar.setOnClickListener {
             Toast.makeText(this, "se abrira opcioens para enviar texto", Toast.LENGTH_LONG).show()

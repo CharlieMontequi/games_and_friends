@@ -43,13 +43,15 @@ class Fragment_observaciones_personales_juego : Fragment() {
 
         val detalleViewModel = ViewModelProvider(requireActivity())[DetalleJuegoViewModel::class.java]
 
+        soloVer()
+
         detalleViewModel.estaEnColeccion.observe(viewLifecycleOwner) { enColeccion ->
             if (enColeccion) {
                 val datos = detalleViewModel.datosColeccion.value
                 txtObservacioens.setText(datos?.anotacionPersonal_coleccion ?: "")
                 imbEditar.setOnClickListener { inicarEdicion() }
                 imbGuardar.setOnClickListener {
-                    soloVer()
+
                     val nuevoTexto = txtObservacioens.text.toString()
                     // Puedes actualizarlo en BD si quieres aquí
                     val gestor = Gestor(requireContext())
@@ -57,12 +59,14 @@ class Fragment_observaciones_personales_juego : Fragment() {
                     val dbHelper = DataBaseHelper(requireContext())
                     val idJuego = arguments?.getInt("ID_JUEGO_DETALLE") ?: return@setOnClickListener
                     dbHelper.actualizarObservaciones(idUsuario, idJuego, nuevoTexto)
+                    soloVer()
                 }
             } else {
                 txtObservacioens.setText("Este juego no forma parte de tu colección. No puedes añadir observaciones.")
                 juegoSinPropiedad()
             }
         }
+
     }
 
     fun inicarEdicion() {

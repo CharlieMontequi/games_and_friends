@@ -4,11 +4,11 @@ import java.time.LocalDate
 
 
 data class Coleccion(
-    val id_coleccion: Int?,
-    val precioCompra_coleccion: Double,
-    var vecesJugado_coleccion: Int,
-    var ultimaVezJugado_coleccion: LocalDate?,
-    var anotacionPersonal_coleccion: String?,
-    val fk_usuario_tiene_coleccion: Int,
-    val fk_juego_en_coleccion: Int
+    var id_coleccion: Int? = null,
+    var precioCompra_coleccion: Double = 0.0,
+    var vecesJugado_coleccion: Int = 0,
+    var ultimaVezJugado_coleccion: LocalDate? = null,
+    var anotacionPersonal_coleccion: String? = null,
+    var fk_usuario_tiene_coleccion: Int = 0,
+    var fk_juego_en_coleccion: Int? = null
 )

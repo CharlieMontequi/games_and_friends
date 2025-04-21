@@ -2,6 +2,7 @@ package com.example.gamesfriends.view
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -33,6 +34,7 @@ class Historial : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.listado_historiales)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         dbHelper = DataBaseHelper(this)
 

@@ -3,6 +3,7 @@ package com.example.gamesfriends.view
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.icu.text.Transliterator.Position
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -35,6 +36,7 @@ class Mis_juegos : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.listado_juegos)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
 
         gestor = Gestor(this)

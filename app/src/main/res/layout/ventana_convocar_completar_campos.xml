@@ -51,7 +51,8 @@
         android:layout_height="33dp"
         android:layout_marginStart="188dp"
         android:layout_marginTop="28dp"
-        android:background="@color/balcoBeige"
+        android:background="@drawable/boton_cancelar"
+        android:padding="5dp"
         android:ems="10"
         android:gravity="center"
         android:hint="nº jgs"
@@ -69,7 +70,8 @@
         android:layout_marginStart="29dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        android:background="@color/balcoBeige"
+        android:background="@drawable/boton_cancelar"
+        android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView21"
         app:layout_constraintTop_toBottomOf="@+id/etxt_numeroJugadores_ventana_convocar" />
@@ -80,7 +82,8 @@
         android:layout_height="33dp"
         android:layout_marginStart="23dp"
         android:layout_marginTop="24dp"
-        android:background="@color/balcoBeige"
+        android:background="@drawable/boton_cancelar"
+        android:padding="5dp"
         android:ems="10"
         android:gravity="center"
         android:hint="2 horas"
@@ -89,4 +92,29 @@
         app:layout_constraintEnd_toEndOf="@+id/spinner_tipo_categoria_convocar"
         app:layout_constraintStart_toEndOf="@+id/textView22"
         app:layout_constraintTop_toBottomOf="@+id/spinner_tipo_categoria_convocar" />
+
+    <Button
+        android:id="@+id/b_cancelar_convocar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="39dp"
+        android:layout_marginEnd="28dp"
+        android:background="@drawable/boton_cancelar"
+        android:text="Cancelar"
+        android:textColor="@color/verde"
+        app:layout_constraintEnd_toEndOf="@+id/textView22"
+        app:layout_constraintStart_toStartOf="@+id/textView22"
+        app:layout_constraintTop_toBottomOf="@+id/textView22" />
+
+    <Button
+        android:id="@+id/b_aceptar_convocar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:text="Aceptar"
+        app:layout_constraintBottom_toBottomOf="@+id/b_cancelar_convocar"
+        app:layout_constraintStart_toEndOf="@+id/b_cancelar_convocar"
+        app:layout_constraintTop_toTopOf="@+id/b_cancelar_convocar"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

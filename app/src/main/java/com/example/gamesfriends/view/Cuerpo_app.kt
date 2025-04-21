@@ -1,6 +1,7 @@
 package com.example.gamesfriends.view
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -23,6 +24,7 @@ class Cuerpo_app : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.cuerpo_app)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         dbHelper = DataBaseHelper(this)
 

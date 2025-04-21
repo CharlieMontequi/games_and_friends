@@ -1,6 +1,7 @@
 package com.example.gamesfriends.view
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -17,6 +18,7 @@ class Regristro : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.registro_nuevo_usuario)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         dbHelper = DataBaseHelper(this)
 

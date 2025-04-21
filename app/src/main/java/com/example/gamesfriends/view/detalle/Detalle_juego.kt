@@ -1,6 +1,7 @@
 package com.example.gamesfriends.view.detalle
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -13,12 +14,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.gamesfriends.R
 import com.example.gamesfriends.model.DataBaseHelper
 import com.example.gamesfriends.model.datos.Coleccion
+import com.example.gamesfriends.view.Cuerpo_app
 import com.example.gamesfriends.view.MainActivity
 import com.example.gamesfriends.view.fragments.Fragment_detalle_juego
 import com.example.gamesfriends.view.fragments.Fragment_observaciones_personales_juego
 import com.example.gamesfriends.viewModel.DetalleJuegoViewModel
-import com.example.gamesfriends.viewModel.DialogAgregarJuegoVerDos
-import com.example.gamesfriends.viewModel.DialogAgregarJuego
+import com.example.gamesfriends.viewModel.dialogs.DialogAgregarJuegoVerDos
 import com.example.gamesfriends.viewModel.Gestor
 
 class Detalle_juego : AppCompatActivity() {
@@ -35,6 +36,7 @@ class Detalle_juego : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.detalle_juego)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         gestor = Gestor(this)
         idUsuario = gestor.obetenerIdRegistro()
@@ -132,7 +134,8 @@ class Detalle_juego : AppCompatActivity() {
                 dbHelper.borrarJuegoDeJuegosTiene(idJuego, idUsuario)
                 detalleViewModel.actualizarEstado(false, null)
                 Toast.makeText(this, "Juego eliminado de la colección", Toast.LENGTH_LONG).show()
-                invalidateOptionsMenu()
+                val intent= Intent(this, Cuerpo_app::class .java)
+                startActivity(intent)
                 true
             }
 

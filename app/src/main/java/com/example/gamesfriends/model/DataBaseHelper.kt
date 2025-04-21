@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.database.sqlite.SQLiteReadOnlyDatabaseException
 import android.util.Log
 import com.example.gamesfriends.model.datos.Amigo
 import com.example.gamesfriends.model.datos.Historial
@@ -296,6 +297,7 @@ data class DataBaseHelper(var contexto: Context) :
         datos.put(KEY_FK_JUEGO_MECANICASENJUEGO, mecanicaEnJuego.fk_juego_mecanicaJuego)
 
         db.insert(TABLE_MECANICAS_EN_JUEGO, null, datos)
+        db.close()
     }
 
     fun crearHistorial(historial: Historial) {
@@ -393,7 +395,7 @@ data class DataBaseHelper(var contexto: Context) :
     }
 
     // para actulizar veces jugado, fecha ultima vez jugado, anotaciones
-    fun actualizarJuego(juegoEnPropiedad: Coleccion) {
+    fun actualizarJuegoEnColeccion(juegoEnPropiedad: Coleccion) {
         val db = this.writableDatabase
         val datos = ContentValues()
         datos.put(
@@ -799,6 +801,85 @@ data class DataBaseHelper(var contexto: Context) :
         return historial
     }
 
+    ///////////////////////////FILTRADO CONVOCAR ///////////////////////////////////////
+
+    fun listadoJuegosFiltrados(
+        idUsuario: Int,
+        jugadoresVan: Int,
+        horasJugar: Int,
+        idMecanica: Int
+    ): MutableList<Juego> {
+        val juegos = mutableListOf<Juego>()
+
+        val db = this.readableDatabase
+        var duracionTotal = horasJugar * 60
+        var duracionAcumulada = 0
+
+        val query = """
+        SELECT 
+            j.*
+        FROM 
+            $TABLE_JUEGOS j
+        JOIN 
+            $TABLE_COLECCION c ON j.$KEY_ID_JUEGO = c.$KEY_FK_JUEGO_TIENE
+        JOIN 
+            $TABLE_MECANICAS_EN_JUEGO mj ON j.$KEY_ID_JUEGO = mj.$KEY_FK_JUEGO_MECANICASENJUEGO
+        WHERE 
+            c.$KEY_FK_USUARIO_TIENE_JUEGO = ?
+            AND j.$KEY_NUMERO_JUGADORES_MINIMO <= ?
+            AND j.$KEY_NUMERO_JUGADORES_MAXIMO >= ?
+            AND mj.$KEY_FK_MECANICAS_MECANICASENJUEGO = ?
+        ORDER BY 
+            c.$KEY_FECHA_ULTIMA_VEZ_JUEGADO ASC
+    """
+
+        val cursor = db.rawQuery(
+            query, arrayOf(
+                idUsuario.toString(),
+                jugadoresVan.toString(),
+                jugadoresVan.toString(),
+                idMecanica.toString()
+            )
+        )
+
+        if (cursor.moveToFirst()) {
+            do {
+                duracionAcumulada = cursor.getInt(cursor.getColumnIndexOrThrow(KEY_DURACION))
+                if (duracionAcumulada < duracionTotal) {
+                    val juego = Juego(
+                        idJuego = cursor.getInt(cursor.getColumnIndexOrThrow(KEY_ID_JUEGO)),
+                        nombreJuego = cursor.getString(cursor.getColumnIndexOrThrow(KEY_NOMBRE_JUEGO)),
+                        descipcionJuegp = cursor.getString(
+                            cursor.getColumnIndexOrThrow(
+                                KEY_DESCIPRCION_JUEGO
+                            )
+                        ),
+                        minimoJugadoresJuego = cursor.getInt(
+                            cursor.getColumnIndexOrThrow(
+                                KEY_NUMERO_JUGADORES_MINIMO
+                            )
+                        ),
+                        maximoJugadoresJuego = cursor.getInt(
+                            cursor.getColumnIndexOrThrow(
+                                KEY_NUMERO_JUGADORES_MAXIMO
+                            )
+                        ),
+                        duracionJuego = cursor.getInt(
+                            cursor.getColumnIndexOrThrow(KEY_DURACION)
+                        )
+                    )
+                    duracionAcumulada += juego.duracionJuego
+                    juegos.add(juego)
+
+                }
+            } while (cursor.moveToNext())
+        }
+
+        cursor.close()
+        return juegos
+    }
+
+
     ///////////////////////////AGRUPACIONES NUMERICAS///////////////////////////////////
     fun agrupacionJuegosEnUso(fkIdHistorial: Int): Int? {
         var cantidad: Int? = null
@@ -905,6 +986,24 @@ data class DataBaseHelper(var contexto: Context) :
         val tienes = cursor.moveToFirst()
         cursor.close()
         return tienes
+    }
+
+    fun comrpobarSiSonAmigos(fkAmigo1: Int, fkAmigo2: Int): Boolean {
+        val db = this.readableDatabase
+        val sentencia =
+            "SELECT 1 FROM $TABLE_AMIGOS WHERE ($KEY_FK_AMIGO1 = ? AND $KEY_FK_AMIGO2 = ?) OR ($KEY_FK_AMIGO1 =? AND $KEY_FK_AMIGO2=?)"
+        val cursor = db.rawQuery(
+            sentencia,
+            arrayOf(
+                fkAmigo1.toString(),
+                fkAmigo2.toString(),
+                fkAmigo2.toString(),
+                fkAmigo1.toString()
+            )
+        )
+        val sonAmigos = cursor.moveToFirst()
+        cursor.close()
+        return sonAmigos
     }
 
     fun comprobarJuegoEnColeccion(fkJuego: Int, fkUsuario: Int): Boolean {

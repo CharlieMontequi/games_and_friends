@@ -2,16 +2,15 @@ package com.example.gamesfriends.view
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView.Validator
 import android.widget.Button
 import android.widget.CheckBox
-import android.widget.CheckedTextView
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
@@ -22,14 +21,8 @@ import com.example.gamesfriends.model.DataBaseHelper
 import com.example.gamesfriends.model.datos.Coleccion
 import com.example.gamesfriends.model.datos.Juego
 import com.example.gamesfriends.model.datos.Usuario
-import com.example.gamesfriends.viewModel.DialogAgregarJuegoVerDos
+import com.example.gamesfriends.viewModel.dialogs.DialogAgregarJuegoVerDos
 import com.example.gamesfriends.viewModel.Gestor
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlinx.coroutines.withContext
-import kotlin.coroutines.resume
 
 class Registro_listado_juegos : AppCompatActivity() {
 
@@ -37,49 +30,45 @@ class Registro_listado_juegos : AppCompatActivity() {
     private val elementosSeleccionados = mutableListOf<Int>()
     private lateinit var listaMostrarJuegs: ListView
 
+    private  val juegosEnColeccion = mutableListOf<Coleccion>()
+
     private lateinit var juegosAgregados: MutableList<Coleccion>
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.registro_nuevo_usuario_seleccion_juegos)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         val usuarioEnRegristro = intent.getParcelableExtra<Usuario>("USUARIO", Usuario::class.java)
 
         val dbHelper = DataBaseHelper(this)
         todosJuegosListados = dbHelper.listaTodosJuegosBBDD()
 
-        listaMostrarJuegs = findViewById(R.id.listV_todos_juegos_registro_2)
         val bGuardarRegistrar = findViewById<Button>(R.id.b_Guardar_Registrar)
+        listaMostrarJuegs = findViewById(R.id.listV_todos_juegos_registro_2)
         val adaptadorPersola =
             AdaptadorPersonalizado(this, R.layout.item_listado_check, todosJuegosListados)
         listaMostrarJuegs.adapter = adaptadorPersola
+
 
         bGuardarRegistrar.setOnClickListener {
             if (usuarioEnRegristro != null) {
                 val idUsuarioNuevo = dbHelper.crearUsuario(usuarioEnRegristro)
 
+                juegosEnColeccion.forEach { coleccion ->
+                    coleccion.fk_usuario_tiene_coleccion = idUsuarioNuevo
+                    dbHelper.crearJuegoEnPropiedad(coleccion)
+                }
+
                 val gestor = Gestor(this)
                 gestor.estaRegristrado(true)
                 gestor.guardarIdRegistro(idUsuarioNuevo)
 
-                Toast.makeText(this, elementosSeleccionados.joinToString(", "), Toast.LENGTH_SHORT)
-                    .show()
-
-                val juegosEnColeccion = mutableListOf<Coleccion>()
-
-                for (posicion in elementosSeleccionados) {
-
-                    juegosEnColeccion.add(construyendoColeccion(posicion, idUsuarioNuevo))
-                    Toast.makeText(this, posicion.toString(), Toast.LENGTH_SHORT)
-                        .show()
-                }
-
-                val intent = Intent(this, Cuerpo_app::class.java)
-                startActivity(intent)
-
 
             }
+            val intent = Intent(this, Cuerpo_app::class.java)
+            startActivity(intent)
         }
 
     }
@@ -110,14 +99,36 @@ class Registro_listado_juegos : AppCompatActivity() {
             checkBox.isChecked = elementosSeleccionados.contains(position)
 
             checkBox.setOnCheckedChangeListener { _, isChecked ->
+                val juego = todosJuegosListados[position]
+
                 if (isChecked) {
-                    // Si está marcado, agregar a la lista de seleccionados
                     if (!elementosSeleccionados.contains(position)) {
                         elementosSeleccionados.add(position)
                     }
+
+                    // Mostrar el diálogo y añadir a colección
+                    DialogAgregarJuegoVerDos(context) { precio, veces, ultimaVez ->
+                        val nuevaColeccion = Coleccion(
+                            id_coleccion = null,
+                            precioCompra_coleccion = precio,
+                            vecesJugado_coleccion = veces,
+                            ultimaVezJugado_coleccion = ultimaVez,
+                            anotacionPersonal_coleccion = null,
+                            fk_usuario_tiene_coleccion = -1,  // Se llenará luego
+                            fk_juego_en_coleccion = juego.idJuego!!
+                        )
+                        juegosEnColeccion.add(nuevaColeccion)
+                        Toast.makeText(context, "Juego añadido a colección", Toast.LENGTH_SHORT).show()
+                    }.mostrar(juego.nombreJuego)
+
                 } else {
-                    // Si no está marcado, eliminar de la lista de seleccionados
                     elementosSeleccionados.remove(position)
+
+                    // Eliminar el juego de la colección
+                    val juegoId = juego.idJuego
+                    juegosEnColeccion.removeAll { it.fk_juego_en_coleccion == juegoId }
+
+                    Toast.makeText(context, "Juego eliminado de colección", Toast.LENGTH_SHORT).show()
                 }
             }
 
