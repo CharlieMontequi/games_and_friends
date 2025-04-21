@@ -20,7 +20,7 @@ class DialogAgregarJuegoVerDos(
 
     private var fechaSeleccionada: LocalDate? = null
 
-    fun mostrar() {
+    fun mostrar(texto :String?) {
         val dialog = Dialog(context)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE) // sin título predeterminado
         val vista = LayoutInflater.from(context).inflate(R.layout.ventana_emergente_al_sumarlo_coleccion_ver2, null)
@@ -29,6 +29,11 @@ class DialogAgregarJuegoVerDos(
         dialog.window?.setBackgroundDrawableResource(R.drawable.fondo_con_borde_verde) // fondo personalizado
 
         // Referencias UI
+        val titulo = vista.findViewById<TextView>(R.id.txt_titulo_emergente_add_juego_coleccion)
+
+        if(texto!=null){
+            titulo.text= texto
+        }
         val inputPrecio = vista.findViewById<EditText>(R.id.etxt_precioCompra_AddJuego)
         val inputVecesJugado = vista.findViewById<EditText>(R.id.etxt_vecesJugado_AddJuego)
         val imbMostrarCalendario = vista.findViewById<ImageButton>(R.id.imb_seleccionarFecha__AddJuego)

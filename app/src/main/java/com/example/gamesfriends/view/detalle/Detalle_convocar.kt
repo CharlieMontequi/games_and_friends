@@ -32,6 +32,7 @@ class Detalle_convocar  : AppCompatActivity() {
         val idUsuario = gestor.obetenerIdRegistro()
         val toolbarCuerpo = findViewById<Toolbar>(R.id.toolbar_convocar_detalle)
         setSupportActionBar(toolbarCuerpo)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         val txtNombrePartida = findViewById<EditText>(R.id.etxt_nombrePartida)
         val listaJuegosAllevar = findViewById<ListView>(R.id.listV_juegosAlllevar)

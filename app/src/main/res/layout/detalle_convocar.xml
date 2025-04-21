@@ -9,7 +9,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_convocar_detalle"
         android:layout_width="0dp"
-        android:layout_height="90dp"
+        android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
@@ -22,46 +22,52 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/hexagono_blanco_beige_foreground"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="4dp"
         android:rotation="90"
-        tools:layout_editor_absoluteX="7dp"
-        tools:layout_editor_absoluteY="81dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_convocar_detalle"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar_convocar_detalle"
+        app:layout_constraintHorizontal_bias="0.002"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_convocar_detalle"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_convocar_detalle"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/hexagono_blanco_beige_foreground" />
+
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="205dp"
-        android:layout_height="85dp"
-        android:text="Games\n&amp; Friends"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:gravity="center"
+        android:text="Games &amp; Friends"
         android:textColor="#F6F5F1"
         android:textColorLink="#F6F5F1"
-        android:textSize="36dp"
+        android:textSize="34sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_convocar_detalle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintHorizontal_bias="0.237"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_convocar_detalle"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_convocar_detalle"
+        app:layout_constraintVertical_bias="0.5" />
 
     <EditText
         android:id="@+id/etxt_nombrePartida"
-        android:layout_width="364dp"
-        android:layout_height="52dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="31dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/fondo_con_borde_verde"
         android:ems="10"
         android:gravity="center"
         android:hint="Nombre de la sesión"
+        android:padding="10dp"
         android:inputType="text"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar_convocar_detalle"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/toolbar_convocar_detalle"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_convocar_detalle" />
@@ -72,7 +78,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Proponer juegos"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/txt_fechaMarcada"
+        app:layout_constraintStart_toStartOf="@+id/txt_fechaMarcada"
         app:layout_constraintTop_toBottomOf="@+id/txt_fechaMarcada" />
 
     <Button
@@ -83,21 +91,23 @@
         android:layout_marginTop="4dp"
         android:layout_marginEnd="148dp"
         android:text="Inivitar"
+        android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="@+id/listV_juegosAlllevar"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="@+id/listV_juegosAlllevar"
         app:layout_constraintTop_toBottomOf="@+id/listV_juegosAlllevar" />
 
     <ListView
         android:id="@+id/listV_juegosAlllevar"
-        android:layout_width="376dp"
+        android:layout_width="0dp"
         android:layout_height="380dp"
+        android:layout_marginStart="1dp"
         android:layout_marginTop="124dp"
         android:layout_marginEnd="2dp"
         android:background="@drawable/fondo_con_borde_verde"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar_convocar_detalle"
+        app:layout_constraintEnd_toEndOf="@+id/etxt_nombrePartida"
         app:layout_constraintHorizontal_bias="0.513"
-        app:layout_constraintStart_toStartOf="@+id/toolbar_convocar_detalle"
+        app:layout_constraintStart_toStartOf="@+id/etxt_nombrePartida"
         app:layout_constraintTop_toBottomOf="@+id/etxt_nombrePartida" />
 
     <TextView

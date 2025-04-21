@@ -26,6 +26,7 @@ class Detalle_historial  : AppCompatActivity() {
         val idUsuario = gestor.obetenerIdRegistro()
         val toolbarCuerpo = findViewById<Toolbar>(R.id.toolbar_detalle_historial)
         setSupportActionBar(toolbarCuerpo)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         val idHistorial = intent.getIntExtra("ID_HISTORIAL",0)
 

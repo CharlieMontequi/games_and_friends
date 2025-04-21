@@ -40,6 +40,7 @@ class Juego_nuevo : AppCompatActivity() {
 
         val toolbarAmigos = findViewById<Toolbar>(R.id.toolbar_juevonuevo)
         setSupportActionBar(toolbarAmigos)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         val nombrejuegoNuevo = findViewById<EditText>(R.id.etxt_nombreJuego_nuevo)
         val descripcionJuegoNuevo = findViewById<EditText>(R.id.etxt_descripcionJuego_nuevo)
@@ -112,7 +113,7 @@ class Juego_nuevo : AppCompatActivity() {
                         dbHelper.crearJuegoEnPropiedad(nuevoRegistro)
                         Toast.makeText(this, "Juego añadido a la colección", Toast.LENGTH_LONG).show()
 
-                    }.mostrar()
+                    }.mostrar(null)
                 }
 
             }

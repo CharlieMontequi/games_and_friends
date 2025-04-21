@@ -16,6 +16,7 @@ import com.example.gamesfriends.R
 import com.example.gamesfriends.model.DataBaseHelper
 import com.example.gamesfriends.model.datos.Coleccion
 import com.example.gamesfriends.model.datos.Usuario
+import com.example.gamesfriends.view.Juego_nuevo
 import com.example.gamesfriends.view.MainActivity
 import com.example.gamesfriends.viewModel.DialogAgregarJuegoVerDos
 import com.example.gamesfriends.viewModel.Gestor
@@ -50,6 +51,7 @@ class Detalle_perfil : AppCompatActivity() {
         val toolbarCuerpo =
             findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_perfil_detalel)
         setSupportActionBar(toolbarCuerpo)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         if (usuarioRegistrado != null) {
             nombre.setText(usuarioRegistrado.nombre_usuario)
@@ -88,6 +90,12 @@ class Detalle_perfil : AppCompatActivity() {
             }
 
             R.id.item_perfil_borrar_perfil -> {
+                true
+            }
+
+            R.id.item_addJuego_bbd_general->{
+                val intent = Intent(this, Juego_nuevo::class.java)
+                startActivity(intent)
                 true
             }
 

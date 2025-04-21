@@ -4,32 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F7F3">
+    android:background="#F8F7F3"
+    >
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_listadoJuegos"
         android:layout_width="0dp"
-        android:layout_height="90dp"
+        android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
         android:rotation="90"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/hexagono_blanco_beige_foreground" />
 
     <TextView
@@ -38,36 +35,37 @@
         android:layout_height="wrap_content"
         android:text="Mi colección"
         android:textColor="#F6F5F1"
-        android:textColorLink="#F6F5F1"
-        android:textSize="36dp"
+        android:textSize="36sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_listadoJuegos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintVertical_bias="0.5" />
 
     <SearchView
         android:id="@+id/searchView"
-        android:layout_width="381dp"
-        android:layout_height="58dp"
-        android:layout_marginStart="121dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="172dp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/fondo_con_borde_verde"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar_listadoJuegos"
-        app:layout_constraintHorizontal_bias="0.399"
-        app:layout_constraintStart_toStartOf="@+id/toolbar_listadoJuegos"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_listadoJuegos" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_listadoJuegos" />
 
     <ListView
         android:id="@+id/listView_listado_juegos"
-        android:layout_width="382dp"
-        android:layout_height="568dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="65dp"
-        android:layout_marginEnd="1dp"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar_listadoJuegos"
-        app:layout_constraintStart_toStartOf="@+id/toolbar_listadoJuegos"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_listadoJuegos" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchView"
+        app:layout_constraintVertical_bias="0.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

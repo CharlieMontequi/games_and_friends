@@ -1,118 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/verde">
-
-    <View
-        android:id="@+id/view5"
-        android:layout_width="390dp"
-        android:layout_height="3dp"
-        android:layout_marginTop="64dp"
-        android:background="@color/balcoBeige"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.476"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/txt_nombrePartida_item_listado_partida"
-        android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingBottom="10dp"> <!-- espacio entre ítems -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Verano Azul"
-        android:textColor="#F6F5F1"
-        android:textSize="30dp"
-        android:textStyle="bold"
+        android:background="@color/verde"
+        android:padding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintVertical_bias="0.0"> <!-- opcional para que no quede pegado -->
 
-    <ImageView
-        android:id="@+id/imageView9"
-        android:layout_width="50sp"
-        android:layout_height="50sp"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="7dp"
-        android:layout_marginEnd="323dp"
-        app:layout_constraintEnd_toEndOf="@+id/view5"
-        app:layout_constraintStart_toStartOf="@+id/view5"
-        app:layout_constraintTop_toBottomOf="@+id/view5"
-        app:srcCompat="@android:drawable/ic_menu_my_calendar" />
+        <View
+            android:id="@+id/view5"
+            android:layout_width="390dp"
+            android:layout_height="3dp"
+            android:layout_marginTop="56dp"
+            android:background="@color/balcoBeige"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/txt_fecha_item_listado_partida"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="202dp"
-        android:text="14-9-2001"
-        android:textColor="@color/balcoBeige"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/view5"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/imageView9"
-        app:layout_constraintTop_toBottomOf="@+id/view5" />
+        <TextView
+            android:id="@+id/txt_nombrePartida_item_listado_partida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Verano Azul"
+            android:textColor="#F6F5F1"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.023" />
 
-    <ImageView
-        android:id="@+id/imageView12"
-        android:layout_width="40sp"
-        android:layout_height="40sp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="7dp"
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="@+id/imageView12"
+            app:layout_constraintStart_toStartOf="@+id/imageView12"
+            app:layout_constraintTop_toBottomOf="@+id/imageView12"
+            app:srcCompat="@android:drawable/ic_menu_my_calendar" />
 
-        android:rotation="90"
-        app:layout_constraintEnd_toEndOf="@+id/imageView9"
-        app:layout_constraintStart_toStartOf="@+id/imageView9"
-        app:layout_constraintTop_toBottomOf="@+id/imageView9"
-        app:srcCompat="@drawable/hexagono_blanco_beige_foreground" />
+        <TextView
+            android:id="@+id/txt_fecha_item_listado_partida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="14-9-2001"
+            android:textColor="@color/balcoBeige"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView9"
+            app:layout_constraintStart_toEndOf="@+id/imageView9"
+            app:layout_constraintTop_toTopOf="@+id/imageView9"
+            app:layout_constraintVertical_bias="0.391" />
 
-    <TextView
-        android:id="@+id/txt_numero_juegos_item_listaHistorial"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="60dp"
-        android:text="8 juegos "
-        android:textColor="@color/balcoBeige"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.035"
-        app:layout_constraintStart_toStartOf="@+id/txt_fecha_item_listado_partida"
-        app:layout_constraintTop_toBottomOf="@+id/txt_fecha_item_listado_partida" />
+        <ImageView
+            android:id="@+id/imageView12"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
 
-    <TextView
-        android:id="@+id/txt_numero_personas_itemListadoHistorial"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="51dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="12dp"
-        android:text="4 personas"
-        android:textColor="@color/balcoBeige"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/view5"
-        app:layout_constraintHorizontal_bias="0.312"
-        app:layout_constraintStart_toEndOf="@+id/txt_numero_juegos_item_listaHistorial"
-        app:layout_constraintTop_toBottomOf="@+id/txt_fecha_item_listado_partida" />
+            android:layout_marginStart="11dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="329dp"
+            android:rotation="90"
+            app:layout_constraintEnd_toEndOf="@+id/view5"
+            app:layout_constraintStart_toStartOf="@+id/view5"
+            app:layout_constraintTop_toBottomOf="@+id/txt_nombrePartida_item_listado_partida"
+            app:srcCompat="@drawable/hexagono_blanco_beige_foreground" />
 
-    <TextView
-        android:id="@+id/textView18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="-"
-        android:textColor="@color/balcoBeige"
-        android:textSize="34sp"
-        app:layout_constraintEnd_toStartOf="@+id/txt_numero_personas_itemListadoHistorial"
-        app:layout_constraintHorizontal_bias="0.473"
-        app:layout_constraintStart_toEndOf="@+id/txt_numero_juegos_item_listaHistorial"
-        app:layout_constraintTop_toBottomOf="@+id/txt_fecha_item_listado_partida" />
+        <TextView
+            android:id="@+id/txt_numero_juegos_item_listaHistorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="8 juegos "
+            android:textColor="@color/balcoBeige"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView12"
+            app:layout_constraintStart_toEndOf="@+id/imageView12"
+            app:layout_constraintTop_toTopOf="@+id/imageView12"
+            app:layout_constraintVertical_bias="0.5" />
+
+        <TextView
+            android:id="@+id/txt_numero_personas_itemListadoHistorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="24dp"
+            android:text="4 personas"
+            android:textColor="@color/balcoBeige"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_numero_juegos_item_listaHistorial"
+            app:layout_constraintStart_toEndOf="@+id/textView18"
+            app:layout_constraintTop_toTopOf="@+id/txt_numero_juegos_item_listaHistorial"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="-"
+            android:textColor="@color/balcoBeige"
+            android:textSize="34sp"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_numero_juegos_item_listaHistorial"
+            app:layout_constraintStart_toEndOf="@+id/txt_numero_juegos_item_listaHistorial"
+            app:layout_constraintTop_toTopOf="@+id/txt_numero_juegos_item_listaHistorial"
+            app:layout_constraintVertical_bias="0.809" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

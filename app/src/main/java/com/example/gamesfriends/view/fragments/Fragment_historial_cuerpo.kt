@@ -48,7 +48,7 @@ class Fragment_historial_cuerpo : Fragment() {
 
         txtNombrePartida.text = historialDetallado!!.nombre_historial
         txtFecha.text = historialDetallado!!.fecha_historial.toString()
-        txtParticpantes.text = historialDetallado!!.numeroPersonas_historial.toString()
+        txtParticpantes.text = historialDetallado!!.numeroPersonas_historial.toString() + " personas"
 
         val listaJuego = view.findViewById<ListView>(R.id.listView_historial_detalle_fragment)
         val adaptar =

@@ -10,6 +10,9 @@
         android:id="@+id/imV_item_listado_amigos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:rotation="90"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,13 +27,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginBottom="32dp"
         android:text="Rattatata"
         android:textColor="#F6F5F1"
         android:textSize="36dp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintBottom_toBottomOf="@+id/imV_item_listado_amigos"
         app:layout_constraintStart_toEndOf="@+id/imV_item_listado_amigos"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/imV_item_listado_amigos" />
 </androidx.constraintlayout.widget.ConstraintLayout>

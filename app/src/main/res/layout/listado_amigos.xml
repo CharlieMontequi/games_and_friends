@@ -9,26 +9,28 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_listado_amigos"
         android:layout_width="0dp"
-        android:layout_height="90dp"
+        android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="335dp"
+        android:layout_marginBottom="4dp"
         android:rotation="90"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_listado_amigos"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar_listado_amigos"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_listado_amigos"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_listado_amigos"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/hexagono_blanco_beige_foreground" />
 
@@ -38,27 +40,26 @@
         android:layout_height="wrap_content"
         android:text="Amigos"
         android:textColor="#F6F5F1"
-        android:textColorLink="#F6F5F1"
-        android:textSize="36dp"
+        android:textSize="36sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_listado_amigos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
-
+        app:layout_constraintTop_toTopOf="@+id/toolbar_listado_amigos"
+        app:layout_constraintVertical_bias="0.75" />
 
     <ListView
         android:id="@+id/listView_listadoAmigos_lista_amigos"
-        android:layout_width="361dp"
-        android:layout_height="571dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:layout_marginStart="192dp"
+        android:layout_marginEnd="191dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/searchV_nombreAmigos_listado_amigos"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="@+id/searchV_nombreAmigos_listado_amigos"
-        app:layout_constraintTop_toBottomOf="@+id/searchV_nombreAmigos_listado_amigos"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintEnd_toEndOf="@+id/toolbar_listado_amigos"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_listado_amigos"
+        app:layout_constraintTop_toBottomOf="@+id/searchV_nombreAmigos_listado_amigos" />
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchV_nombreAmigos_listado_amigos"

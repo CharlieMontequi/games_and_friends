@@ -44,6 +44,7 @@ class Mis_juegos : AppCompatActivity() {
 
         val toolbarCuerpo = findViewById<Toolbar>(R.id.toolbar_listadoJuegos)
         setSupportActionBar(toolbarCuerpo)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         val listadoJuegosColeccion = findViewById<ListView>(R.id.listView_listado_juegos)
         val adaptaador =

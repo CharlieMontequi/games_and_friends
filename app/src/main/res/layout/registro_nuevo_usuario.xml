@@ -9,7 +9,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_registro"
         android:layout_width="0dp"
-        android:layout_height="90dp"
+        android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
@@ -21,19 +21,18 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="205dp"
-        android:layout_height="85dp"
-        android:text="Games\n&amp; Friends"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        android:gravity="center"
+        android:text="Games &amp; Friends"
         android:textColor="#F6F5F1"
-        android:textColorLink="#F6F5F1"
-        android:textSize="36dp"
+        android:textSize="36sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.563"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+        app:layout_constraintStart_toEndOf="@+id/imageView4"
+        app:layout_constraintTop_toTopOf="@+id/imageView4"
+        app:layout_constraintVertical_bias="0.002" />
 
     <TextView
         android:id="@+id/textView4"
@@ -81,23 +80,25 @@
 
     <EditText
         android:id="@+id/etxt_nombre_registro"
-        android:layout_width="350dp"
+        android:layout_width="0dp"
         android:layout_height="50dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
         android:background="@drawable/fondo_con_borde_verde"
         android:ems="10"
         android:gravity="center"
         android:hint="Nombre/Alias"
         android:inputType="text"
         android:textSize="34sp"
-        app:layout_constraintEnd_toEndOf="@+id/textView4"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView4"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar_registro"
+        app:layout_constraintHorizontal_bias="0.111"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_registro"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <EditText
         android:id="@+id/etxt_correo_registro"
-        android:layout_width="350dp"
+        android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/fondo_con_borde_verde"
@@ -106,14 +107,14 @@
         android:hint="Correo"
         android:inputType="textEmailAddress"
         android:textSize="34sp"
-        app:layout_constraintEnd_toEndOf="@+id/textView5"
+        app:layout_constraintEnd_toEndOf="@+id/etxt_nombre_registro"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView5"
+        app:layout_constraintStart_toStartOf="@+id/etxt_nombre_registro"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <EditText
         android:id="@+id/etxt_contrasenia_registro"
-        android:layout_width="350dp"
+        android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginStart="2dp"
         android:layout_marginTop="20dp"
@@ -123,9 +124,9 @@
         android:hint="Contraseña"
         android:inputType="textPassword"
         android:textSize="34sp"
-        app:layout_constraintEnd_toEndOf="@+id/textView6"
+        app:layout_constraintEnd_toEndOf="@+id/etxt_correo_registro"
         app:layout_constraintHorizontal_bias="0.011"
-        app:layout_constraintStart_toStartOf="@+id/textView6"
+        app:layout_constraintStart_toStartOf="@+id/etxt_correo_registro"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <Button
@@ -133,25 +134,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="101dp"
-        android:layout_marginTop="156dp"
+        android:layout_marginTop="76dp"
         android:layout_marginEnd="109dp"
         android:text="Continuar"
-        android:textSize="20dp"
+        android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="@+id/etxt_contrasenia_registro"
-        app:layout_constraintHorizontal_bias="0.425"
+        app:layout_constraintHorizontal_bias="0.56"
         app:layout_constraintStart_toStartOf="@+id/etxt_contrasenia_registro"
         app:layout_constraintTop_toBottomOf="@+id/etxt_contrasenia_registro" />
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="4dp"
         android:rotation="90"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_registro"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_registro"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/hexagono_blanco_beige_foreground" />
 </androidx.constraintlayout.widget.ConstraintLayout>

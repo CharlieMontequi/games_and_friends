@@ -9,7 +9,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_detalle_amigo"
         android:layout_width="0dp"
-        android:layout_height="90dp"
+        android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
@@ -22,15 +22,17 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="4dp"
         android:rotation="90"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_detalle_amigo"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar_detalle_amigo"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_detalle_amigo"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_detalle_amigo"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/hexagono_blanco_beige_foreground" />
 
     <TextView
@@ -48,10 +50,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar_detalle_amigo"
         app:layout_constraintEnd_toEndOf="@+id/toolbar_detalle_amigo"
-        app:layout_constraintHorizontal_bias="0.18"
+        app:layout_constraintHorizontal_bias="0.722"
         app:layout_constraintStart_toStartOf="@+id/toolbar_detalle_amigo"
         app:layout_constraintTop_toTopOf="@+id/toolbar_detalle_amigo"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.5" />
 
     <TextView
         android:id="@+id/textView8"
@@ -72,51 +74,56 @@
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="108dp"
         android:text="Último juego jugado:"
         android:textColor="@color/verde"
         android:textSize="28dp"
         app:layout_constraintEnd_toEndOf="@+id/listView_juegosAmigoDetalle"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/listView_juegosAmigoDetalle"
         app:layout_constraintTop_toBottomOf="@+id/listView_juegosAmigoDetalle" />
 
     <ListView
         android:id="@+id/listView_juegosAmigoDetalle"
-        android:layout_width="367dp"
-        android:layout_height="329dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintEnd_toEndOf="@+id/textView8"
+        android:layout_width="0dp"
+        android:layout_height="351dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="62dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/fondo_con_borde_verde"
+        android:paddingStart="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView8"
-        app:layout_constraintTop_toBottomOf="@+id/textView8"
-        android:background="@drawable/fondo_con_borde_verde"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_detalle_amigo" />
 
     <TextView
         android:id="@+id/txt_ultimoJuegoJugado_amigoDetalle"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginTop="76dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/fondo_con_borde_verde"
         android:gravity="center"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
         android:scrollbarAlwaysDrawHorizontalTrack="true"
         android:text="el teo, tu te agachas y yo te pego"
         android:textSize="25dp"
-        app:layout_constraintEnd_toEndOf="@+id/textView9"
-        app:layout_constraintHorizontal_bias="0.047"
-        app:layout_constraintStart_toStartOf="@+id/textView9"
-        app:layout_constraintTop_toBottomOf="@+id/listView_juegosAmigoDetalle" />
+        app:layout_constraintEnd_toEndOf="@+id/listView_juegosAmigoDetalle"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
     <Button
         android:id="@+id/b_add_amigo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="188dp"
-        android:text="Añadir amigo"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="189dp"
+        android:text="Añadir"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="@+id/txt_ultimoJuegoJugado_amigoDetalle"
         app:layout_constraintHorizontal_bias="0.0"
@@ -127,12 +134,14 @@
         android:id="@+id/b_borrar_amigo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="214dp"
-        android:layout_marginTop="40dp"
-        android:text="Eliminar amigo"
+        android:layout_marginStart="232dp"
+        android:layout_marginEnd="7dp"
+        android:text="Eliminar"
         android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/b_add_amigo"
         app:layout_constraintEnd_toEndOf="@+id/txt_ultimoJuegoJugado_amigoDetalle"
-        app:layout_constraintHorizontal_bias="0.189"
+        app:layout_constraintHorizontal_bias="0.55"
         app:layout_constraintStart_toStartOf="@+id/txt_ultimoJuegoJugado_amigoDetalle"
-        app:layout_constraintTop_toBottomOf="@+id/txt_ultimoJuegoJugado_amigoDetalle" />
+        app:layout_constraintTop_toTopOf="@+id/b_add_amigo"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

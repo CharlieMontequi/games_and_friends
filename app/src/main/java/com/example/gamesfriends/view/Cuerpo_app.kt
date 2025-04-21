@@ -28,6 +28,7 @@ class Cuerpo_app : AppCompatActivity() {
 
         val toolbarCuerpo = findViewById<Toolbar>(R.id.toolbar_cuerpo_app)
         setSupportActionBar(toolbarCuerpo)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         val b_misJuegos = findViewById<Button>(R.id.b_misJuegos_cuerpo)
         val b_amigos = findViewById<Button>(R.id.b_amistades_cuerpo)

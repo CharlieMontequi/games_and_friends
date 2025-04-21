@@ -35,6 +35,7 @@ class Detalle_amigo : AppCompatActivity() {
 
         val toolbarCuerpo = findViewById<Toolbar>(R.id.toolbar_detalle_amigo)
         setSupportActionBar(toolbarCuerpo)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         /*
         comprobar si el id del usuario y el del amigo estan en la tabla relacionados
         si lo estan habilitar borrar y tapar añadir y sino al reves

@@ -42,6 +42,7 @@ class Amistades  : AppCompatActivity() {
 
         val toolbarAmigos = findViewById<Toolbar>(R.id.toolbar_listado_amigos)
         setSupportActionBar(toolbarAmigos)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         val buscarAmigos = findViewById<SearchView>(R.id.searchV_nombreAmigos_listado_amigos)
         val lisaAmigos = findViewById<ListView>(R.id.listView_listadoAmigos_lista_amigos)

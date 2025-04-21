@@ -20,8 +20,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         dbHelper = DataBaseHelper(this)
-        dbHelper.deleteBBDD()
-        dbHelper.datosMninimos()
+//        dbHelper.deleteBBDD()
+//        dbHelper.datosMninimos()
 
         // comprobacion de registro previo
         val estadoRegristro = Gestor(this)

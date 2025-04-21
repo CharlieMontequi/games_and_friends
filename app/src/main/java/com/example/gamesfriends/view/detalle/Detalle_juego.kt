@@ -40,7 +40,7 @@ class Detalle_juego : AppCompatActivity() {
         idUsuario = gestor.obetenerIdRegistro()
         val toolbarCuerpo = findViewById<Toolbar>(R.id.toolbar_detalle_juego)
         setSupportActionBar(toolbarCuerpo)
-
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         idJuego = intent.getIntExtra("ID_JUEGO", 0)
 
@@ -124,7 +124,7 @@ class Detalle_juego : AppCompatActivity() {
                     // Mostrar mensaje y actualizar menú dentro del callback
                     Toast.makeText(this, "Juego añadido a la colección", Toast.LENGTH_LONG).show()
                     invalidateOptionsMenu()
-                }.mostrar()
+                }.mostrar(null)
                 true
             }
 
