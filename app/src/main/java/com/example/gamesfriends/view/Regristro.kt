@@ -1,5 +1,6 @@
 package com.example.gamesfriends.view
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
@@ -48,5 +49,16 @@ class Regristro : AppCompatActivity() {
             }
         }
 
+    }
+    ////////////////////////////////////CIERRE AL DAR ATRAS/////////////////////
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+        val backDispatcher = onBackPressedDispatcher
+
+        // Llamar al manejador del botón de retroceso
+        backDispatcher.onBackPressed()
+
+        // Si necesitas cerrar la actividad
+        finish()
     }
 }

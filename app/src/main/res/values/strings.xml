@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Games &amp; Friends</string>
+    <string name="infoTAJA">La formula T.A.J.A.(Tasa de Aprovechamiento de Juegos Adquiridos) como de aprovechado esta un juego.
+        \nPara ello calcula la tasa de aprovechamiento diviendo el precio de compra entre duración del juego, en horas, por las veces que se ha jugado  y por el numero mediode jugadores.
+        \nSi sale 1 o menos el juego esta rentabilizado, si sale más de 1 y menos de 5 estas en el buen camino para rentabilizarlo, si sale más de 5 el juego esta sin rentabilizar.</string>
+    <string name="taja1">¡FELICIDADES!\nTu juego está muy bien aprovechado. Tiene un valor de : </string>
+    <string name="taja2">¡VAS POR EL BUEN CAMINO!\nTu juego está en proceso de ser bien aprovechado. Tiene un valor de : </string>
+    <string name="taja3">¡OH. NO!\nTu juego no se está aprovechando. Tiene un valor de: </string>
 </resources>

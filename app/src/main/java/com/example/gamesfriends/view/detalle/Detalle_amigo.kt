@@ -1,5 +1,6 @@
 package com.example.gamesfriends.view.detalle
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
@@ -44,6 +45,7 @@ class Detalle_amigo : AppCompatActivity() {
 
         val dbHelper = DataBaseHelper(this)
         val usuarioAmigo = dbHelper.detalleUsuario(idAmigo)
+        val ultimoJuegoJugado = dbHelper.ulitmoJuegoJugado(idAmigo)
 
         if (usuarioAmigo == null) {
             Toast.makeText(this, "Error: amigo no encontrado", Toast.LENGTH_LONG).show()
@@ -54,10 +56,7 @@ class Detalle_amigo : AppCompatActivity() {
         val toolbarCuerpo = findViewById<Toolbar>(R.id.toolbar_detalle_amigo)
         setSupportActionBar(toolbarCuerpo)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        /*
-        comprobar si el id del usuario y el del amigo estan en la tabla relacionados
-        si lo estan habilitar borrar y tapar añadir y sino al reves
-         */
+
         var sonAmigos = dbHelper.comrpobarSiSonAmigos(idUsuario,idAmigo)
 
 
@@ -69,6 +68,8 @@ class Detalle_amigo : AppCompatActivity() {
         val txtUltimoJuegoJugado = findViewById<TextView>(R.id.txt_ultimoJuegoJugado_amigoDetalle)
 
         txtNombreAmigo.text = usuarioAmigo.nombre_usuario + "@"+ usuarioAmigo.id_usuario
+        Toast.makeText(this, "EL JUEGO ES "+ ultimoJuegoJugado!!.nombreJuego + ultimoJuegoJugado.idJuego.toString(), Toast.LENGTH_SHORT).show()
+        txtUltimoJuegoJugado.text= ultimoJuegoJugado!!.nombreJuego
 
         val bAniadirAmigo = findViewById<Button>(R.id.b_add_amigo)
         val bBorrarAmigo = findViewById<Button>(R.id.b_borrar_amigo)
@@ -108,6 +109,7 @@ class Detalle_amigo : AppCompatActivity() {
                 Toast.makeText(this, "Error al borrar amigo", Toast.LENGTH_SHORT).show()
             }
         }
+        finish()
 
     }
 
@@ -123,12 +125,14 @@ class Detalle_amigo : AppCompatActivity() {
             R.id.item_juego_perfil -> {
                 val intent = Intent(this, Detalle_perfil::class.java)
                 startActivity(intent)
+                finish()
                 true
             }
 
             R.id.item_addJuego_bbd_general -> {
                 val intent = Intent(this, Juego_nuevo::class.java)
                 startActivity(intent)
+                finish()
                 true
             }
 
@@ -160,9 +164,21 @@ class Detalle_amigo : AppCompatActivity() {
                 ).show()
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
+                finish()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+    ////////////////////////////////////CIERRE AL DAR ATRAS/////////////////////
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+        val backDispatcher = onBackPressedDispatcher
+
+        // Llamar al manejador del botón de retroceso
+        backDispatcher.onBackPressed()
+
+        // Si necesitas cerrar la actividad
+        finish()
     }
 }

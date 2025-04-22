@@ -23,7 +23,8 @@ class DialogConvocarFiltrado (private val context: Context, private val onAcepta
 
         val dbHelper= DataBaseHelper(context)
         val listadoMecanicas = dbHelper.listaTodasMecanicas()
-        val nombresMecanicasArray = listadoMecanicas.map { it.nombreMecanica }.toTypedArray()
+
+        val nombresMecanicasArray = arrayOf("Selecciona una mecánica...") + listadoMecanicas.map { it.nombreMecanica }
 
         val inputJugadores = vista.findViewById<EditText>(R.id.etxt_numeroJugadores_ventana_convocar)
         val inputSpinner = vista.findViewById<Spinner>(R.id.spinner_tipo_categoria_convocar)
@@ -31,16 +32,22 @@ class DialogConvocarFiltrado (private val context: Context, private val onAcepta
         val bAceptar= vista.findViewById<Button>(R.id.b_aceptar_convocar)
         val bCacelar = vista.findViewById<Button>(R.id.b_cancelar_convocar)
 
-        val adapter = ArrayAdapter(context, android.R.layout.simple_spinner_item,nombresMecanicasArray)
+        val adapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, nombresMecanicasArray)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        inputSpinner.adapter= adapter
+        inputSpinner.adapter = adapter
 
         bAceptar.setOnClickListener {
 
             val numJugadores = inputJugadores.text.toString().toIntOrNull()?:0
             val horasJuego = inputHoras.text.toString().toIntOrNull()?:0
             val itemSeletd = inputSpinner.selectedItemPosition
-            val idMencanica = listadoMecanicas[itemSeletd].id_mecanica
+            var idMencanica=-1
+            if(itemSeletd==0){
+                idMencanica =0
+            }else{
+                idMencanica = listadoMecanicas[itemSeletd-1].id_mecanica!!
+            }
+
 
             if (numJugadores <= 0 || horasJuego <= 0) {
                 Toast.makeText(context, "Completa todos los campos correctamente", Toast.LENGTH_SHORT).show()

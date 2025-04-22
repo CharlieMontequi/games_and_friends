@@ -1,5 +1,6 @@
 package com.example.gamesfriends.view.detalle
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.gamesfriends.R
@@ -17,6 +19,8 @@ import com.example.gamesfriends.model.datos.Usuario
 import com.example.gamesfriends.view.Juego_nuevo
 import com.example.gamesfriends.view.MainActivity
 import com.example.gamesfriends.viewModel.Gestor
+import org.w3c.dom.Text
+import kotlin.time.TestTimeSource
 
 class Detalle_perfil : AppCompatActivity() {
 
@@ -44,7 +48,8 @@ class Detalle_perfil : AppCompatActivity() {
         correo = findViewById(R.id.etxt_correo_perfil_detalle)
         contrasenia = findViewById(R.id.etxt_contrasenia_perfil_detalle)
         guardar = findViewById(R.id.b_guardar_perfil_detalle)
-
+        val txtJuegoColeccionTotal = findViewById<TextView>(R.id.txt_nueroJuegos_perdil_detalle)
+        txtJuegoColeccionTotal.text = dbHelper.totalJuegosEnColeccion(idUsuario).toString()
 
         val toolbarCuerpo =
             findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_perfil_detalel)
@@ -91,9 +96,10 @@ class Detalle_perfil : AppCompatActivity() {
                 true
             }
 
-            R.id.item_addJuego_bbd_general->{
+            R.id.item_addJuego_bbd_general -> {
                 val intent = Intent(this, Juego_nuevo::class.java)
                 startActivity(intent)
+                finish()
                 true
             }
 
@@ -125,6 +131,7 @@ class Detalle_perfil : AppCompatActivity() {
                 ).show()
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
+                finish()
                 true
             }
 
@@ -149,5 +156,17 @@ class Detalle_perfil : AppCompatActivity() {
         contrasenia.isEnabled = false
         guardar.isEnabled = false
         guardar.visibility = View.INVISIBLE
+    }
+
+    ////////////////////////////////////CIERRE AL DAR ATRAS/////////////////////
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+        val backDispatcher = onBackPressedDispatcher
+
+        // Llamar al manejador del botón de retroceso
+        backDispatcher.onBackPressed()
+
+        // Si necesitas cerrar la actividad
+        finish()
     }
 }

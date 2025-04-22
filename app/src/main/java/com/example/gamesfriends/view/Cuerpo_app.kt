@@ -1,5 +1,6 @@
 package com.example.gamesfriends.view
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
@@ -19,7 +20,7 @@ import com.example.gamesfriends.viewModel.Gestor
 class Cuerpo_app : AppCompatActivity() {
 
     private lateinit var dbHelper: DataBaseHelper
-    private lateinit var estadoRegistro :Gestor
+    private lateinit var gestor :Gestor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,12 +68,14 @@ class Cuerpo_app : AppCompatActivity() {
             R.id.item_juego_perfil -> {
                 val intent = Intent(this, Detalle_perfil::class.java)
                 startActivity(intent)
+                finish()
                 true
             }
 
             R.id.item_addJuego_bbd_general -> {
                 val intent = Intent(this, Juego_nuevo::class.java)
                 startActivity(intent)
+                finish()
                 true
             }
 
@@ -95,8 +98,8 @@ class Cuerpo_app : AppCompatActivity() {
             }
 
             R.id.item_salir_desconectar_general -> {
-                estadoRegistro = Gestor(this)
-                estadoRegistro.estaRegristrado(false)
+                gestor = Gestor(this)
+                gestor.estaRegristrado(false)
                 Toast.makeText(
                     this,
                     "Adiosito",
@@ -104,9 +107,21 @@ class Cuerpo_app : AppCompatActivity() {
                 ).show()
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
+                finish()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+    ////////////////////////////////////CIERRE AL DAR ATRAS/////////////////////
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+        val backDispatcher = onBackPressedDispatcher
+
+        // Llamar al manejador del botón de retroceso
+        backDispatcher.onBackPressed()
+
+        // Si necesitas cerrar la actividad
+        finish()
     }
 }

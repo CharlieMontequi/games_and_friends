@@ -280,7 +280,7 @@ data class DataBaseHelper(var contexto: Context) :
         )
         datos.put(
             KEY_FECHA_ULTIMA_VEZ_JUEGADO,
-            deFechaATexto(juegoEnPropiedad.ultimaVezJugado_coleccion)
+            juegoEnPropiedad.ultimaVezJugado_coleccion
         )
         datos.put(KEY_VECES_JUGADO, juegoEnPropiedad.vecesJugado_coleccion)
         datos.put(KEY_ANOTACION_PERSONAL, juegoEnPropiedad.anotacionPersonal_coleccion)
@@ -300,16 +300,21 @@ data class DataBaseHelper(var contexto: Context) :
         db.close()
     }
 
-    fun crearHistorial(historial: Historial) {
+    fun crearHistorial(historial: Historial) :Int {
         val db = this.writableDatabase
         val datos = ContentValues()
         datos.put(KEY_NOMBRE_PARTIDA, historial.nombre_historial)
-        datos.put(KEY_FECHA_PARTIDA, deFechaATexto(historial.fecha_historial))
+        datos.put(KEY_FECHA_PARTIDA, historial.fecha_historial)
         datos.put(KEY_NUMERO_PERSONAS, historial.numeroPersonas_historial)
         datos.put(KEY_FK_USUARIO_MONTA_PARTIDA, historial.usuario_historial)
 
 
-        db.insert(TABLE_HISTORIAL, null, datos)
+        val id = db.insert(TABLE_HISTORIAL, null, datos)
+        return if (id != 1L) {
+            id.toInt()
+        } else {
+            -1
+        }
     }
 
     fun crearJuegoEnUso(juegoUsado: JuegoUsado) {
@@ -402,8 +407,7 @@ data class DataBaseHelper(var contexto: Context) :
             KEY_PRECIO_COMPRA, juegoEnPropiedad.precioCompra_coleccion
         )
         datos.put(
-            KEY_FECHA_ULTIMA_VEZ_JUEGADO,
-            deFechaATexto(juegoEnPropiedad.ultimaVezJugado_coleccion)
+            KEY_FECHA_ULTIMA_VEZ_JUEGADO, juegoEnPropiedad.ultimaVezJugado_coleccion
         )
         datos.put(KEY_VECES_JUGADO, juegoEnPropiedad.vecesJugado_coleccion)
         datos.put(KEY_ANOTACION_PERSONAL, juegoEnPropiedad.anotacionPersonal_coleccion)
@@ -496,11 +500,8 @@ data class DataBaseHelper(var contexto: Context) :
                     id_coleccion = cursor.getInt(cursorIdJuegoTiene),
                     precioCompra_coleccion = cursor.getDouble(cursorPrecio),
                     vecesJugado_coleccion = cursor.getInt(cursorVecesJugado),
-                    ultimaVezJugado_coleccion = deTextoAFecha(
-                        cursor.getString(
-                            cursorUlitimaVexJugado
-                        )
-                    ),
+                    ultimaVezJugado_coleccion = cursor.getString(cursorUlitimaVexJugado)
+                    ,
                     anotacionPersonal_coleccion = cursor.getString(cursorAnotaciones),
                     fk_juego_en_coleccion = cursor.getInt(cursorFKIDJuego),
                     fk_usuario_tiene_coleccion = fkIdusuario
@@ -564,7 +565,7 @@ data class DataBaseHelper(var contexto: Context) :
                 val historial = Historial(
                     id_historial = cursor.getInt(cursorIdHiatorial),
                     nombre_historial = cursor.getString(cursorNombre),
-                    fecha_historial = deTextoAFecha(cursor.getString(cursorFecha)),
+                    fecha_historial = cursor.getString(cursorFecha),
                     numeroPersonas_historial = cursor.getInt(cursorNumeroPersonas),
                     usuario_historial = fk_idUsuario
                 )
@@ -738,7 +739,7 @@ data class DataBaseHelper(var contexto: Context) :
                 id_coleccion = cursor.getInt(idColeccionCursor),
                 precioCompra_coleccion = cursor.getDouble(precioCompraCursor),
                 vecesJugado_coleccion = cursor.getInt(vecesJugadoCursor),
-                ultimaVezJugado_coleccion = deTextoAFecha(cursor.getString(ultimaVezCursor)),
+                ultimaVezJugado_coleccion = cursor.getString(ultimaVezCursor),
                 anotacionPersonal_coleccion = cursor.getString(anotacionesCurosr),
                 fk_usuario_tiene_coleccion = cursor.getInt(fkUsiarioCursor),
                 fk_juego_en_coleccion = fkPropietario
@@ -747,6 +748,30 @@ data class DataBaseHelper(var contexto: Context) :
         cursor.close()
         db.close()
         return juegoTiene
+    }
+
+    fun ulitmoJuegoJugado(idUsuario: Int): Juego? {
+        val db = this.readableDatabase
+        val sentencia =
+            "SELECT J.* FROM $TABLE_JUEGOS J " +
+                    "JOIN $TABLE_COLECCION C ON J.$KEY_ID_JUEGO = C.$KEY_FK_JUEGO_TIENE " +
+                    "WHERE C.$KEY_FK_USUARIO_TIENE_JUEGO = ? " +
+                    "ORDER BY C.$KEY_FECHA_ULTIMA_VEZ_JUEGADO ASC LIMIT 1"
+        val cursor = db.rawQuery(sentencia, arrayOf(idUsuario.toString()))
+
+        var juego=Juego()
+        if (cursor.moveToFirst()) {
+            juego = Juego(
+                idJuego = cursor.getInt(0),
+                nombreJuego = cursor.getString(1),
+                descipcionJuegp = cursor.getString(2),
+                minimoJugadoresJuego = cursor.getInt(3),
+                maximoJugadoresJuego = cursor.getInt(4),
+                duracionJuego = cursor.getInt(5)
+            )
+
+        }
+        return juego
     }
 
     fun detalleJuego(idJuego: Int): Juego? {
@@ -790,7 +815,7 @@ data class DataBaseHelper(var contexto: Context) :
             historial = Historial(
                 id_historial = idHistorial,
                 nombre_historial = cursor.getString(curNombre),
-                fecha_historial = deTextoAFecha(cursor.getString(cruFecha)),
+                fecha_historial =cursor.getString(cruFecha),
                 numeroPersonas_historial = cursor.getInt(curNumeroPersonas),
                 usuario_historial = cursor.getInt(curFKusaurio)
             )
@@ -830,7 +855,7 @@ data class DataBaseHelper(var contexto: Context) :
             AND j.$KEY_NUMERO_JUGADORES_MAXIMO >= ?
             AND mj.$KEY_FK_MECANICAS_MECANICASENJUEGO = ?
         ORDER BY 
-            c.$KEY_FECHA_ULTIMA_VEZ_JUEGADO ASC
+            c.$KEY_FECHA_ULTIMA_VEZ_JUEGADO DESC
     """
 
         val cursor = db.rawQuery(
@@ -1193,9 +1218,9 @@ data class DataBaseHelper(var contexto: Context) :
         usuarios.forEach { usuarios: Usuario -> crearUsuario(usuarios) }
 
         val usuarioConJuegos = listOf(
-            Coleccion(null, 1.0, 0, null, "intimisimi", 1, 1),
+            Coleccion(null, 15.0, 1, null, "intimisimi", 1, 1),
             Coleccion(null, 30.0, 12, null, "ajshdfa", 1, 2),
-            Coleccion(null, 90.0, 2398764, null, "", 1, 4),
+            Coleccion(null, 90.0, 2, null, "", 1, 4),
             Coleccion(null, 12.0, 2, null, "", 2, 4),
             Coleccion(null, 90.0, 2, null, "", 2, 2),
             Coleccion(null, 70.0, 4, null, "", 3, 5),

@@ -1,10 +1,10 @@
 package com.example.gamesfriends.model.datos
 
 data class Juego(
-    val idJuego: Int?,
-    val nombreJuego: String,
-    val descipcionJuegp: String,
-    val minimoJugadoresJuego: Int,
-    val maximoJugadoresJuego: Int,
-    val duracionJuego: Int
+    var idJuego: Int? = null,
+    var nombreJuego: String = "",
+    var descipcionJuegp: String = "",
+    var minimoJugadoresJuego: Int = -1,
+    var maximoJugadoresJuego: Int = -1,
+    var duracionJuego: Int = -1
 )

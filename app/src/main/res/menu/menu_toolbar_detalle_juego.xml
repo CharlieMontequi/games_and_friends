@@ -9,6 +9,9 @@
         android:id="@+id/item_juego_eliminarJuego_coleccion"
         android:title="Eliminar juego de la colección" />
     <item
+        android:id="@+id/item_taja_detallejuego"
+        android:title="Fórmula T.A.J.A." />
+    <item
         android:id="@+id/item_juego_perfil"
         android:title="Perfil" />
     <item

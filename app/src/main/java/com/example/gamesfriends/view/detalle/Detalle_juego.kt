@@ -1,13 +1,17 @@
 package com.example.gamesfriends.view.detalle
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
@@ -16,6 +20,7 @@ import com.example.gamesfriends.model.DataBaseHelper
 import com.example.gamesfriends.model.datos.Coleccion
 import com.example.gamesfriends.view.Cuerpo_app
 import com.example.gamesfriends.view.MainActivity
+import com.example.gamesfriends.view.Mis_juegos
 import com.example.gamesfriends.view.fragments.Fragment_detalle_juego
 import com.example.gamesfriends.view.fragments.Fragment_observaciones_personales_juego
 import com.example.gamesfriends.viewModel.DetalleJuegoViewModel
@@ -116,7 +121,7 @@ class Detalle_juego : AppCompatActivity() {
                         fk_juego_en_coleccion = idJuego,
                         precioCompra_coleccion = precio,
                         vecesJugado_coleccion = veces,
-                        ultimaVezJugado_coleccion = fecha,
+                        ultimaVezJugado_coleccion = fecha.toString(),
                         anotacionPersonal_coleccion = null
                     )
 
@@ -126,6 +131,9 @@ class Detalle_juego : AppCompatActivity() {
                     // Mostrar mensaje y actualizar menú dentro del callback
                     Toast.makeText(this, "Juego añadido a la colección", Toast.LENGTH_LONG).show()
                     invalidateOptionsMenu()
+
+                    val intent = Intent(this, Mis_juegos::class.java)
+                    startActivity(intent)
                 }.mostrar(null)
                 true
             }
@@ -134,14 +142,26 @@ class Detalle_juego : AppCompatActivity() {
                 dbHelper.borrarJuegoDeJuegosTiene(idJuego, idUsuario)
                 detalleViewModel.actualizarEstado(false, null)
                 Toast.makeText(this, "Juego eliminado de la colección", Toast.LENGTH_LONG).show()
-                val intent= Intent(this, Cuerpo_app::class .java)
+                val intent = Intent(this, Cuerpo_app::class.java)
                 startActivity(intent)
+                finish()
+                true
+            }
+
+            R.id.item_taja_detallejuego -> {
+                val vistataja = LayoutInflater.from(this).inflate(R.layout.vetana_info_taja, null)
+                val builder = AlertDialog.Builder(this)
+                    .setTitle("Fórmula T.A.J.A.")
+                    .setView(vistataja)
+                    .setPositiveButton("Entendido") { dialog, _ -> dialog.dismiss() }
+                builder.show()
                 true
             }
 
             R.id.item_juego_perfil -> {
                 val intent = Intent(this, Detalle_perfil::class.java)
                 startActivity(intent)
+                finish()
                 true
             }
 
@@ -174,10 +194,22 @@ class Detalle_juego : AppCompatActivity() {
                 ).show()
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
+                finish()
                 true
             }
 
             else -> super.onOptionsItemSelected(item)
         }
+    }
+    ////////////////////////////////////CIERRE AL DAR ATRAS/////////////////////
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+        val backDispatcher = onBackPressedDispatcher
+
+        // Llamar al manejador del botón de retroceso
+        backDispatcher.onBackPressed()
+
+        // Si necesitas cerrar la actividad
+        finish()
     }
 }

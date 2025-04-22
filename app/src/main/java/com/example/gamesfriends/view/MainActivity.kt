@@ -1,5 +1,6 @@
 package com.example.gamesfriends.view
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
@@ -22,8 +23,8 @@ class MainActivity : AppCompatActivity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         dbHelper = DataBaseHelper(this)
-        dbHelper.deleteBBDD()
-        dbHelper.datosMninimos()
+//        dbHelper.deleteBBDD()
+//        dbHelper.datosMninimos()
 
         // comprobacion de registro previo
         val estadoRegristro = Gestor(this)
@@ -71,20 +72,29 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        txtContrasenia.setOnClickListener {
-            Toast.makeText(
-                this,
-                "pos te jodes y empiezas de cero:)",
-                Toast.LENGTH_LONG
-            ).show()
-        }
-
-
+//        txtContrasenia.setOnClickListener {
+//            Toast.makeText(
+//                this,
+//                "pos te jodes y empiezas de cero:)",
+//                Toast.LENGTH_LONG
+//            ).show()
+//        }
 
         tXTRegistrarse.setOnClickListener {
             val intent = Intent(this, Regristro::class.java)
             startActivity(intent)
         }
 
+    }
+    ////////////////////////////////////CIERRE AL DAR ATRAS/////////////////////
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+        val backDispatcher = onBackPressedDispatcher
+
+        // Llamar al manejador del botón de retroceso
+        backDispatcher.onBackPressed()
+
+        // Si necesitas cerrar la actividad
+        finish()
     }
 }

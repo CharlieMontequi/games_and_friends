@@ -69,6 +69,7 @@ class Registro_listado_juegos : AppCompatActivity() {
             }
             val intent = Intent(this, Cuerpo_app::class.java)
             startActivity(intent)
+            finish()
         }
 
     }
@@ -112,7 +113,7 @@ class Registro_listado_juegos : AppCompatActivity() {
                             id_coleccion = null,
                             precioCompra_coleccion = precio,
                             vecesJugado_coleccion = veces,
-                            ultimaVezJugado_coleccion = ultimaVez,
+                            ultimaVezJugado_coleccion = ultimaVez.toString(),
                             anotacionPersonal_coleccion = null,
                             fk_usuario_tiene_coleccion = -1,  // Se llenará luego
                             fk_juego_en_coleccion = juego.idJuego!!
@@ -142,31 +143,4 @@ class Registro_listado_juegos : AppCompatActivity() {
             return crearListadoJuegos(position, convertView, parent)
         }
     }
-
-    // crear coleccion
-
-    fun construyendoColeccion(posicion: Int, idUsuario: Int): Coleccion {
-        var coleccion = Coleccion(
-            null,
-            -1.0,
-            -1,
-            null,
-            null,
-            idUsuario,
-            todosJuegosListados[posicion].idJuego!!
-        )
-        DialogAgregarJuegoVerDos(this) { precio, veces, ultimaVez ->
-            coleccion = Coleccion(
-                id_coleccion = null,
-                precio,
-                veces,
-                ultimaVez,
-                null,
-                idUsuario,
-                todosJuegosListados[posicion].idJuego!!
-            )
-        }.mostrar(todosJuegosListados[posicion].nombreJuego)
-        return coleccion
-    }
-
 }

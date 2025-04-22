@@ -1,5 +1,6 @@
 package com.example.gamesfriends.view
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
@@ -100,7 +101,7 @@ class Juego_nuevo : AppCompatActivity() {
                         fk_juego_en_coleccion = null,
                         precioCompra_coleccion = precio,
                         vecesJugado_coleccion = veces,
-                        ultimaVezJugado_coleccion = fecha,
+                        ultimaVezJugado_coleccion = fecha.toString(),
                         anotacionPersonal_coleccion = null
                     )
                 }.mostrar(null)
@@ -171,6 +172,7 @@ class Juego_nuevo : AppCompatActivity() {
             R.id.item_juego_perfil -> {
                 val intent = Intent(this, Detalle_perfil::class.java)
                 startActivity(intent)
+                finish()
                 true
             }
 
@@ -211,9 +213,21 @@ class Juego_nuevo : AppCompatActivity() {
                 ).show()
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
+                finish()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+    ////////////////////////////////////CIERRE AL DAR ATRAS/////////////////////
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+        val backDispatcher = onBackPressedDispatcher
+
+        // Llamar al manejador del botón de retroceso
+        backDispatcher.onBackPressed()
+
+        // Si necesitas cerrar la actividad
+        finish()
     }
 }

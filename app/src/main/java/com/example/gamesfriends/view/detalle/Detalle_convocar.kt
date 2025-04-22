@@ -1,5 +1,6 @@
 package com.example.gamesfriends.view.detalle
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -18,16 +19,25 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.example.gamesfriends.R
 import com.example.gamesfriends.model.DataBaseHelper
+import com.example.gamesfriends.model.datos.Coleccion
 import com.example.gamesfriends.model.datos.Juego
+import com.example.gamesfriends.model.datos.JuegoUsado
+import com.example.gamesfriends.view.Cuerpo_app
+import com.example.gamesfriends.view.Historial
 import com.example.gamesfriends.view.Juego_nuevo
 import com.example.gamesfriends.view.MainActivity
 import com.example.gamesfriends.viewModel.Gestor
 import com.example.gamesfriends.viewModel.dialogs.DialogConvocarFiltrado
+import java.time.LocalDate
 import java.util.Calendar
+import java.util.Locale
 
-class Detalle_convocar  : AppCompatActivity() {
+class Detalle_convocar : AppCompatActivity() {
 
-    private lateinit var gestor : Gestor
+    private lateinit var gestor: Gestor
+    private val juegosAActualizar = mutableListOf<Coleccion>()
+    private var jugadoresInvitados = 0
+    private lateinit var  listadoJuegosFiltradoTiempo: MutableList<Juego>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +57,7 @@ class Detalle_convocar  : AppCompatActivity() {
         val listaViewJuegosAllevar = findViewById<ListView>(R.id.listV_juegosAlllevar)
         val txtFechaRecogida = findViewById<TextView>(R.id.txt_fechaMarcada)
         val imB_calendario = findViewById<ImageButton>(R.id.imB_calendario)
-        val bProponer= findViewById<Button>(R.id.b_proponer_juegos_convocar)
+        val bProponer = findViewById<Button>(R.id.b_proponer_juegos_convocar)
         val b_invitar = findViewById<Button>(R.id.b_compartir_invitacion)
 
         val calendar = Calendar.getInstance()
@@ -69,21 +79,95 @@ class Detalle_convocar  : AppCompatActivity() {
         }
 
         bProponer.setOnClickListener {
+            if (txtFechaRecogida.text.toString().equals("Sin determinar")) {
+                Toast.makeText(this, "Es necesario marcar la fecha primero", Toast.LENGTH_LONG)
+                    .show()
+            } else {
 
-            DialogConvocarFiltrado(this){jugadores, idMecanica, horas->
-                listadoJuego= dbHelper.listadoJuegosFiltrados(idUsuario,jugadores,horas,idMecanica)
-                val nombresJuego = listadoJuego.map{it.nombreJuego}.toTypedArray()
-                val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1,nombresJuego)
-                listaViewJuegosAllevar.adapter= adapter
-            }.mostrar()
+                DialogConvocarFiltrado(this) { jugadores, idMecanica, horas ->
+                    if (idMecanica == 0) {
+                        listadoJuego =
+                            dbHelper.listaJuegosPropiedadSiendoJuegosLoObtenido(idUsuario)
+                    } else {
+                        listadoJuego =
+                            dbHelper.listadoJuegosFiltrados(idUsuario, jugadores, horas, idMecanica)
+                    }
+
+                    jugadoresInvitados = jugadores
+
+                     listadoJuegosFiltradoTiempo = calculoHoras(listadoJuego, horas)
+                    val nombresJuego =
+                        listadoJuegosFiltradoTiempo!!.map { it.nombreJuego }.toTypedArray()
+                    val adapter =
+                        ArrayAdapter(this, android.R.layout.simple_list_item_1, nombresJuego)
+                    listaViewJuegosAllevar.adapter = adapter
+
+                    juegosAActualizar.clear()
+
+                    listadoJuegosFiltradoTiempo.forEach { juegoJuegado ->
+
+                        val juegosEnPropiedad = dbHelper.listaJuegosPropiedad(idUsuario)
+                        juegosEnPropiedad.forEach { juegoEnColeccion ->
+                            if (juegoEnColeccion.id_coleccion == juegoJuegado.idJuego) {
+                                val copiaJuego = juegoEnColeccion.copy(
+                                    vecesJugado_coleccion = juegoEnColeccion.vecesJugado_coleccion + 1,
+                                    ultimaVezJugado_coleccion = txtFechaRecogida.text.toString()
+                                )
+                                juegosAActualizar.add(copiaJuego)
+                            }
+                        }
+
+
+                    }
+                }.mostrar()
+            }
 
         }
 
 
         b_invitar.setOnClickListener {
-            Toast.makeText(this, "se abrira opcioens para enviar texto", Toast.LENGTH_LONG).show()
+            val idHistorialNuevo =  dbHelper.crearHistorial(
+                com.example.gamesfriends.model.datos.Historial(
+                    id_historial = null,
+                    txtNombrePartida.text.toString(),
+                    txtFechaRecogida.text.toString(),
+                    jugadoresInvitados,
+                    idUsuario
+                )
+            )
+            juegosAActualizar.forEach {
+                dbHelper.actualizarJuegoEnColeccion(it)
+                dbHelper.crearJuegoEnUso(JuegoUsado(idJuegoUsado = null, fkJuegoJuegousado = it.fk_juego_en_coleccion!!, fkHistorialJuegousado = idHistorialNuevo))
+            }
+
+            val nombresJuegos = listadoJuegosFiltradoTiempo.joinToString(", "){it.nombreJuego}
+            val mensaje = "¡Hola! Te convoco a ${txtNombrePartida.text.toString()}. Una emocionante jornada de juegos de mesa el día ${txtFechaRecogida.text.toString()}. " +
+                    "Seremos unas ${jugadoresInvitados.toString()} personas y jugaremos a: $nombresJuegos."
+
+            val intent = Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, mensaje)
+            }
+
+            val chooser = Intent.createChooser(intent, "Enviar invitación con...")
+            startActivity(chooser)
+            finish()
         }
 
+    }
+
+    private fun calculoHoras(listadoJuegos: MutableList<Juego>, horas: Int): MutableList<Juego> {
+        var juegosFiltradosSumatorioDuracion = mutableListOf<Juego>()
+        val duracionMaxima = horas * 60
+        var duracionIncremental = 0
+        listadoJuegos.forEach { juego ->
+            if (duracionIncremental < duracionMaxima) {
+                juegosFiltradosSumatorioDuracion.add(juego)
+                duracionIncremental += juego.duracionJuego
+            }
+        }
+
+        return juegosFiltradosSumatorioDuracion
     }
 
     // TOOLBAR
@@ -98,12 +182,14 @@ class Detalle_convocar  : AppCompatActivity() {
             R.id.item_juego_perfil -> {
                 val intent = Intent(this, Detalle_perfil::class.java)
                 startActivity(intent)
+                finish()
                 true
             }
 
             R.id.item_addJuego_bbd_general -> {
                 val intent = Intent(this, Juego_nuevo::class.java)
                 startActivity(intent)
+                finish()
                 true
             }
 
@@ -135,10 +221,23 @@ class Detalle_convocar  : AppCompatActivity() {
                 ).show()
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
+                finish()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
 
+    ////////////////////////////////////CIERRE AL DAR ATRAS/////////////////////
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+        val backDispatcher = onBackPressedDispatcher
+
+        // Llamar al manejador del botón de retroceso
+        backDispatcher.onBackPressed()
+
+        // Si necesitas cerrar la actividad
+        finish()
+    }
 }

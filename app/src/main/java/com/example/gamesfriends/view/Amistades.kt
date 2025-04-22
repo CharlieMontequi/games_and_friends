@@ -1,5 +1,6 @@
 package com.example.gamesfriends.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -46,7 +47,47 @@ class Amistades  : AppCompatActivity() {
         setSupportActionBar(toolbarAmigos)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        val buscarAmigos = findViewById<SearchView>(R.id.searchV_nombreAmigos_listado_amigos)
+        val searchViewBuscarAmigos = findViewById<SearchView>(R.id.searchV_nombreAmigos_listado_amigos)
+
+        searchViewBuscarAmigos.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                val filtro = query.orEmpty().trim()
+
+                // Regex: cualquier texto + @ + uno o más dígitos al final
+                val patron = Regex(".*@\\d+$")
+
+                if (patron.matches(filtro)) {
+                    val idPosibleAmigo = filtro.substringAfter("@")
+                    val idAmigo = idPosibleAmigo.toIntOrNull() ?: -1
+                    val usuario = dbHelper.detalleUsuario(idAmigo)
+
+                    if (usuario != null && usuario.id_usuario != null && usuario.id_usuario!! > 0) {
+                        val intentDetalleAmigo = Intent(this@Amistades, Detalle_amigo::class.java)
+                        intentDetalleAmigo.putExtra("ID_AMIGO", usuario.id_usuario)
+                        startActivity(intentDetalleAmigo)
+                        finish()
+                    } else {
+                        Toast.makeText(
+                            this@Amistades,
+                            "No existe ningún usuario con ese ID.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                } else {
+                    Toast.makeText(
+                        this@Amistades,
+                        "Formato inválido. Usa nombre@numero",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                return true // Indica que manejaste el submit
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false // No hacemos nada con el cambio de texto
+            }
+        })
         val lisaAmigos = findViewById<ListView>(R.id.listView_listadoAmigos_lista_amigos)
 
         if(tienesAmigops){
@@ -118,12 +159,14 @@ class Amistades  : AppCompatActivity() {
             R.id.item_juego_perfil -> {
                 val intent = Intent(this, Detalle_perfil::class.java)
                 startActivity(intent)
+                finish()
                 true
             }
 
             R.id.item_addJuego_bbd_general -> {
                 val intent = Intent(this, Juego_nuevo::class.java)
                 startActivity(intent)
+                finish()
                 true
             }
 
@@ -155,11 +198,23 @@ class Amistades  : AppCompatActivity() {
                 ).show()
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
+                finish()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
+    ////////////////////////////////////CIERRE AL DAR ATRAS/////////////////////
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+        val backDispatcher = onBackPressedDispatcher
+
+        // Llamar al manejador del botón de retroceso
+        backDispatcher.onBackPressed()
+
+        // Si necesitas cerrar la actividad
+        finish()
+    }
 
 }

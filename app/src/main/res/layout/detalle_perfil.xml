@@ -54,7 +54,7 @@
         android:id="@+id/etxt_nombre_detalle_perfil"
         android:layout_width="wrap_content"
         android:layout_height="50sp"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="56dp"
         android:layout_marginTop="60dp"
         android:background="@drawable/fondo_con_borde_verde"
         android:ems="10"

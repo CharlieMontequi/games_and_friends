@@ -91,12 +91,13 @@
             android:id="@+id/textView24"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:text="Veces jugado:"
-            android:textStyle="bold"
             android:textColor="@color/verde"
             android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/txt_descripcionJuego_fragment"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/txt_descripcionJuego_fragment"
             app:layout_constraintTop_toBottomOf="@+id/view3" />
 
@@ -117,12 +118,12 @@
             android:id="@+id/txt_veces_jugado_fragmentDetalleJuego"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="184dp"
+            android:layout_marginStart="12dp"
             android:layout_marginTop="4dp"
             android:text="INFINITO"
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="@+id/textView24"
-            app:layout_constraintStart_toStartOf="@+id/textView24"
+            app:layout_constraintStart_toEndOf="@+id/textView24"
             app:layout_constraintTop_toTopOf="@+id/textView24"
             app:layout_constraintVertical_bias="1.0" />
 

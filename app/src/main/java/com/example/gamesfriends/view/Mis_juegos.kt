@@ -17,6 +17,7 @@ import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import com.example.gamesfriends.R
 import com.example.gamesfriends.model.DataBaseHelper
@@ -30,7 +31,8 @@ class Mis_juegos : AppCompatActivity() {
 
     private lateinit var dbHelper: DataBaseHelper
     private var idUsuarioRegistrado: Int = -1
-    private lateinit var listadoJuegos: List<Juego>
+    private lateinit var listadoJuegosEnColecicon: List<Juego>
+    private lateinit var todosLosJuegosBBDD:List<Juego>
     private lateinit var gestor :Gestor
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,22 +44,42 @@ class Mis_juegos : AppCompatActivity() {
         gestor = Gestor(this)
         idUsuarioRegistrado = gestor.obetenerIdRegistro()
         dbHelper = DataBaseHelper(this)
-        listadoJuegos = dbHelper.listaJuegosPropiedadSiendoJuegosLoObtenido(idUsuarioRegistrado)
+        listadoJuegosEnColecicon = dbHelper.listaJuegosPropiedadSiendoJuegosLoObtenido(idUsuarioRegistrado)
+
+        todosLosJuegosBBDD= dbHelper.listaTodosJuegosBBDD()
 
         val toolbarCuerpo = findViewById<Toolbar>(R.id.toolbar_listadoJuegos)
         setSupportActionBar(toolbarCuerpo)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
+        val searchViewJuegos = findViewById<SearchView>(R.id.searchView_listadoJuegos)
+
         val listadoJuegosColeccion = findViewById<ListView>(R.id.listView_listado_juegos)
         val adaptaador =
-            AdaptadorPersonalizado(this, R.layout.item_juego_listado_juegos, listadoJuegos)
+            AdaptadorPersonalizado(this, R.layout.item_juego_listado_juegos, listadoJuegosEnColecicon)
         listadoJuegosColeccion.adapter = adaptaador
         listadoJuegosColeccion.setOnItemClickListener { _, _, position, _ ->
-            val juegoSeleccionado = listadoJuegos[position]
+            val juegoSeleccionado = listadoJuegosEnColecicon[position]
             val intent = Intent(this, Detalle_juego::class.java)
             intent.putExtra("ID_JUEGO", juegoSeleccionado.idJuego)
             startActivity(intent)
+
         }
+
+        searchViewJuegos.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean = false
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val filtro = newText.orEmpty().lowercase().trim()
+                val juegosFiltrados = todosLosJuegosBBDD.filter {
+                    it.nombreJuego.lowercase().contains(filtro)
+                }
+                adaptaador.clear()
+                adaptaador.addAll(juegosFiltrados)
+                adaptaador.notifyDataSetChanged()
+                return true
+            }
+        })
 
     }
 
@@ -84,11 +106,11 @@ class Mis_juegos : AppCompatActivity() {
 
             // los componentes de la fila
             rowView.findViewById<TextView>(R.id.txt_nombreJuego_item_listado_juego).text =
-                listadoJuegos[position].nombreJuego
+                listadoJuegosEnColecicon[position].nombreJuego
             rowView.findViewById<TextView>(R.id.txt_nJugadores_item_listado_juegos).text =
-                "${listadoJuegos[position].minimoJugadoresJuego}-${listadoJuegos[position].maximoJugadoresJuego} jgs"
+                "${listadoJuegosEnColecicon[position].minimoJugadoresJuego}-${listadoJuegosEnColecicon[position].maximoJugadoresJuego} jgs"
             rowView.findViewById<TextView>(R.id.txt_tiempo_item_listado_jeugos).text =
-                listadoJuegos[position].duracionJuego.toString() + "min"
+                listadoJuegosEnColecicon[position].duracionJuego.toString() + "min"
             return rowView
         }
 
@@ -108,12 +130,14 @@ class Mis_juegos : AppCompatActivity() {
             R.id.item_juego_perfil -> {
                 val intent = Intent(this, Detalle_perfil::class.java)
                 startActivity(intent)
+                finish()
                 true
             }
 
             R.id.item_addJuego_bbd_general -> {
                 val intent = Intent(this, Juego_nuevo::class.java)
                 startActivity(intent)
+                finish()
                 true
             }
 
@@ -145,9 +169,21 @@ class Mis_juegos : AppCompatActivity() {
                 ).show()
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
+                finish()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+    ////////////////////////////////////CIERRE AL DAR ATRAS/////////////////////
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+        val backDispatcher = onBackPressedDispatcher
+
+        // Llamar al manejador del botón de retroceso
+        backDispatcher.onBackPressed()
+
+        // Si necesitas cerrar la actividad
+        finish()
     }
 }
