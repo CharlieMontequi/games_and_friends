@@ -1107,7 +1107,7 @@ data class DataBaseHelper(var contexto: Context) :
                 Mecanica(null, "Exploración/aventuera"),
                 Mecanica(null, "Gestión de acciones"),
                 Mecanica(null, "Gestión de recursos"),
-                Mecanica(null, "Lanzamiento de datos"),
+                Mecanica(null, "Lanzamiento de dados"),
                 Mecanica(null, "Memoria"),
                 Mecanica(null, "Narrativo/imaginativo"),
                 Mecanica(null, "Puzle"),

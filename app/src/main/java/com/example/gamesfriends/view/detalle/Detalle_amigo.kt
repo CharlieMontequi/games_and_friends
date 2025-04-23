@@ -37,11 +37,6 @@ class Detalle_amigo : AppCompatActivity() {
         val idUsuario = gestor.obetenerIdRegistro()
         val idAmigo = intent.getIntExtra("ID_AMIGO", -1)
 
-        if (idAmigo == -1) {
-            Toast.makeText(this, "Error: ID del amigo no válido", Toast.LENGTH_LONG).show()
-            finish()
-            return
-        }
 
         val dbHelper = DataBaseHelper(this)
         val usuarioAmigo = dbHelper.detalleUsuario(idAmigo)
@@ -109,7 +104,6 @@ class Detalle_amigo : AppCompatActivity() {
                 Toast.makeText(this, "Error al borrar amigo", Toast.LENGTH_SHORT).show()
             }
         }
-        finish()
 
     }
 

@@ -26,10 +26,10 @@ import com.example.gamesfriends.view.detalle.Detalle_juego
 import com.example.gamesfriends.view.detalle.Detalle_perfil
 import com.example.gamesfriends.viewModel.Gestor
 
-class Amistades  : AppCompatActivity() {
+class Amistades : AppCompatActivity() {
 
-     private lateinit var listaDeAmigosTienes: List<Usuario>
-    private lateinit var gestor :Gestor
+    private lateinit var listaDeAmigosTienes: List<Usuario>
+    private lateinit var gestor: Gestor
     private var idUsuarioRegistrado: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,8 +37,8 @@ class Amistades  : AppCompatActivity() {
         setContentView(R.layout.listado_amigos)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-         gestor = Gestor(this)
-         idUsuarioRegistrado = gestor.obetenerIdRegistro()
+        gestor = Gestor(this)
+        idUsuarioRegistrado = gestor.obetenerIdRegistro()
 
         val dbHelper = DataBaseHelper(this)
         val tienesAmigops = dbHelper.tienesAmigos(idUsuarioRegistrado)
@@ -48,6 +48,7 @@ class Amistades  : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         val searchViewBuscarAmigos = findViewById<SearchView>(R.id.searchV_nombreAmigos_listado_amigos)
+        val lisaAmigos = findViewById<ListView>(R.id.listView_listadoAmigos_lista_amigos)
 
         searchViewBuscarAmigos.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -61,11 +62,11 @@ class Amistades  : AppCompatActivity() {
                     val idAmigo = idPosibleAmigo.toIntOrNull() ?: -1
                     val usuario = dbHelper.detalleUsuario(idAmigo)
 
-                    if (usuario != null && usuario.id_usuario != null && usuario.id_usuario!! > 0) {
+                    if (usuario != null && usuario.id_usuario!! > 0) {
                         val intentDetalleAmigo = Intent(this@Amistades, Detalle_amigo::class.java)
                         intentDetalleAmigo.putExtra("ID_AMIGO", usuario.id_usuario)
                         startActivity(intentDetalleAmigo)
-                        finish()
+
                     } else {
                         Toast.makeText(
                             this@Amistades,
@@ -88,13 +89,14 @@ class Amistades  : AppCompatActivity() {
                 return false // No hacemos nada con el cambio de texto
             }
         })
-        val lisaAmigos = findViewById<ListView>(R.id.listView_listadoAmigos_lista_amigos)
 
-        if(tienesAmigops){
+
+        if (tienesAmigops) {
             // cargar datos amigos
             listaDeAmigosTienes = dbHelper.listadoTodosAmigosObteniendoElAmigo(idUsuarioRegistrado)
-            val adaotadorConAmigos = AdaptadorPersonalizado(this, R.layout.item_listado_amigos, listaDeAmigosTienes)
-            lisaAmigos.adapter= adaotadorConAmigos
+            val adaotadorConAmigos =
+                AdaptadorPersonalizado(this, R.layout.item_listado_amigos, listaDeAmigosTienes)
+            lisaAmigos.adapter = adaotadorConAmigos
 
             lisaAmigos.setOnItemClickListener { _, _, position, _ ->
                 val amigoSeleccionado = listaDeAmigosTienes[position]
@@ -103,7 +105,7 @@ class Amistades  : AppCompatActivity() {
                 startActivity(intent)
             }
 
-        }else{
+        } else {
             // array de no tienes amigos aun
             val noAmigos = arrayOf(
                 "No tienes amigo",
@@ -111,7 +113,9 @@ class Amistades  : AppCompatActivity() {
                 "Momento",
                 "Usa la barra de búsqueda para encontrar tus amigos"
             )
-            val adaptadorSinAmigos = ArrayAdapter(this, android.R.layout.simple_list_item_1, noAmigos)
+            val adaptadorSinAmigos =
+                ArrayAdapter(this, android.R.layout.simple_list_item_1, noAmigos)
+            lisaAmigos.adapter = adaptadorSinAmigos
         }
     }
 
@@ -137,7 +141,8 @@ class Amistades  : AppCompatActivity() {
             )
 
             // los componentes de la fila
-            rowView.findViewById<TextView>(R.id.txt_item_nombre_lista_amigos).text = listaDeAmigosTienes[position].nombre_usuario
+            rowView.findViewById<TextView>(R.id.txt_item_nombre_lista_amigos).text =
+                listaDeAmigosTienes[position].nombre_usuario
 
             return rowView
         }
@@ -150,7 +155,7 @@ class Amistades  : AppCompatActivity() {
     // TOOLBAR
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inlfater: MenuInflater = menuInflater
-        inlfater.inflate(R.menu.menu_toolbar_detalle_juego, menu)
+        inlfater.inflate(R.menu.menu_toolbar_general, menu)
         return true
     }
 
@@ -201,6 +206,7 @@ class Amistades  : AppCompatActivity() {
                 finish()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
