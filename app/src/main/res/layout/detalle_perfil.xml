@@ -56,12 +56,14 @@
         android:layout_height="50sp"
         android:layout_marginStart="56dp"
         android:layout_marginTop="60dp"
+        android:layout_marginEnd="62dp"
         android:background="@drawable/fondo_con_borde_verde"
         android:ems="10"
         android:gravity="center"
         android:hint="Nombre de Usuario"
         android:inputType="text"
         android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar_perfil_detalel"
         app:layout_constraintStart_toStartOf="@+id/toolbar_perfil_detalel"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_perfil_detalel" />
 
