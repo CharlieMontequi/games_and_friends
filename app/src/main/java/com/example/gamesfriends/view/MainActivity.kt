@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.gamesfriends.R
 import com.example.gamesfriends.model.DataBaseHelper
 import com.example.gamesfriends.viewModel.Gestor
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
@@ -50,6 +51,31 @@ class MainActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
+                //registro con firebase-- USUARIO NUEVO
+                FirebaseAuth.getInstance().createUserWithEmailAndPassword(txtCorreo.text.toString(), txtContrasenia.text.toString()).addOnCompleteListener {
+                    if (it.isSuccessful){
+                        Toast.makeText(this, "TODO ha salido bien", Toast.LENGTH_SHORT).show()
+                    }else{
+                        Toast.makeText(this, "hubo un fallo", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                // ACCEDER TENIENDO CUETNA FIRTEBASE
+                FirebaseAuth.getInstance().signInWithEmailAndPassword(txtCorreo.text.toString(), txtContrasenia.text.toString()).addOnCompleteListener {
+                    val intent = Intent(this, Cuerpo_app::class.java)
+                    intent.putExtra("ID_USUARIO", idUsuario)
+                    startActivity(intent)
+                    Toast.makeText(this, "Bienvenide" + idUsuario.toString(), Toast.LENGTH_SHORT).show()
+                    estadoRegristro.estaRegristrado(true)
+                    estadoRegristro.guardarIdRegistro(idUsuario)
+                }
+
+                //////////CERRAR SESION//////////////
+                FirebaseAuth.getInstance().signOut()
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                // para crear la cuenta
+
                 var idUsuario = dbHelper.incioSesion(
                     txtCorreo.text.toString(),
                     txtContrasenia.text.toString()

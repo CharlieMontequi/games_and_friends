@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "336084950407",
+    "project_id": "conectividadgaf",
+    "storage_bucket": "conectividadgaf.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:336084950407:android:7847158b0c4945e2374722",
+        "android_client_info": {
+          "package_name": "com.example.gamesfriends"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_VJy0J2AMYRcQYBkBtYhIKCykGJzbVgo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
