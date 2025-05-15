@@ -63,7 +63,7 @@ class Detalle_amigo : AppCompatActivity() {
         val txtUltimoJuegoJugado = findViewById<TextView>(R.id.txt_ultimoJuegoJugado_amigoDetalle)
 
         txtNombreAmigo.text = usuarioAmigo.nombre_usuario + "@"+ usuarioAmigo.id_usuario
-        Toast.makeText(this, "EL JUEGO ES "+ ultimoJuegoJugado!!.nombreJuego + ultimoJuegoJugado.idJuego.toString(), Toast.LENGTH_SHORT).show()
+
         txtUltimoJuegoJugado.text= ultimoJuegoJugado!!.nombreJuego
 
         val bAniadirAmigo = findViewById<Button>(R.id.b_add_amigo)
@@ -72,6 +72,14 @@ class Detalle_amigo : AppCompatActivity() {
         val listJuegoColeccionAmigo = findViewById<ListView>(R.id.listView_juegosAmigoDetalle)
         val adaotador= ArrayAdapter(this, android.R.layout.simple_list_item_1, listadoNombreJuegos)
         listJuegoColeccionAmigo.adapter= adaotador
+
+        listJuegoColeccionAmigo.setOnItemClickListener { _, _, position, _ ->
+            val juegoSeleccionado = listadoJuegoAmnigo[position]
+            val intent = Intent(this, Detalle_juego::class.java)
+            intent.putExtra("ID_JUEGO", juegoSeleccionado.idJuego)
+            startActivity(intent)
+
+        }
 
         if(sonAmigos){
             bAniadirAmigo.visibility= View.INVISIBLE
@@ -133,7 +141,7 @@ class Detalle_amigo : AppCompatActivity() {
             R.id.item_notificaciones_general -> {
                 Toast.makeText(
                     this,
-                    "En desarrollo helmosho2",
+                    "En desarrollo, lo sentimos",
                     Toast.LENGTH_LONG
                 ).show()
                 true
@@ -142,7 +150,7 @@ class Detalle_amigo : AppCompatActivity() {
             R.id.item_acercaDe_general -> {
                 Toast.makeText(
                     this,
-                    "Aplicacion de juegos de mesa- dialog en desarrollo",
+                    "Aplicacion de desarrollada por Carlos Montequi",
                     Toast.LENGTH_LONG
                 ).show()
                 true

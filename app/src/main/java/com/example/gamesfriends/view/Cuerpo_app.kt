@@ -23,7 +23,7 @@ import com.example.gamesfriends.viewModel.dialogs.Dialong_juegoAletorio
 class Cuerpo_app : AppCompatActivity() {
 
     private lateinit var dbHelper: DataBaseHelper
-    private lateinit var gestor :Gestor
+    private lateinit var gestor: Gestor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +43,7 @@ class Cuerpo_app : AppCompatActivity() {
         val b_convocar = findViewById<Button>(R.id.b_convocar_cuerpo)
 
         b_juegoAleatorio.setOnClickListener {
-            Dialong_juegoAletorio(this){idJuego :Int ->
+            Dialong_juegoAletorio(this) { idJuego: Int ->
                 val intent = Intent(this, Detalle_juego::class.java)
                 intent.putExtra("ID_JUEGO", idJuego)
                 startActivity(intent)
@@ -94,8 +94,8 @@ class Cuerpo_app : AppCompatActivity() {
             R.id.item_notificaciones_general -> {
                 Toast.makeText(
                     this,
-                    "En desarrollo helmosho2",
-                    Toast.LENGTH_LONG
+                    "En desarrollo, lo sentimos",
+                    Toast.LENGTH_SHORT
                 ).show()
                 true
             }
@@ -103,8 +103,8 @@ class Cuerpo_app : AppCompatActivity() {
             R.id.item_acercaDe_general -> {
                 Toast.makeText(
                     this,
-                    "Aplicacion de juegos de mesa- dialog en desarrollo",
-                    Toast.LENGTH_LONG
+                    "Aplicacion de desarrollada por Carlos Montequi",
+                    Toast.LENGTH_SHORT
                 ).show()
                 true
             }
@@ -122,9 +122,11 @@ class Cuerpo_app : AppCompatActivity() {
                 finish()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
+
     ////////////////////////////////////CIERRE AL DAR ATRAS/////////////////////
     @SuppressLint("MissingSuperCall")
     override fun onBackPressed() {

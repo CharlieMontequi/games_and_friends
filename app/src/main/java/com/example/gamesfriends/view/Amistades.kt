@@ -178,8 +178,8 @@ class Amistades : AppCompatActivity() {
             R.id.item_notificaciones_general -> {
                 Toast.makeText(
                     this,
-                    "En desarrollo helmosho2",
-                    Toast.LENGTH_LONG
+                    "En desarrollo, lo sentimos",
+                    Toast.LENGTH_SHORT
                 ).show()
                 true
             }
@@ -187,8 +187,8 @@ class Amistades : AppCompatActivity() {
             R.id.item_acercaDe_general -> {
                 Toast.makeText(
                     this,
-                    "Aplicacion de juegos de mesa- dialog en desarrollo",
-                    Toast.LENGTH_LONG
+                    "Aplicacion de desarrollada por Carlos Montequi",
+                    Toast.LENGTH_SHORT
                 ).show()
                 true
             }

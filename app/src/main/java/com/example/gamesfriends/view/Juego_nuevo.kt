@@ -180,7 +180,7 @@ class Juego_nuevo : AppCompatActivity() {
                 Toast.makeText(
                     this,
                     "Y estás en añadir el juego. Completa los campos.",
-                    Toast.LENGTH_LONG
+                    Toast.LENGTH_SHORT
                 ).show()
                 true
             }
@@ -188,7 +188,7 @@ class Juego_nuevo : AppCompatActivity() {
             R.id.item_notificaciones_general -> {
                 Toast.makeText(
                     this,
-                    "En desarrollo helmosho2",
+                    "En desarrollo, lo sentimos",
                     Toast.LENGTH_LONG
                 ).show()
                 true
@@ -197,8 +197,8 @@ class Juego_nuevo : AppCompatActivity() {
             R.id.item_acercaDe_general -> {
                 Toast.makeText(
                     this,
-                    "Aplicacion de juegos de mesa- dialog en desarrollo",
-                    Toast.LENGTH_LONG
+                    "Aplicacion de desarrollada por Carlos Montequi",
+                    Toast.LENGTH_SHORT
                 ).show()
                 true
             }

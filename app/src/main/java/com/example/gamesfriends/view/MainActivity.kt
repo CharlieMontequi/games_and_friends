@@ -25,8 +25,8 @@ class MainActivity : AppCompatActivity() {
         dbHelper = DataBaseHelper(this)
 
         // intento de colarlo toodito en un json
-        dbHelper.deleteBBDD()
-        dbHelper.datosMninimos()
+//        dbHelper.deleteBBDD()
+//        dbHelper.datosMninimos()
 
         // comprobacion de registro previo
         val estadoRegristro = Gestor(this)
@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
                         Toast.makeText(
                             this,
                             "El correo o contraseña son erróneos :)",
-                            Toast.LENGTH_LONG
+                            Toast.LENGTH_SHORT
                         ).show()
                     }
                 }
@@ -89,13 +89,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-//        txtContrasenia.setOnClickListener {
-//            Toast.makeText(
-//                this,
-//                "pos te jodes y empiezas de cero:)",
-//                Toast.LENGTH_LONG
-//            ).show()
-//        }
 
         tXTRegistrarse.setOnClickListener {
             val intent = Intent(this, Regristro::class.java)
@@ -105,14 +98,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     ////////////////////////////////////CIERRE AL DAR ATRAS/////////////////////
-    @SuppressLint("MissingSuperCall")
+
     override fun onBackPressed() {
-        val backDispatcher = onBackPressedDispatcher
+        super.onBackPressed()
 
-        // Llamar al manejador del botón de retroceso
-        backDispatcher.onBackPressed()
-
-        // Si necesitas cerrar la actividad
         finish()
     }
 }

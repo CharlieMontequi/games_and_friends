@@ -70,7 +70,7 @@ class Detalle_historial  : AppCompatActivity() {
             R.id.item_notificaciones_general -> {
                 Toast.makeText(
                     this,
-                    "En desarrollo helmosho2",
+                    "En desarrollo, lo siento",
                     Toast.LENGTH_LONG
                 ).show()
                 true
@@ -79,7 +79,7 @@ class Detalle_historial  : AppCompatActivity() {
             R.id.item_acercaDe_general -> {
                 Toast.makeText(
                     this,
-                    "Aplicacion de juegos de mesa- dialog en desarrollo",
+                    "Aplicacion de desarrollada por Carlos Montequi",
                     Toast.LENGTH_LONG
                 ).show()
                 true

@@ -69,9 +69,9 @@ class Detalle_convocar : AppCompatActivity() {
                 // Aquí haces lo que quieras con la fecha seleccionada
                 val fechaActual = LocalDate.now()
 
-                if (fechaActual.isAfter(fechaSeleccionada)) {
+                if (fechaSeleccionada.isAfter(fechaActual)) {
 
-                    txtFechaRecogida.text = fechaActual.toString()
+                    txtFechaRecogida.text = fechaSeleccionada.toString()
                 } else {
                     Toast.makeText(this, "No puedes jugar en el pasado", Toast.LENGTH_SHORT).show()
                 }
@@ -87,7 +87,7 @@ class Detalle_convocar : AppCompatActivity() {
 
         bProponer.setOnClickListener {
             if (txtFechaRecogida.text.toString().equals("Sin determinar")) {
-                Toast.makeText(this, "Es necesario marcar la fecha primero", Toast.LENGTH_LONG)
+                Toast.makeText(this, "Es necesario marcar la fecha primero", Toast.LENGTH_SHORT)
                     .show()
             } else {
 
@@ -203,8 +203,8 @@ class Detalle_convocar : AppCompatActivity() {
             R.id.item_notificaciones_general -> {
                 Toast.makeText(
                     this,
-                    "En desarrollo helmosho2",
-                    Toast.LENGTH_LONG
+                    "En desarrollo, lo sentimos",
+                    Toast.LENGTH_SHORT
                 ).show()
                 true
             }
@@ -212,8 +212,8 @@ class Detalle_convocar : AppCompatActivity() {
             R.id.item_acercaDe_general -> {
                 Toast.makeText(
                     this,
-                    "Aplicacion de juegos de mesa- dialog en desarrollo",
-                    Toast.LENGTH_LONG
+                    "Aplicacion de desarrollada por Carlos Montequi",
+                    Toast.LENGTH_SHORT
                 ).show()
                 true
             }

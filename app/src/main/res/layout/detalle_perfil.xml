@@ -64,7 +64,6 @@
         android:inputType="text"
         android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="@+id/toolbar_perfil_detalel"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/toolbar_perfil_detalel"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_perfil_detalel" />
 

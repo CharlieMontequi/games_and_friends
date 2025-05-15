@@ -10,13 +10,13 @@
         android:id="@+id/textView36"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="16dp"
         android:text="Nº de jugadores:"
         android:textColor="@color/verde"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.089"
+        app:layout_constraintHorizontal_bias="0.069"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,9 +24,10 @@
         android:id="@+id/etxt_juegoAletaroio_nJugadores"
         android:layout_width="70dp"
         android:layout_height="38dp"
-        android:layout_marginStart="84dp"
+        android:layout_marginStart="52dp"
         android:background="@drawable/boton_cancelar"
         android:ems="10"
+        android:gravity="center"
         android:inputType="number"
         android:padding="5dp"
         android:textSize="20sp"
@@ -52,20 +53,19 @@
 
     <Spinner
         android:id="@+id/spinner_mecnicas_juegoAleatorio"
-        android:layout_width="163dp"
-        android:layout_height="39dp"
-        android:layout_marginStart="84dp"
+        android:layout_width="182dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="44dp"
         android:layout_marginTop="7dp"
-        android:layout_marginEnd="1dp"
         android:layout_marginBottom="1dp"
         android:background="@drawable/boton_cancelar"
         android:padding="5dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView37"
         app:layout_constraintEnd_toEndOf="@+id/etxt_juegoAletaroio_nJugadores"
-        app:layout_constraintHorizontal_bias="0.806"
+        app:layout_constraintHorizontal_bias="0.878"
         app:layout_constraintStart_toEndOf="@+id/textView37"
         app:layout_constraintTop_toTopOf="@+id/textView37"
-        app:layout_constraintVertical_bias="0.466" />
+        app:layout_constraintVertical_bias="0.583" />
 
     <Switch
         android:id="@+id/switch_juegoAleatorio"
@@ -88,8 +88,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="125dp"
+        android:layout_marginEnd="16dp"
         android:text="Aceptar"
         app:layout_constraintBottom_toBottomOf="@+id/b_cancelarJuegoAleatorio"
+        app:layout_constraintEnd_toEndOf="@+id/spinner_mecnicas_juegoAleatorio"
         app:layout_constraintStart_toEndOf="@+id/b_cancelarJuegoAleatorio"
         app:layout_constraintTop_toTopOf="@+id/b_cancelarJuegoAleatorio" />
 
@@ -97,13 +99,14 @@
         android:id="@+id/b_cancelarJuegoAleatorio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="189dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/boton_cancelar"
         android:text="Cancelar"
         android:textColor="@color/verde"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/switch_juegoAleatorio"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/switch_juegoAleatorio"
         app:layout_constraintTop_toBottomOf="@+id/switch_juegoAleatorio" />
 </androidx.constraintlayout.widget.ConstraintLayout>

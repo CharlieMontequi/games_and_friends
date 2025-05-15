@@ -13,16 +13,20 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.gamesfriends.R
 import com.example.gamesfriends.model.DataBaseHelper
 import com.example.gamesfriends.model.datos.Juego
 import com.example.gamesfriends.model.datos.Usuario
+import com.example.gamesfriends.model.json.ExportarJson
+import com.example.gamesfriends.model.json.ImportarJson
 import com.example.gamesfriends.view.Juego_nuevo
 import com.example.gamesfriends.view.MainActivity
 import com.example.gamesfriends.viewModel.Gestor
 import com.google.gson.Gson
+import kotlin.math.exp
 
 class Detalle_perfil : AppCompatActivity() {
 
@@ -35,7 +39,8 @@ class Detalle_perfil : AppCompatActivity() {
     private lateinit var contrasenia: EditText
     private lateinit var guardar: Button
 
-
+    // Declarar el launcher aquí para usarlo en toda la actividad
+    private lateinit var pickerLauncher: ActivityResultLauncher<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +54,7 @@ class Detalle_perfil : AppCompatActivity() {
 
         val usuarioRegistrado = dbHelper.detalleUsuario(idUsuario)
 
-        val txtNombrePerfil =findViewById<TextView>(R.id.txt_perfil_nombre_usuario)
+        val txtNombrePerfil = findViewById<TextView>(R.id.txt_perfil_nombre_usuario)
         val b_importar = findViewById<Button>(R.id.b_importarJuegos)
         val b_exportar = findViewById<Button>(R.id.b_exportarJuegos)
 
@@ -68,7 +73,8 @@ class Detalle_perfil : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         if (usuarioRegistrado != null) {
-            txtNombrePerfil.text= usuarioRegistrado.nombre_usuario + "@"+ usuarioRegistrado.id_usuario
+            txtNombrePerfil.text =
+                usuarioRegistrado.nombre_usuario + "@" + usuarioRegistrado.id_usuario
             nombre.setText(usuarioRegistrado.nombre_usuario)
             correo.setText(usuarioRegistrado.correo_usuario)
             contrasenia.setText(usuarioRegistrado.contrasenia_usuario)
@@ -95,14 +101,34 @@ class Detalle_perfil : AppCompatActivity() {
             }
         }
 
-        b_importar.setOnClickListener {
+        // Inicializamos el launcher para elegir archivos JSON
+        pickerLauncher =
+            registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+                if (uri != null) {
+                    importarArchivoDesdeUri(uri)
+                } else {
+                    Toast.makeText(this, "No se seleccionó ningún archivo", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
 
+        b_importar.setOnClickListener {
+            pickerLauncher.launch("application/json")
 
         }
 
         b_exportar.setOnClickListener {
-
+            val exportarJUEGOS = ExportarJson(this)
+            if (usuarioRegistrado != null) {
+                exportarJUEGOS.exportarJuegosConMecanicas(
+                    dbHelper.listaTodosJuegosBBDD(),
+                    dbHelper.listaTodosJuegosYMecanicas(),
+                    usuarioRegistrado.nombre_usuario + "_" + usuarioRegistrado.id_usuario
+                )
+            }
+            Toast.makeText(this, "Base de datos exportada con exito", Toast.LENGTH_SHORT).show()
         }
+
     }
 
     // TOOLBAR
@@ -134,8 +160,8 @@ class Detalle_perfil : AppCompatActivity() {
             R.id.item_notificaciones_general -> {
                 Toast.makeText(
                     this,
-                    "En desarrollo helmosho2",
-                    Toast.LENGTH_LONG
+                    "En desarrollo, lo siento",
+                    Toast.LENGTH_SHORT
                 ).show()
                 true
             }
@@ -143,8 +169,8 @@ class Detalle_perfil : AppCompatActivity() {
             R.id.item_acercaDe_general -> {
                 Toast.makeText(
                     this,
-                    "Aplicacion de juegos de mesa- dialog en desarrollo",
-                    Toast.LENGTH_LONG
+                    "Aplicacion de desarrollada por Carlos Montequi",
+                    Toast.LENGTH_SHORT
                 ).show()
                 true
             }
@@ -186,6 +212,24 @@ class Detalle_perfil : AppCompatActivity() {
         guardar.visibility = View.INVISIBLE
     }
 
+    private fun importarArchivoDesdeUri(uri: Uri) {
+        try {
+            contentResolver.openInputStream(uri).use { inputStream ->
+                val jsonTexto = inputStream?.bufferedReader().use { it?.readText() ?: "" }
+
+                if (jsonTexto.isNotEmpty()) {
+                    val importarJson = ImportarJson(this, dbHelper)
+                    importarJson.importarDesdeTexto(jsonTexto)  // O el método que tengas para importar desde string
+                    Toast.makeText(this, "Importación completada.", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "El archivo está vacío.", Toast.LENGTH_SHORT).show()
+                }
+            }
+        } catch (e: Exception) {
+            Toast.makeText(this, "Error al importar: ${e.message}", Toast.LENGTH_LONG).show()
+            e.printStackTrace()
+        }
+    }
 
     ////////////////////////////////////CIERRE AL DAR ATRAS/////////////////////
     @SuppressLint("MissingSuperCall")

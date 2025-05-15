@@ -147,8 +147,8 @@ class Mis_juegos : AppCompatActivity() {
             R.id.item_notificaciones_general -> {
                 Toast.makeText(
                     this,
-                    "En desarrollo helmosho2",
-                    Toast.LENGTH_LONG
+                    "En desarrollo, lo sentimos",
+                    Toast.LENGTH_SHORT
                 ).show()
                 true
             }
@@ -156,8 +156,8 @@ class Mis_juegos : AppCompatActivity() {
             R.id.item_acercaDe_general -> {
                 Toast.makeText(
                     this,
-                    "Aplicacion de juegos de mesa- dialog en desarrollo",
-                    Toast.LENGTH_LONG
+                    "Aplicacion de desarrollada por Carlos Montequi",
+                    Toast.LENGTH_SHORT
                 ).show()
                 true
             }
@@ -168,7 +168,7 @@ class Mis_juegos : AppCompatActivity() {
                 Toast.makeText(
                     this,
                     "Adiosito",
-                    Toast.LENGTH_LONG
+                    Toast.LENGTH_SHORT
                 ).show()
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
