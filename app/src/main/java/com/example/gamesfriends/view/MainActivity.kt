@@ -23,6 +23,8 @@ class MainActivity : AppCompatActivity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         dbHelper = DataBaseHelper(this)
+
+        // intento de colarlo toodito en un json
         dbHelper.deleteBBDD()
         dbHelper.datosMninimos()
 
