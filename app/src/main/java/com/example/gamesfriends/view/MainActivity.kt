@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         dbHelper = DataBaseHelper(this)
 
-        // intento de colarlo toodito en un json
+        // intento de colarlo toodito en un json-parece que funciona
 //        dbHelper.deleteBBDD()
 //        dbHelper.datosMninimos()
 
