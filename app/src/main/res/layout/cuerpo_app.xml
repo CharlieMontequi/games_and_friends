@@ -53,20 +53,20 @@
         android:id="@+id/b_misJuegos_cuerpo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="50dp"
         android:gravity="center"
         android:text="Mis juegos"
         android:textSize="34sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_cuerpo_app"
+        app:layout_constraintEnd_toEndOf="@+id/b_juegoAleatorio"
+        app:layout_constraintStart_toStartOf="@+id/b_juegoAleatorio"
+        app:layout_constraintTop_toBottomOf="@+id/b_juegoAleatorio"
         app:layout_constraintWidth_percent="0.75" />
 
     <Button
         android:id="@+id/b_amistades_cuerpo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="50dp"
         android:gravity="center"
         android:text="Amistades"
         android:textSize="34sp"
@@ -79,7 +79,7 @@
         android:id="@+id/b_historial_cuerpo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="50dp"
         android:gravity="center"
         android:text="Historial"
         android:textSize="34sp"
@@ -92,7 +92,7 @@
         android:id="@+id/b_convocar_cuerpo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="50dp"
         android:gravity="center"
         android:text="Convocar"
         android:textSize="34sp"
@@ -100,5 +100,19 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@id/b_historial_cuerpo"
         app:layout_constraintTop_toBottomOf="@id/b_historial_cuerpo" />
+
+    <Button
+        android:id="@+id/b_juegoAleatorio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="66dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="66dp"
+        android:gravity="center"
+        android:text="¿A qué jugar?"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar_cuerpo_app"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_cuerpo_app"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_cuerpo_app" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

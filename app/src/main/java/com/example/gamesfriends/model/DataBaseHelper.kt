@@ -5,7 +5,6 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.database.sqlite.SQLiteReadOnlyDatabaseException
 import android.util.Log
 import com.example.gamesfriends.model.datos.Amigo
 import com.example.gamesfriends.model.datos.Historial
@@ -828,6 +827,31 @@ data class DataBaseHelper(var contexto: Context) :
 
     ///////////////////////////FILTRADO CONVOCAR ///////////////////////////////////////
 
+    fun todaColeccionDelUsuario(idUsuario: Int): MutableList<Int> {
+        val juegos = mutableListOf<Int>()
+        val db = this.readableDatabase
+
+        val query = """
+        SELECT $KEY_FK_JUEGO_TIENE
+        FROM $TABLE_COLECCION
+        WHERE $KEY_FK_USUARIO_TIENE_JUEGO = ?
+    """
+
+        val cursor = db.rawQuery(query, arrayOf(idUsuario.toString()))
+
+        if (cursor.moveToFirst()) {
+            do {
+                val idJuego = cursor.getInt(cursor.getColumnIndexOrThrow(KEY_FK_JUEGO_TIENE))
+                juegos.add(idJuego)
+            } while (cursor.moveToNext())
+        }
+
+        cursor.close()
+        return juegos
+    }
+
+    ///////////////////////////FILTRADO CONVOCAR ///////////////////////////////////////
+
     fun listadoJuegosFiltrados(
         idUsuario: Int,
         jugadoresVan: Int,
@@ -904,6 +928,139 @@ data class DataBaseHelper(var contexto: Context) :
         return juegos
     }
 
+    ///////////////////////////FILTRADO JUGADORES ///////////////////////////////////////
+
+    fun todaColeccionUsuarioPorNumJugadores(
+        idUsuario: Int,
+        jugadores: Int
+    ): MutableList<Int> {
+        val db = this.readableDatabase
+        val listaIds = mutableListOf<Int>()
+
+        val query = """
+        SELECT 
+            j.$KEY_ID_JUEGO
+        FROM 
+            $TABLE_JUEGOS j
+        JOIN 
+            $TABLE_COLECCION c ON j.$KEY_ID_JUEGO = c.$KEY_FK_JUEGO_TIENE
+        WHERE 
+            c.$KEY_FK_USUARIO_TIENE_JUEGO = ?
+            AND j.$KEY_NUMERO_JUGADORES_MINIMO <= ?
+            AND j.$KEY_NUMERO_JUGADORES_MAXIMO >= ?
+        ORDER BY 
+            c.$KEY_FECHA_ULTIMA_VEZ_JUEGADO DESC
+    """
+
+        val cursor = db.rawQuery(
+            query, arrayOf(
+                idUsuario.toString(),
+                jugadores.toString(),
+                jugadores.toString()
+            )
+        )
+
+        if (cursor.moveToFirst()) {
+            do {
+                val idJuego = cursor.getInt(cursor.getColumnIndexOrThrow(KEY_ID_JUEGO))
+                listaIds.add(idJuego)
+            } while (cursor.moveToNext())
+        }
+
+        cursor.close()
+        return listaIds
+    }
+
+    ///////////////////////////FILTRADO MECANICA ///////////////////////////////////////
+
+    fun todaColecciónUsuarioPorMecanica(
+        idUsuario: Int,
+        idMecanica: Int
+    ): MutableList<Int> {
+        val db = this.readableDatabase
+        val listaIds = mutableListOf<Int>()
+
+        val query = """
+        SELECT 
+            j.$KEY_ID_JUEGO
+        FROM 
+            $TABLE_JUEGOS j
+        JOIN 
+            $TABLE_COLECCION c ON j.$KEY_ID_JUEGO = c.$KEY_FK_JUEGO_TIENE
+        JOIN 
+            $TABLE_MECANICAS_EN_JUEGO mj ON j.$KEY_ID_JUEGO = mj.$KEY_FK_JUEGO_MECANICASENJUEGO
+        WHERE 
+            c.$KEY_FK_USUARIO_TIENE_JUEGO = ?
+            AND mj.$KEY_FK_MECANICAS_MECANICASENJUEGO = ?
+        ORDER BY 
+            c.$KEY_FECHA_ULTIMA_VEZ_JUEGADO DESC
+    """
+
+        val cursor = db.rawQuery(
+            query, arrayOf(
+                idUsuario.toString(),
+                idMecanica.toString()
+            )
+        )
+
+        if (cursor.moveToFirst()) {
+            do {
+                val idJuego = cursor.getInt(cursor.getColumnIndexOrThrow(KEY_ID_JUEGO))
+                listaIds.add(idJuego)
+            } while (cursor.moveToNext())
+        }
+
+        cursor.close()
+        return listaIds
+    }
+
+    ///////////////////////////FILTRADO JUEGADORES Y MECANICA///////////////////////////
+
+    fun todaColeccionUsuarioConMecanicaYJugadores(
+        idUsuario: Int,
+        jugadores: Int,
+        idMecanica: Int
+    ): MutableList<Int> {
+        val db = this.readableDatabase
+        val listaIds = mutableListOf<Int>()
+
+        val query = """
+        SELECT 
+            j.$KEY_ID_JUEGO
+        FROM 
+            $TABLE_JUEGOS j
+        JOIN 
+            $TABLE_COLECCION c ON j.$KEY_ID_JUEGO = c.$KEY_FK_JUEGO_TIENE
+        JOIN 
+            $TABLE_MECANICAS_EN_JUEGO mj ON j.$KEY_ID_JUEGO = mj.$KEY_FK_JUEGO_MECANICASENJUEGO
+        WHERE 
+            c.$KEY_FK_USUARIO_TIENE_JUEGO = ?
+            AND mj.$KEY_FK_MECANICAS_MECANICASENJUEGO = ?
+            AND j.$KEY_NUMERO_JUGADORES_MINIMO <= ?
+            AND j.$KEY_NUMERO_JUGADORES_MAXIMO >= ?
+        ORDER BY 
+            c.$KEY_FECHA_ULTIMA_VEZ_JUEGADO DESC
+    """
+
+        val cursor = db.rawQuery(
+            query, arrayOf(
+                idUsuario.toString(),
+                idMecanica.toString(),
+                jugadores.toString(),
+                jugadores.toString()
+            )
+        )
+
+        if (cursor.moveToFirst()) {
+            do {
+                val idJuego = cursor.getInt(cursor.getColumnIndexOrThrow(KEY_ID_JUEGO))
+                listaIds.add(idJuego)
+            } while (cursor.moveToNext())
+        }
+
+        cursor.close()
+        return listaIds
+    }
 
     ///////////////////////////AGRUPACIONES NUMERICAS///////////////////////////////////
     fun agrupacionJuegosEnUso(fkIdHistorial: Int): Int? {
@@ -1095,25 +1252,29 @@ data class DataBaseHelper(var contexto: Context) :
     fun datosMninimos() {
         val todasMecanicas =
             listOf(
-                Mecanica(null, "Azar"),
-                Mecanica(null, "Bazas"),
-                Mecanica(null, "Colocación de losetas"),
-                Mecanica(null, "Colocación de trabajadores"),
-                Mecanica(null, "Construcción de mazo"),
-                Mecanica(null, "Cooperativo"),
-                Mecanica(null, "Destreza"),
-                Mecanica(null, "Deducción/escape"),
-                Mecanica(null, "Estrategia"),
-                Mecanica(null, "Exploración/aventuera"),
-                Mecanica(null, "Gestión de acciones"),
-                Mecanica(null, "Gestión de recursos"),
-                Mecanica(null, "Lanzamiento de dados"),
-                Mecanica(null, "Memoria"),
-                Mecanica(null, "Narrativo/imaginativo"),
-                Mecanica(null, "Puzle"),
-                Mecanica(null, "Roles"),
-                Mecanica(null, "Roles ocultos"),
-                Mecanica(null, "Roll & write")
+                Mecanica(null, "Azar"), //1
+                Mecanica(null, "Bazas"),//2
+                Mecanica(null, "Colección de sets"),//3
+                Mecanica(null, "Colocación de losetas"),//4
+                Mecanica(null, "Colocación de trabajadores"),//5
+                Mecanica(null, "Construcción de mazo"),//6
+                Mecanica(null, "Cooperativo"),//7
+                Mecanica(null, "Destreza"),//8
+                Mecanica(null, "Deducción/escape"),//9
+                Mecanica(null, "Estrategia"),//10//
+                Mecanica(null, "Exploración/aventuera"),//11
+                Mecanica(null, "Gestión de acciones"),//12
+                Mecanica(null, "Gestión de recursos"),//13
+                Mecanica(null, "Lanzamiento de dados"),//14
+                Mecanica(null, "Memoria"),//15
+                Mecanica(null, "Narrativo/imaginativo"),//16
+                Mecanica(null, "Puzle"),//17
+                Mecanica(null, "Roles"),//18
+                Mecanica(null, "Roles ocultos"),//19
+                Mecanica(null, "Roll & write"),//20
+                Mecanica(null, "Gestión de cartas"),//21
+                Mecanica(null, "Colocación de cartas"),//22
+                Mecanica(null, "Colocación de dados")//23
             )
 
         // crear las mecanicas

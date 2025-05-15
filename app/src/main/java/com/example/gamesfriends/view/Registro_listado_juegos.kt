@@ -47,9 +47,9 @@ class Registro_listado_juegos : AppCompatActivity() {
 
         val bGuardarRegistrar = findViewById<Button>(R.id.b_Guardar_Registrar)
         listaMostrarJuegs = findViewById(R.id.listV_todos_juegos_registro_2)
-        val adaptadorPersola =
+        val adaptadorPersona =
             AdaptadorPersonalizado(this, R.layout.item_listado_check, todosJuegosListados)
-        listaMostrarJuegs.adapter = adaptadorPersola
+        listaMostrarJuegs.adapter = adaptadorPersona
 
 
         bGuardarRegistrar.setOnClickListener {

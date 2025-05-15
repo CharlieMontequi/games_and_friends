@@ -26,6 +26,7 @@ import com.example.gamesfriends.view.fragments.Fragment_observaciones_personales
 import com.example.gamesfriends.viewModel.DetalleJuegoViewModel
 import com.example.gamesfriends.viewModel.dialogs.DialogAgregarJuegoVerDos
 import com.example.gamesfriends.viewModel.Gestor
+import com.example.gamesfriends.viewModel.dialogs.Dialog_infoTAJA
 
 class Detalle_juego : AppCompatActivity() {
 
@@ -149,12 +150,8 @@ class Detalle_juego : AppCompatActivity() {
             }
 
             R.id.item_taja_detallejuego -> {
-                val vistataja = LayoutInflater.from(this).inflate(R.layout.vetana_info_taja, null)
-                val builder = AlertDialog.Builder(this)
-                    .setTitle("Fórmula T.A.J.A.")
-                    .setView(vistataja)
-                    .setPositiveButton("Entendido") { dialog, _ -> dialog.dismiss() }
-                builder.show()
+
+                Dialog_infoTAJA(this).mostrar()
                 true
             }
 

@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import com.example.gamesfriends.R
 import java.time.LocalDate
 import java.util.Calendar
@@ -46,8 +47,15 @@ class DialogAgregarJuegoVerDos(
         val datePicker = DatePickerDialog(
             context,
             { _, year, month, dayOfMonth ->
-                fechaSeleccionada = LocalDate.of(year, month + 1, dayOfMonth)
-                inputFecha.text = fechaSeleccionada.toString()
+                val fecha = LocalDate.of(year, month + 1, dayOfMonth)
+                val fechaActual = LocalDate.now()
+
+                if (fecha.isBefore(fechaActual)) {
+                    fechaSeleccionada = fecha
+                    inputFecha.text = fecha.toString()
+                } else {
+                    Toast.makeText(context, "No puedes jugar en el futuro", Toast.LENGTH_SHORT).show()
+                }
             },
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
@@ -69,5 +77,17 @@ class DialogAgregarJuegoVerDos(
         }
 
         dialog.show()
+    }
+
+    //comprobar fecha anterior
+    fun comprobarFechaSeleccionada(context: Context, fecha: LocalDate): String? {
+        val fechaActual = LocalDate.now()
+
+        return if (fecha.isBefore(fechaActual)) {
+            fecha.toString()
+        } else {
+            Toast.makeText(context, "No puedes jugar en el futuro", Toast.LENGTH_SHORT).show()
+            null
+        }
     }
 }

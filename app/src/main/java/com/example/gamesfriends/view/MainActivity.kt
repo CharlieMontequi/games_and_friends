@@ -23,12 +23,12 @@ class MainActivity : AppCompatActivity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         dbHelper = DataBaseHelper(this)
-//        dbHelper.deleteBBDD()
-//        dbHelper.datosMninimos()
+        dbHelper.deleteBBDD()
+        dbHelper.datosMninimos()
 
         // comprobacion de registro previo
         val estadoRegristro = Gestor(this)
-        if(estadoRegristro.comprobarEstadoRegistro()){
+        if (estadoRegristro.comprobarEstadoRegistro()) {
             Toast.makeText(this, "Sesión ya iniciada", Toast.LENGTH_SHORT).show()
             startActivity(Intent(this, Cuerpo_app::class.java))
         }
@@ -50,25 +50,40 @@ class MainActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                var idUsuario = dbHelper.incioSesion(
-                    txtCorreo.text.toString(),
-                    txtContrasenia.text.toString()
-                )
-                if (idUsuario > 0) {
-                    val intent = Intent(this, Cuerpo_app::class.java)
-                    intent.putExtra("ID_USUARIO", idUsuario)
-                    startActivity(intent)
-                    Toast.makeText(this, "Bienvenide" + idUsuario.toString(), Toast.LENGTH_SHORT).show()
-                    estadoRegristro.estaRegristrado(true)
-                    estadoRegristro.guardarIdRegistro(idUsuario)
 
+                val correoTexto = txtCorreo.text.toString()
+                val correoRegex = Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}\$")
+
+                if (!correoRegex.matches(correoTexto)) {
+                    Toast.makeText(this, "El correo no tiene un formato válido", Toast.LENGTH_SHORT)
+                        .show()
+                    return@setOnClickListener
                 } else {
-                    Toast.makeText(
-                        this,
-                        "El correo o contraseña son erróneos :)",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    var idUsuario = dbHelper.incioSesion(
+                        txtCorreo.text.toString(),
+                        txtContrasenia.text.toString()
+                    )
+                    if (idUsuario > 0) {
+                        val intent = Intent(this, Cuerpo_app::class.java)
+                        intent.putExtra("ID_USUARIO", idUsuario)
+                        startActivity(intent)
+                        Toast.makeText(
+                            this,
+                            "Bienvenide" + idUsuario.toString(),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        estadoRegristro.estaRegristrado(true)
+                        estadoRegristro.guardarIdRegistro(idUsuario)
+
+                    } else {
+                        Toast.makeText(
+                            this,
+                            "El correo o contraseña son erróneos :)",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
                 }
+
             }
         }
 
@@ -86,6 +101,7 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
     ////////////////////////////////////CIERRE AL DAR ATRAS/////////////////////
     @SuppressLint("MissingSuperCall")
     override fun onBackPressed() {

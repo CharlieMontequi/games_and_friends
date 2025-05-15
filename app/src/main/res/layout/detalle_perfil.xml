@@ -55,21 +55,80 @@
         android:layout_width="wrap_content"
         android:layout_height="50sp"
         android:layout_marginStart="56dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="68dp"
+        android:layout_marginEnd="62dp"
         android:background="@drawable/fondo_con_borde_verde"
         android:ems="10"
         android:gravity="center"
         android:hint="Nombre de Usuario"
         android:inputType="text"
         android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar_perfil_detalel"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/toolbar_perfil_detalel"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_perfil_detalel" />
+
+    <TextView
+        android:id="@+id/textView33"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="52dp"
+        android:text="Nombre:"
+        android:textColor="@color/verde"
+        android:textSize="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/etxt_nombre_detalle_perfil"
+        app:layout_constraintEnd_toEndOf="@+id/etxt_nombre_detalle_perfil"
+        app:layout_constraintHorizontal_bias="0.012"
+        app:layout_constraintStart_toStartOf="@+id/etxt_nombre_detalle_perfil" />
+
+    <TextView
+        android:id="@+id/textView35"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="247dp"
+        android:layout_marginBottom="48dp"
+        android:text="Correo:"
+        android:textColor="@color/verde"
+        android:textSize="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/etxt_correo_perfil_detalle"
+        app:layout_constraintEnd_toEndOf="@+id/etxt_correo_perfil_detalle"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/etxt_correo_perfil_detalle" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="67dp"
+        android:text="Juegos de colección:"
+        android:textColor="@color/verde"
+        android:textSize="24dp"
+        app:layout_constraintEnd_toEndOf="@+id/etxt_contrasenia_perfil_detalle"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/etxt_contrasenia_perfil_detalle"
+        app:layout_constraintTop_toBottomOf="@+id/etxt_contrasenia_perfil_detalle" />
+
+    <TextView
+        android:id="@+id/textView34"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="215dp"
+        android:layout_marginBottom="48dp"
+        android:text="Contraseña:"
+        android:textColor="@color/verde"
+        android:textSize="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/etxt_contrasenia_perfil_detalle"
+        app:layout_constraintEnd_toEndOf="@+id/etxt_contrasenia_perfil_detalle"
+        app:layout_constraintHorizontal_bias="0.056"
+        app:layout_constraintStart_toStartOf="@+id/etxt_contrasenia_perfil_detalle" />
 
     <EditText
         android:id="@+id/etxt_contrasenia_perfil_detalle"
         android:layout_width="wrap_content"
         android:layout_height="50sp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="56dp"
         android:background="@drawable/fondo_con_borde_verde"
         android:ems="10"
         android:gravity="center"
@@ -81,11 +140,25 @@
         app:layout_constraintStart_toStartOf="@+id/etxt_correo_perfil_detalle"
         app:layout_constraintTop_toBottomOf="@+id/etxt_correo_perfil_detalle" />
 
+    <TextView
+        android:id="@+id/txt_nueroJuegos_perdil_detalle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="252dp"
+        android:layout_marginTop="28dp"
+        android:text="190"
+        android:textColor="@color/verde"
+        android:textSize="24dp"
+        app:layout_constraintEnd_toEndOf="@+id/etxt_contrasenia_perfil_detalle"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/etxt_contrasenia_perfil_detalle"
+        app:layout_constraintTop_toBottomOf="@+id/etxt_contrasenia_perfil_detalle" />
+
     <EditText
         android:id="@+id/etxt_correo_perfil_detalle"
         android:layout_width="wrap_content"
         android:layout_height="50sp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="52dp"
         android:layout_marginEnd="83dp"
         android:background="@drawable/fondo_con_borde_verde"
         android:ems="10"
@@ -98,44 +171,39 @@
         app:layout_constraintStart_toStartOf="@+id/etxt_nombre_detalle_perfil"
         app:layout_constraintTop_toBottomOf="@+id/etxt_nombre_detalle_perfil" />
 
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="67dp"
-        android:text="Juegos de colección:"
-        android:textColor="@color/verde"
-        android:textSize="24dp"
-        app:layout_constraintEnd_toEndOf="@+id/etxt_contrasenia_perfil_detalle"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/etxt_contrasenia_perfil_detalle"
-        app:layout_constraintTop_toBottomOf="@+id/etxt_contrasenia_perfil_detalle" />
-
-    <TextView
-        android:id="@+id/txt_nueroJuegos_perdil_detalle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="252dp"
-        android:layout_marginTop="24dp"
-        android:text="190"
-        android:textColor="@color/verde"
-        android:textSize="24dp"
-        app:layout_constraintEnd_toEndOf="@+id/etxt_contrasenia_perfil_detalle"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/etxt_contrasenia_perfil_detalle"
-        app:layout_constraintTop_toBottomOf="@+id/etxt_contrasenia_perfil_detalle" />
-
     <Button
         android:id="@+id/b_guardar_perfil_detalle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="54dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="15dp"
         android:text="Guardar cambios"
         app:layout_constraintEnd_toEndOf="@+id/textView12"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/textView12"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+    <Button
+        android:id="@+id/b_importarJuegos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Importar juegos"
+        app:layout_constraintEnd_toEndOf="@+id/b_guardar_perfil_detalle"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/b_guardar_perfil_detalle"
+        app:layout_constraintTop_toBottomOf="@+id/b_guardar_perfil_detalle" />
+
+    <Button
+        android:id="@+id/b_exportarJuegos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Exportar juegos"
+        app:layout_constraintEnd_toEndOf="@+id/b_importarJuegos"
+        app:layout_constraintHorizontal_bias="0.442"
+        app:layout_constraintStart_toStartOf="@+id/b_importarJuegos"
+        app:layout_constraintTop_toBottomOf="@+id/b_importarJuegos" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,7 @@ package com.example.gamesfriends.view.detalle
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -12,17 +13,19 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.gamesfriends.R
 import com.example.gamesfriends.model.DataBaseHelper
+import com.example.gamesfriends.model.datos.Juego
 import com.example.gamesfriends.model.datos.Usuario
 import com.example.gamesfriends.view.Juego_nuevo
 import com.example.gamesfriends.view.MainActivity
 import com.example.gamesfriends.viewModel.Gestor
-import org.w3c.dom.Text
-import kotlin.time.TestTimeSource
+import com.google.gson.Gson
 
 class Detalle_perfil : AppCompatActivity() {
+
 
     private lateinit var dbHelper: DataBaseHelper
     private lateinit var gestor: Gestor
@@ -31,6 +34,8 @@ class Detalle_perfil : AppCompatActivity() {
     private lateinit var correo: EditText
     private lateinit var contrasenia: EditText
     private lateinit var guardar: Button
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,10 +49,16 @@ class Detalle_perfil : AppCompatActivity() {
 
         val usuarioRegistrado = dbHelper.detalleUsuario(idUsuario)
 
+        val txtNombrePerfil =findViewById<TextView>(R.id.txt_perfil_nombre_usuario)
+        val b_importar = findViewById<Button>(R.id.b_importarJuegos)
+        val b_exportar = findViewById<Button>(R.id.b_exportarJuegos)
+
+
         nombre = findViewById(R.id.etxt_nombre_detalle_perfil)
         correo = findViewById(R.id.etxt_correo_perfil_detalle)
         contrasenia = findViewById(R.id.etxt_contrasenia_perfil_detalle)
         guardar = findViewById(R.id.b_guardar_perfil_detalle)
+
         val txtJuegoColeccionTotal = findViewById<TextView>(R.id.txt_nueroJuegos_perdil_detalle)
         txtJuegoColeccionTotal.text = dbHelper.totalJuegosEnColeccion(idUsuario).toString()
 
@@ -57,6 +68,7 @@ class Detalle_perfil : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         if (usuarioRegistrado != null) {
+            txtNombrePerfil.text= usuarioRegistrado.nombre_usuario + "@"+ usuarioRegistrado.id_usuario
             nombre.setText(usuarioRegistrado.nombre_usuario)
             correo.setText(usuarioRegistrado.correo_usuario)
             contrasenia.setText(usuarioRegistrado.contrasenia_usuario)
@@ -65,15 +77,31 @@ class Detalle_perfil : AppCompatActivity() {
         soloVer()
 
         guardar.setOnClickListener {
-            dbHelper.actualizarUsuario(
-                Usuario(
-                    id_usuario = idUsuario,
-                    nombre_usuario = nombre.text.toString(),
-                    correo_usuario = correo.text.toString(),
-                    contrasenia_usuario = contrasenia.text.toString()
+            val correoTexto = correo.text.toString()
+            val correoRegex = Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}\$")
+
+            if (correoRegex.matches(correoTexto)) {
+                dbHelper.actualizarUsuario(
+                    Usuario(
+                        id_usuario = idUsuario,
+                        nombre_usuario = nombre.text.toString(),
+                        correo_usuario = correoTexto,
+                        contrasenia_usuario = contrasenia.text.toString()
+                    )
                 )
-            )
-            soloVer()
+                soloVer()
+            } else {
+                Toast.makeText(this, "El correo no es correcto", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        b_importar.setOnClickListener {
+
+
+        }
+
+        b_exportar.setOnClickListener {
+
         }
     }
 
@@ -157,6 +185,7 @@ class Detalle_perfil : AppCompatActivity() {
         guardar.isEnabled = false
         guardar.visibility = View.INVISIBLE
     }
+
 
     ////////////////////////////////////CIERRE AL DAR ATRAS/////////////////////
     @SuppressLint("MissingSuperCall")

@@ -65,9 +65,16 @@ class Detalle_convocar : AppCompatActivity() {
         val datePicker = DatePickerDialog(
             this,
             { _, year, month, dayOfMonth ->
-                val fechaSeleccionada = "$dayOfMonth/${month + 1}/$year"
+                val fechaSeleccionada = LocalDate.of(year, month + 1, dayOfMonth)
                 // Aquí haces lo que quieras con la fecha seleccionada
-                txtFechaRecogida.text = fechaSeleccionada
+                val fechaActual = LocalDate.now()
+
+                if (fechaActual.isAfter(fechaSeleccionada)) {
+
+                    txtFechaRecogida.text = fechaActual.toString()
+                } else {
+                    Toast.makeText(this, "No puedes jugar en el pasado", Toast.LENGTH_SHORT).show()
+                }
             },
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),

@@ -14,8 +14,11 @@ import androidx.appcompat.widget.Toolbar
 import com.example.gamesfriends.R
 import com.example.gamesfriends.model.DataBaseHelper
 import com.example.gamesfriends.view.detalle.Detalle_convocar
+import com.example.gamesfriends.view.detalle.Detalle_juego
 import com.example.gamesfriends.view.detalle.Detalle_perfil
 import com.example.gamesfriends.viewModel.Gestor
+import com.example.gamesfriends.viewModel.dialogs.DialogConvocarFiltrado
+import com.example.gamesfriends.viewModel.dialogs.Dialong_juegoAletorio
 
 class Cuerpo_app : AppCompatActivity() {
 
@@ -33,10 +36,19 @@ class Cuerpo_app : AppCompatActivity() {
         setSupportActionBar(toolbarCuerpo)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
+        val b_juegoAleatorio = findViewById<Button>(R.id.b_juegoAleatorio)
         val b_misJuegos = findViewById<Button>(R.id.b_misJuegos_cuerpo)
         val b_amigos = findViewById<Button>(R.id.b_amistades_cuerpo)
         val b_historial = findViewById<Button>(R.id.b_historial_cuerpo)
         val b_convocar = findViewById<Button>(R.id.b_convocar_cuerpo)
+
+        b_juegoAleatorio.setOnClickListener {
+            Dialong_juegoAletorio(this){idJuego :Int ->
+                val intent = Intent(this, Detalle_juego::class.java)
+                intent.putExtra("ID_JUEGO", idJuego)
+                startActivity(intent)
+            }.mostrar()
+        }
 
         b_convocar.setOnClickListener {
             val intent = Intent(this, Detalle_convocar::class.java)

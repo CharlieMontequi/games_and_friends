@@ -67,8 +67,11 @@ class Mis_juegos : AppCompatActivity() {
         }
 
         searchViewJuegos.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            //para controlar los evios de datos desde el enter
             override fun onQueryTextSubmit(query: String?): Boolean = false
 
+            // actualizacion de la lista en funcion del texto de busqueda
             override fun onQueryTextChange(newText: String?): Boolean {
                 val filtro = newText.orEmpty().lowercase().trim()
                 val juegosFiltrados = todosLosJuegosBBDD.filter {
