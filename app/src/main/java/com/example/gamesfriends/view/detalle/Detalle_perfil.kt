@@ -101,7 +101,7 @@ class Detalle_perfil : AppCompatActivity() {
             }
         }
 
-        // Inicializamos el launcher para elegir archivos JSON
+        // inicializaar el launcher para elegir archivos JSON
         pickerLauncher =
             registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
                 if (uri != null) {
@@ -219,7 +219,7 @@ class Detalle_perfil : AppCompatActivity() {
 
                 if (jsonTexto.isNotEmpty()) {
                     val importarJson = ImportarJson(this, dbHelper)
-                    importarJson.importarDesdeTexto(jsonTexto)  // O el método que tengas para importar desde string
+                    importarJson.importarDesdeTexto(jsonTexto)
                     Toast.makeText(this, "Importación completada.", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(this, "El archivo está vacío.", Toast.LENGTH_SHORT).show()

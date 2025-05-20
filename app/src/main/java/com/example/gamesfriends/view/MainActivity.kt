@@ -25,8 +25,8 @@ class MainActivity : AppCompatActivity() {
         dbHelper = DataBaseHelper(this)
 
         // intento de colarlo toodito en un json-parece que funciona
-//        dbHelper.deleteBBDD()
-//        dbHelper.datosMninimos()
+        dbHelper.deleteBBDD()
+        dbHelper.datosMninimos()
 
         // comprobacion de registro previo
         val estadoRegristro = Gestor(this)
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, Cuerpo_app::class.java))
         }
 
-        //
+
         val txtCorreo = findViewById<EditText>(R.id.etxt_correo_inicioSesion)
         val txtContrasenia = findViewById<EditText>(R.id.etxt_contrasenia_inicioSesion)
         val b_entrar = findViewById<Button>(R.id.b_entrar_inicioSesion)
@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity() {
                 ).show()
             } else {
 
+                // comprobacion del correo
                 val correoTexto = txtCorreo.text.toString()
                 val correoRegex = Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}\$")
 
@@ -74,6 +75,8 @@ class MainActivity : AppCompatActivity() {
                             "Bienvenide" + idUsuario.toString(),
                             Toast.LENGTH_SHORT
                         ).show()
+
+                        //guardar estado registro
                         estadoRegristro.estaRegristrado(true)
                         estadoRegristro.guardarIdRegistro(idUsuario)
 

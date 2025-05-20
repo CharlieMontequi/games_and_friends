@@ -133,32 +133,46 @@ class Detalle_convocar : AppCompatActivity() {
 
 
         b_invitar.setOnClickListener {
-            val idHistorialNuevo =  dbHelper.crearHistorial(
-                com.example.gamesfriends.model.datos.Historial(
-                    id_historial = null,
-                    txtNombrePartida.text.toString(),
-                    txtFechaRecogida.text.toString(),
-                    jugadoresInvitados,
-                    idUsuario
+
+            val nombrePartida = txtNombrePartida.text.toString().trim()
+            val fecha = txtFechaRecogida.text.toString()
+
+            if (nombrePartida.isNotEmpty() &&
+                fecha != "Sin determinar" &&
+                ::listadoJuegosFiltradoTiempo.isInitialized &&
+                listadoJuegosFiltradoTiempo.isNotEmpty() &&
+                jugadoresInvitados > 0
+            ) {
+                val idHistorialNuevo =  dbHelper.crearHistorial(
+                    com.example.gamesfriends.model.datos.Historial(
+                        id_historial = null,
+                        txtNombrePartida.text.toString(),
+                        txtFechaRecogida.text.toString(),
+                        jugadoresInvitados,
+                        idUsuario
+                    )
                 )
-            )
-            juegosAActualizar.forEach {
-                dbHelper.actualizarJuegoEnColeccion(it)
-                dbHelper.crearJuegoEnUso(JuegoUsado(idJuegoUsado = null, fkJuegoJuegousado = it.fk_juego_en_coleccion!!, fkHistorialJuegousado = idHistorialNuevo))
+                juegosAActualizar.forEach {
+                    dbHelper.actualizarJuegoEnColeccion(it)
+                    dbHelper.crearJuegoEnUso(JuegoUsado(idJuegoUsado = null, fkJuegoJuegousado = it.fk_juego_en_coleccion!!, fkHistorialJuegousado = idHistorialNuevo))
+                }
+
+                val nombresJuegos = listadoJuegosFiltradoTiempo.joinToString(", "){it.nombreJuego}
+                val mensaje = "¡Hola! Te convoco a ${txtNombrePartida.text.toString()}. Una emocionante jornada de juegos de mesa el día ${txtFechaRecogida.text.toString()}. " +
+                        "Seremos unas ${jugadoresInvitados.toString()} personas y jugaremos a: $nombresJuegos."
+
+                val intent = Intent(Intent.ACTION_SEND).apply {
+                    type = "text/plain"
+                    putExtra(Intent.EXTRA_TEXT, mensaje)
+                }
+
+                val chooser = Intent.createChooser(intent, "Enviar invitación con...")
+                startActivity(chooser)
+                finish()
+            }else{
+                Toast.makeText(this, "Es necesario completar todos los campos.", Toast.LENGTH_SHORT).show()
             }
 
-            val nombresJuegos = listadoJuegosFiltradoTiempo.joinToString(", "){it.nombreJuego}
-            val mensaje = "¡Hola! Te convoco a ${txtNombrePartida.text.toString()}. Una emocionante jornada de juegos de mesa el día ${txtFechaRecogida.text.toString()}. " +
-                    "Seremos unas ${jugadoresInvitados.toString()} personas y jugaremos a: $nombresJuegos."
-
-            val intent = Intent(Intent.ACTION_SEND).apply {
-                type = "text/plain"
-                putExtra(Intent.EXTRA_TEXT, mensaje)
-            }
-
-            val chooser = Intent.createChooser(intent, "Enviar invitación con...")
-            startActivity(chooser)
-            finish()
         }
 
     }

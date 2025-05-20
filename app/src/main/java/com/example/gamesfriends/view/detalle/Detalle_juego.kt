@@ -129,7 +129,7 @@ class Detalle_juego : AppCompatActivity() {
                     dbHelper.crearJuegoEnPropiedad(nuevoRegistro)
                     detalleViewModel.actualizarEstado(true, nuevoRegistro)
 
-                    // Mostrar mensaje y actualizar menú dentro del callback
+                    // mostrar mensaje y actualizar menú dentro del callback
                     Toast.makeText(this, "Juego añadido a la colección", Toast.LENGTH_LONG).show()
                     invalidateOptionsMenu()
 

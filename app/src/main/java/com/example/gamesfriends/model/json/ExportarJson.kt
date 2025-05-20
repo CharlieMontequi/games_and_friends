@@ -28,7 +28,7 @@ class ExportarJson(private val context: Context) {
                 .filter { it.fk_juego_mecanicaJuego == juego.idJuego }
                 .map { it.fk_mecanica_mecanicaJuego }
 
-            // Si hay más de una mecánica, usamos JSONArray; si solo una, el mismo formato que diste
+            // si las mecancias son varias estan en un array
             juegoJson.put("mencanicaenjuego", if (mecanicasIds.size == 1) mecanicasIds.first() else JSONArray(mecanicasIds))
 
             jsonArray.put(juegoJson)

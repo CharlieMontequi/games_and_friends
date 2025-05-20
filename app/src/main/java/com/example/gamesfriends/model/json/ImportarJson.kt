@@ -16,6 +16,7 @@ class ImportarJson (private val context: Context, private val dbHelper: DataBase
         for (i in 0 until jsonArray.length()) {
             val juegoJson = jsonArray.getJSONObject(i)
 
+            // construir card juego para meterlo
             val juego = Juego(
                 nombreJuego = juegoJson.getString("nombreJuego"),
                 duracionJuego = juegoJson.getInt("duracionJuego"),
@@ -33,6 +34,7 @@ class ImportarJson (private val context: Context, private val dbHelper: DataBase
                 else -> emptyList()
             }
 
+            // tomar las mecacnas asociasdas a cada juego
             for (idMecanica in idsMecanicas) {
                 val mecanicaEnJuego = MecanicaEnJuego(
                     id_mecanicaJuego = null,
